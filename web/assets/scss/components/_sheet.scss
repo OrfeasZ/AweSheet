@@ -1,0 +1,76 @@
+.toolbar {
+  height: 30px;
+}
+
+.sheet {
+  width: 100%;
+  height: 100%;
+  padding-top: 30px;
+  box-sizing: border-box;
+  margin-top: -30px;
+
+  .sheet-grid {
+    .row {
+      height: 30px;
+      float: left;
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      vertical-align: top;
+
+      &.empty {
+
+      }
+
+      &.selected {
+
+      }
+
+      .row-label {
+        display: inline-block;
+        width: 50px;
+        height: 30px;
+        border: 1px solid #000;
+        text-align: center;
+        line-height: 30px;
+        vertical-align: top;
+      }
+
+      .column {
+        display: inline-block;
+        width: 100px;
+        height: 30px;
+        border: 1px solid #000;
+        text-align: center;
+        line-height: 30px;
+        vertical-align: top;
+
+        &.empty {
+          width: 50px;
+        }
+
+        &.selected {
+
+        }
+      }
+
+      .cell {
+        display: inline-block;
+        width: 100px;
+        height: 30px;
+        border: 1px solid #000;
+        text-align: center;
+        line-height: 30px;
+        vertical-align: top;
+
+        &.selected {
+
+        }
+
+        span {
+
+        }
+      }
+    }
+  }
+}

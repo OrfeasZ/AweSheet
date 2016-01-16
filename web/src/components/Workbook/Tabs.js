@@ -5,7 +5,8 @@ export default class Tabs extends Component
     render()
     {
         return (
-            <div>
+            <div className="tab-container">
+                {this.props.children}
             </div>
         );
     }

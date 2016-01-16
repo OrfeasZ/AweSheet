@@ -1,20 +1,73 @@
 import {
-    ADD_SHEET
+    SET_SHEET,
+    REMOVE_SHEET,
+    SET_ACTIVE_SHEET,
+    SET_SELECTED_CELL
 } from '../constants/ActionTypes'
 
 const initialState = {
-    sheets: []
+    sheets: {},
+    sheetProps: {},
+    activeSheet: 0
 };
 
 export default function team(state = initialState, action)
 {
     switch (action.type)
     {
-        case ADD_SHEET:
+        case SET_SHEET:
         {
             let finalState = {
-                sheets: []
+                sheets: state.sheets,
+                sheetProps: state.sheetProps,
+                activeSheet: state.activeSheet
             };
+
+            finalState.sheets[action.sheet.id] = action.sheet;
+
+            if (!(action.sheet.id in finalState.sheetProps))
+            {
+                finalState.sheetProps[action.sheet.id] = {
+                    selectedCell: [-1, -1]
+                };
+            }
+
+            return finalState;
+        }
+
+        case REMOVE_SHEET:
+        {
+            let finalState = {
+                sheets: state.sheets,
+                sheetProps: state.sheetProps,
+                activeSheet: state.activeSheet
+            };
+
+            delete finalState.sheets[action.sheet.id];
+            delete finalState.sheetProps[action.sheet.id];
+
+            return finalState;
+        }
+
+        case SET_ACTIVE_SHEET:
+        {
+            return {
+                sheets: state.sheets,
+                sheetProps: state.sheetProps,
+                activeSheet: action.sheet
+            };
+        }
+
+        case SET_SELECTED_CELL:
+        {
+            let finalState = {
+                sheets: state.sheets,
+                sheetProps: state.sheetProps,
+                activeSheet: state.activeSheet
+            };
+
+            if (action.sheet.id in finalState.sheetProps)
+                finalState.sheetProps[action.sheet.id].selectedCell = [ action.x, action.y ];
 
             return finalState;
         }

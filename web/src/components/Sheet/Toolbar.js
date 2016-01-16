@@ -5,7 +5,8 @@ export default class Dropdown extends Component
     render()
     {
         return (
-            <div>
+            <div className="toolbar">
+                Toolbar
             </div>
         );
     }
