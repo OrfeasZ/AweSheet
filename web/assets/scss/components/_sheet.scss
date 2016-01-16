@@ -138,7 +138,8 @@
         text-overflow: ellipsis;
         box-sizing: border-box;
         z-index: 1;
-        display: inline-block;
+        display: inline-flex;
+        align-content: center;
         vertical-align: top;
 
         &:first-of-type {
@@ -146,17 +147,18 @@
         }
 
         &.selected {
-          border: 2px solid #3193c5;
+          outline: 2px solid #3193c5;
+          outline-offset: -2px;
         }
 
         .cell-input {
           position: absolute;
-          top: 0;
-          left: 0;
-          bottom: 0;
+          top: 2px;
+          left: 2px;
+          bottom: 2px;
           outline: 0;
           border: 0;
-          padding: 0 4px;
+          padding: 0 4px 0 2px;
           font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
           font-size: 12px;
           display: none;
@@ -168,7 +170,8 @@
           }
         }
 
-        span {
+        .cell-value {
+
         }
       }
     }
