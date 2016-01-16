@@ -5,7 +5,7 @@ export default class Column extends Component
     render()
     {
         // TODO: Translate to letter.
-        let value = this.props.empty ? null : this.props.x;
+        let value = this.props.empty ? null : this.getColumnName();
 
         let className = 'column';
 
@@ -16,9 +16,29 @@ export default class Column extends Component
             className += ' selected';
 
         return (
-            <div className={className}>
+            <th className={className}>
                 {value}
-            </div>
+            </th>
         );
+    }
+
+    getColumnName()
+    {
+        var x = this.props.x;
+
+        var ordA = 'a'.charCodeAt(0);
+        var ordZ = 'z'.charCodeAt(0);
+
+        var len = ordZ - ordA + 1;
+
+        var name = "";
+
+        while(x >= 0)
+        {
+            name = String.fromCharCode(x % len + ordA) + name;
+            x = Math.floor(x / len) - 1;
+        }
+
+        return name;
     }
 }

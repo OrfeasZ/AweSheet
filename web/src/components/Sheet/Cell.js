@@ -12,9 +12,9 @@ export default class Cell extends Component
         let value = this.props.cell ? (<span>{this.props.cell.displayValue}</span>) : null;
 
         return (
-            <div className={className}>
+            <td className={className}>
                 {value}
-            </div>
+            </td>
         );
     }
 }

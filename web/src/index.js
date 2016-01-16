@@ -58,3 +58,10 @@ store.dispatch({
         cells: {}
     }
 });
+
+store.dispatch({
+    type: ActionType.SET_SELECTED_CELL,
+    id: 0,
+    x: 2,
+    y: 5
+});

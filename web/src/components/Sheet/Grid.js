@@ -10,17 +10,13 @@ export default class Grid extends Component
     {
         const { cells, maxRow, maxColumn, selectedCell } = this.props;
 
-        let rows = [];
+        let head = [];
+        let body = [];
 
-        // Populate columns.
-        let columns = [];
-
-        columns.push(<Column key={-1} empty={true} />);
+        head.push(<Column key={-1} empty={true} />);
 
         for (let x = 0; x < maxColumn; ++x)
-            columns.push(<Column key={x} x={x} selected={selectedCell[0] == x} />);
-
-        rows.push(<Row key={-1} empty={true}>{columns}</Row>);
+            head.push(<Column key={x} x={x} selected={selectedCell[0] == x} />);
 
         // Populate rows.
         for (let y = 0; y < maxRow; ++y)
@@ -31,13 +27,20 @@ export default class Grid extends Component
             for (let x = 0; x < maxColumn; ++x)
                 rowCells.push(<Cell key={x + 'x' + y} cell={cells[x + 'x' + y]} x={x} y={y} selected={selectedCell[0] == x && selectedCell[1] == y} />);
 
-            rows.push(<Row key={y} y={y} selected={selectedCell[1] == y}>{rowCells}</Row>);
+            body.push(<Row key={y} y={y} selected={selectedCell[1] == y}>{rowCells}</Row>);
         }
 
         return (
-            <div className="sheet-grid">
-                {rows}
-            </div>
+            <table className="sheet-grid">
+                <thead>
+                    <tr className="row">
+                        {head}
+                    </tr>
+                </thead>
+                <tbody>
+                    {body}
+                </tbody>
+            </table>
         );
     }
 }

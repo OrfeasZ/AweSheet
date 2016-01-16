@@ -6,7 +6,7 @@ export default class Row extends Component
     {
         let value = this.props.empty ?
             null :
-            <div className="row-label">{this.props.y}</div>;
+            <td className="row-label">{this.props.y + 1}</td>;
 
         let className = 'row';
 
@@ -17,10 +17,10 @@ export default class Row extends Component
             className += ' selected';
 
         return (
-            <div className={className}>
+            <tr className={className}>
                 {value}
                 {this.props.children}
-            </div>
+            </tr>
         );
     }
 }
