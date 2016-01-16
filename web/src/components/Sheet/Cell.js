@@ -27,6 +27,8 @@ export default class Cell extends Component
             input = <input
                 ref="input"
                 className="cell-input"
+                data-x={this.props.x}
+                data-y={this.props.y}
                 type="text"
                 size={this.state.inputSize}
                 onChange={(e) => this.onValueChange(e)}
@@ -34,15 +36,23 @@ export default class Cell extends Component
                 defaultValue={this.props.cell ? this.props.cell.value : ''} />;
         }
 
-        let value = this.props.cell ? (<span>{this.props.cell.displayValue}</span>) : null;
+        let value = this.props.cell ? this.props.cell.displayValue : null;
 
         return (
-            <div className={className}
+            <div
+                data-x={this.props.x}
+                data-y={this.props.y}
+                className={className}
                 onDoubleClick={(e) => this.onDoubleClick(e)}
                 onClick={(e) => this.onClick(e)}
                 onKeyDown={(e) => this.onCellKeyDown(e)}
-                style={{ width: this.props.size + 'px' }} >
-                {value}
+                style={{ width: this.props.size + 'px', height: this.props.height + 'px', lineHeight: this.props.height + 'px' }} >
+                <span
+                    className="cell-value"
+                    data-x={this.props.x}
+                    data-y={this.props.y}>
+                    {value}
+                </span>
                 {input}
             </div>
         );

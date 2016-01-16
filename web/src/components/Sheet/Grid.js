@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import * as ActionType from '../../constants/ActionTypes'
 
 import Column from './Column'
 import Cell from './Cell'
@@ -11,6 +12,14 @@ export default class Grid extends Component
         super(props);
 
         const { maxColumn, maxRow } = this.props;
+
+        this.mouseStartCoords = [0, 0];
+        this.mouseStartElement = null;
+        this.startingColumnWidth = 0;
+        this.resizingColumn = false;
+        this.startingRowHeight = 0;
+        this.resizingRow = false;
+        this.mouseDown = false;
 
         this.state = {
             columnSizes: [],
@@ -107,7 +116,17 @@ export default class Grid extends Component
 
                 let editing = editingCell !== null && editingCell[0] == x && editingCell[1] == y;
 
-                rowCells.push(<Cell sheet={id} key={x + 'x' + y} cell={cells[x + 'x' + y]} x={x} y={y} selected={selected} editing={editing} size={this.state.columnSizes[x]} />);
+                rowCells.push(<Cell
+                    sheet={id}
+                    key={x + 'x' + y}
+                    cell={cells[x + 'x' + y]}
+                    x={x}
+                    y={y}
+                    selected={selected}
+                    editing={editing}
+                    size={this.state.columnSizes[x]}
+                    height={this.state.rowSizes[y]} />
+                );
             }
 
             body.push(<Row key={y} y={y} selected={selectedRow} scroll={this.state.scrollLeft} size={this.state.rowSizes[y]}>{rowCells}</Row>);
@@ -115,7 +134,12 @@ export default class Grid extends Component
 
         return (
             <div className="grid-container">
-                <div ref="grid" className="sheet-grid">
+                <div
+                    ref="grid"
+                    className="sheet-grid"
+                    onMouseDown={(e) => this.onMouseDown(e)}
+                    onMouseMove={(e) => this.onMouseMove(e)}
+                    onMouseUp={(e) => this.onMouseUp(e)}>
                     <div className="row">
                         {head}
                     </div>
@@ -184,5 +208,183 @@ export default class Grid extends Component
             rowSizes: rowSizes,
             columnSizes: columnSizes
         });
+    }
+
+    onMouseDown(event)
+    {
+        this.mouseStartCoords = [ event.pageX, event.pageY ];
+        this.mouseStartElement = event.target;
+        this.mouseDown = true;
+
+        let elementClass = this.mouseStartElement.className;
+
+        // User clicked a column header.
+        if (elementClass.indexOf('column') !== -1 && elementClass.indexOf('empty') === -1)
+        {
+            let columnX = parseInt(this.mouseStartElement.getAttribute('data-x'), 10);
+
+            // Are we trying to resize the column?
+            if (this.mouseStartCoords[0] == (this.mouseStartElement.getBoundingClientRect().left + this.mouseStartElement.offsetWidth) - 1)
+            {
+                this.resizingColumn = true;
+                this.startingColumnWidth = this.state.columnSizes[columnX];
+                return;
+            }
+
+            this.resizingColumn = false;
+            this.startingColumnWidth = 0;
+
+            // Select entire column.
+            let cells = [];
+
+            for (let i = 0; i < this.state.rowSizes.length; ++i)
+                cells.push([ columnX, i ]);
+
+            store.dispatch({
+                type: ActionType.SET_SELECTED_CELLS,
+                id: this.props.id,
+                cells: cells
+            });
+
+            return;
+        }
+
+        // User clicked a row label.
+        if (elementClass.indexOf('row-label') !== -1)
+        {
+            let rowY = parseInt(this.mouseStartElement.getAttribute('data-y'), 10);
+
+            // Are we trying to resize the row?
+            if (this.mouseStartCoords[1] == (this.mouseStartElement.getBoundingClientRect().top + this.mouseStartElement.offsetHeight) - 1)
+            {
+                this.resizingRow = true;
+                this.startingRowHeight = this.state.rowSizes[rowY];
+                return;
+            }
+
+            this.resizingRow = false;
+            this.startingRowHeight = 0;
+
+            // Select entire row.
+            let cells = [];
+
+            for (let i = 0; i < this.state.columnSizes.length; ++i)
+                cells.push([ i, rowY ]);
+
+            store.dispatch({
+                type: ActionType.SET_SELECTED_CELLS,
+                id: this.props.id,
+                cells: cells
+            });
+
+            return;
+        }
+
+        // User clicked a cell.
+        if (elementClass.indexOf('cell') !== -1)
+        {
+            let cellX = parseInt(this.mouseStartElement.getAttribute('data-x'), 10);
+            let cellY = parseInt(this.mouseStartElement.getAttribute('data-y'), 10);
+
+            // Select cell.
+            store.dispatch({
+                type: ActionType.SET_SELECTED_CELLS,
+                id: this.props.id,
+                cells: [
+                    [ cellX, cellY ]
+                ]
+            });
+
+            return;
+        }
+    }
+
+    onMouseMove(event)
+    {
+        if (!this.mouseDown)
+            return;
+
+        // Handle column resizing.
+        if (this.resizingColumn)
+        {
+            let columnX = parseInt(this.mouseStartElement.getAttribute('data-x'), 10);
+
+            let widthDiff = event.pageX - this.mouseStartCoords[0];
+
+            let finalWidth = this.startingColumnWidth + widthDiff;
+
+            if (finalWidth < 100)
+                finalWidth = 100;
+
+            this.setState({
+                columnSizes: [
+                    ...this.state.columnSizes.slice(0, columnX),
+                    finalWidth,
+                    ...this.state.columnSizes.slice(columnX + 1)
+                ]
+            });
+
+            return;
+        }
+
+        // Handle row resizing.
+        if (this.resizingRow)
+        {
+            let rowY = parseInt(this.mouseStartElement.getAttribute('data-y'), 10);
+
+            let heightDiff = event.pageY - this.mouseStartCoords[1];
+
+            let finalHeight = this.startingRowHeight + heightDiff;
+
+            if (finalHeight < 24)
+                finalHeight = 24;
+
+            this.setState({
+                rowSizes: [
+                    ...this.state.rowSizes.slice(0, rowY),
+                    finalHeight,
+                    ...this.state.rowSizes.slice(rowY + 1)
+                ]
+            });
+
+            return;
+        }
+
+        // Handle mouse-drag multiple cell selection.
+        if (this.mouseStartElement.className.indexOf('cell') !== -1 && event.target.className.indexOf('cell') !== -1)
+        {
+            let cellX = parseInt(this.mouseStartElement.getAttribute('data-x'), 10);
+            let cellY = parseInt(this.mouseStartElement.getAttribute('data-y'), 10);
+
+            let targetX = parseInt(event.target.getAttribute('data-x'), 10);
+            let targetY = parseInt(event.target.getAttribute('data-y'), 10);
+
+            let minX = cellX < targetX ? cellX : targetX;
+            let maxX = cellX > targetX ? cellX : targetX;
+
+            let minY = cellY < targetY ? cellY : targetY;
+            let maxY = cellY > targetY ? cellY : targetY;
+
+            let cells = [];
+
+            for (let x = minX; x <= maxX; ++x)
+                for (let y = minY; y <= maxY; ++y)
+                    cells.push([ x, y ]);
+
+            store.dispatch({
+                type: ActionType.SET_SELECTED_CELLS,
+                id: this.props.id,
+                cells: cells
+            });
+
+            return;
+        }
+    }
+
+    onMouseUp(event)
+    {
+        this.mouseDown = false;
+        this.resizingColumn = false;
+        this.resizingRow = false;
     }
 }

@@ -8,7 +8,7 @@ export default class Row extends Component
 
         if (!this.props.empty)
         {
-            value = <div className="row-label" style={{ top: this.props.top + 'px', left: this.props.scroll + 'px' }}>{this.props.y + 1}</div>;
+            value = <div className="row-label" data-y={this.props.y} style={{ left: this.props.scroll + 'px' }}>{this.props.y + 1}</div>;
         }
 
         let className = 'row';
@@ -20,7 +20,7 @@ export default class Row extends Component
             className += ' selected';
 
         return (
-            <div className={className}>
+            <div className={className} style={{ height: this.props.size + 'px', lineHeight: this.props.size + 'px' }}>
                 {value}
                 {this.props.children}
             </div>

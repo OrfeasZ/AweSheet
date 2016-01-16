@@ -4,8 +4,7 @@ export default class Column extends Component
 {
     render()
     {
-        // TODO: Translate to letter.
-        let value = this.props.empty ? null : <span>{this.getColumnName()}</span>;
+        let value = this.props.empty ? null : this.getColumnName();
 
         let className = 'column';
 
@@ -17,6 +16,7 @@ export default class Column extends Component
 
         return (
             <div
+                data-x={!this.props.empty ? this.props.x : -1}
                 className={className}
                 style={{ width: this.props.size + 'px', left: this.props.left + 'px', top: this.props.scroll + 'px' }} >
                 {value}
