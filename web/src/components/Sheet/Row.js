@@ -4,9 +4,12 @@ export default class Row extends Component
 {
     render()
     {
-        let value = this.props.empty ?
-            null :
-            <td className="row-label">{this.props.y + 1}</td>;
+        let value = null;
+
+        if (!this.props.empty)
+        {
+            value = <div className="row-label" style={{ top: this.props.top + 'px', left: this.props.scroll + 'px' }}>{this.props.y + 1}</div>;
+        }
 
         let className = 'row';
 
@@ -17,10 +20,10 @@ export default class Row extends Component
             className += ' selected';
 
         return (
-            <tr className={className}>
+            <div className={className}>
                 {value}
                 {this.props.children}
-            </tr>
+            </div>
         );
     }
 }

@@ -60,8 +60,12 @@ store.dispatch({
 });
 
 store.dispatch({
-    type: ActionType.SET_SELECTED_CELL,
+    type: ActionType.SET_SELECTED_CELLS,
     id: 0,
-    x: 2,
-    y: 5
+    cells: [
+        [ 2, 5 ],
+        [ 2, 6 ],
+        [ 3, 5 ],
+        [ 3, 6 ]
+    ]
 });

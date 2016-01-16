@@ -2,7 +2,8 @@ import {
     SET_SHEET,
     REMOVE_SHEET,
     SET_ACTIVE_SHEET,
-    SET_SELECTED_CELL
+    SET_SELECTED_CELLS,
+    SET_EDITING_CELL
 } from '../constants/ActionTypes'
 
 const initialState = {
@@ -28,7 +29,8 @@ export default function team(state = initialState, action)
             if (!(action.sheet.id in finalState.sheetProps))
             {
                 finalState.sheetProps[action.sheet.id] = {
-                    selectedCell: [-1, -1]
+                    selectedCells: [],
+                    editingCell: null
                 };
             }
 
@@ -58,7 +60,7 @@ export default function team(state = initialState, action)
             };
         }
 
-        case SET_SELECTED_CELL:
+        case SET_SELECTED_CELLS:
         {
             let finalState = {
                 sheets: state.sheets,
@@ -67,7 +69,21 @@ export default function team(state = initialState, action)
             };
 
             if (action.id in finalState.sheetProps)
-                finalState.sheetProps[action.id].selectedCell = [ action.x, action.y ];
+                finalState.sheetProps[action.id].selectedCells = action.cells;
+
+            return finalState;
+        }
+
+        case SET_EDITING_CELL:
+        {
+            let finalState = {
+                sheets: state.sheets,
+                sheetProps: state.sheetProps,
+                activeSheet: state.activeSheet
+            };
+
+            if (action.id in finalState.sheetProps)
+                finalState.sheetProps[action.id].editingCell = action.cell;
 
             return finalState;
         }

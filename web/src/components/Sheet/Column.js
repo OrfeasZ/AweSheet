@@ -5,7 +5,7 @@ export default class Column extends Component
     render()
     {
         // TODO: Translate to letter.
-        let value = this.props.empty ? null : this.getColumnName();
+        let value = this.props.empty ? null : <span>{this.getColumnName()}</span>;
 
         let className = 'column';
 
@@ -16,9 +16,11 @@ export default class Column extends Component
             className += ' selected';
 
         return (
-            <th className={className}>
+            <div
+                className={className}
+                style={{ width: this.props.size + 'px', left: this.props.left + 'px', top: this.props.scroll + 'px' }} >
                 {value}
-            </th>
+            </div>
         );
     }
 
@@ -33,7 +35,7 @@ export default class Column extends Component
 
         var name = "";
 
-        while(x >= 0)
+        while (x >= 0)
         {
             name = String.fromCharCode(x % len + ordA) + name;
             x = Math.floor(x / len) - 1;
