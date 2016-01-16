@@ -12,22 +12,24 @@ export default class Grid extends Component
 
         const { maxColumn, maxRow } = this.props;
 
-        // Calculate required rows and columns based on window size.
-        let minRow = (window.innerHeight / 23) - 1;
-        let minColumn = (window.innerWidth / 70) + 1;
-
-        let rows = maxRow > minRow ? maxRow : minRow;
-        let columns = maxColumn > minColumn ? maxColumn : minColumn;
-
         this.state = {
             columnSizes: [],
             rowSizes: [],
             scrollLeft: 0,
-            scrollTop: 0
+            scrollTop: 0,
+            windowHeight: window.innerHeight,
+            windowWidth: window.innerWidth
         };
 
+        // Calculate required rows and columns based on window size.
+        let minRow = (this.state.windowHeight / 23) - 5;
+        let minColumn = (this.state.windowWidth / 100);
+
+        let rows = maxRow > minRow ? maxRow : minRow;
+        let columns = maxColumn > minColumn ? maxColumn : minColumn;
+
         for (let i = 0; i < columns; ++i)
-            this.state.columnSizes.push(70);
+            this.state.columnSizes.push(100);
 
         for (let i = 0; i < rows; ++i)
             this.state.rowSizes.push(24);
@@ -38,8 +40,8 @@ export default class Grid extends Component
         const { id, cells, maxRow, maxColumn, selectedCells, editingCell } = this.props;
 
         // Calculate required rows and columns based on window size.
-        let minRow = (window.innerHeight / 23) - 1;
-        let minColumn = (window.innerWidth / 70) + 1;
+        let minRow = (this.state.windowHeight / 23) - 5;
+        let minColumn = (this.state.windowWidth / 100);
 
         let rows = maxRow > minRow ? maxRow : minRow;
         let columns = maxColumn > minColumn ? maxColumn : minColumn;
@@ -47,12 +49,15 @@ export default class Grid extends Component
         let head = [];
         let body = [];
 
-        head.push(<Column key={-1} empty={true} left={this.state.scrollLeft} scroll={this.state.scrollTop} />);
+        // Add the first empty corner column.
+        head.push(<Column key={-1} empty={true} size={30} left={this.state.scrollLeft} scroll={this.state.scrollTop} />);
 
         let columnLeft = 30;
 
+        // Populate columns.
         for (let x = 0; x < columns; ++x)
         {
+            // Check if this column is selected.
             let selected = false;
 
             for (let selection of selectedCells)
@@ -73,6 +78,7 @@ export default class Grid extends Component
         {
             let rowCells = [];
 
+            // Check if this row is selected.
             let selectedRow = false;
 
             for (let selection of selectedCells)
@@ -87,6 +93,7 @@ export default class Grid extends Component
             // Populate cells.
             for (let x = 0; x < columns; ++x)
             {
+                // Check if this cell is selected.
                 let selected = false;
 
                 for (let selection of selectedCells)
@@ -121,11 +128,13 @@ export default class Grid extends Component
     componentDidMount()
     {
         this.refs.grid.addEventListener('scroll', (e) => this.onScroll(e));
+        window.addEventListener('resize', () => this.onResize());
     }
 
     componentWillUnmount()
     {
         this.refs.grid.removeEventListener('scroll', (e) => this.onScroll(e));
+        window.removeEventListener('resize', () => this.onResize());
     }
 
     onScroll(event)
@@ -133,6 +142,47 @@ export default class Grid extends Component
         this.setState({
             scrollLeft: this.refs.grid.scrollLeft,
             scrollTop: this.refs.grid.scrollTop
+        });
+    }
+
+    onResize()
+    {
+        const { maxColumn, maxRow } = this.props;
+
+        let rowSizes = this.state.rowSizes;
+        let columnSizes = this.state.columnSizes;
+
+        let minRow = (window.innerHeight / 23) - 5;
+        let minColumn = (window.innerWidth / 100);
+
+        let rows = maxRow > minRow ? maxRow : minRow;
+        let columns = maxColumn > minColumn ? maxColumn : minColumn;
+
+        if (rows > rowSizes.length)
+        {
+            for (let i = 0; i < rows - rowSizes.length; ++i)
+                rowSizes.push(24);
+        }
+        else if (rows < rowSizes.length)
+        {
+            rowSizes = rowSizes.slice(0, rows);
+        }
+
+        if (columns > columnSizes.length)
+        {
+            for (let i = 0; i < columns - columnSizes.length; ++i)
+                columnSizes.push(100);
+        }
+        else if (columns < columnSizes.length)
+        {
+            columnSizes = columnSizes.slice(0, columns);
+        }
+
+        this.setState({
+            windowHeight: window.innerHeight,
+            windowWidth: window.innerWidth,
+            rowSizes: rowSizes,
+            columnSizes: columnSizes
         });
     }
 }

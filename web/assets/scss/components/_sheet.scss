@@ -100,7 +100,6 @@
 
       .column {
         line-height: 24px;
-        width: 70px;
         height: 24px;
         text-align: center;
         text-transform: uppercase;
@@ -113,10 +112,6 @@
         position: absolute;
         left: 0;
         z-index: 3;
-
-        &:hover {
-          background: #c2dde0;
-        }
 
         &:after, &:before {
           content: "";
@@ -149,6 +144,7 @@
           border-bottom: 0;
           position: absolute;
           z-index: 4;
+          border-bottom: 1px solid rgba(171, 171, 171, 1.0);
 
           &:after {
             display: block;
@@ -158,6 +154,10 @@
         &.selected {
           background: #e1e1e1;
           border-bottom: 2px solid #3193c5;
+        }
+
+        &:hover {
+          background: #c2dde0;
         }
       }
 
