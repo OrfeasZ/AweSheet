@@ -4,7 +4,6 @@
   left: 0;
   right: 0;
   bottom: 0;
-  overflow: hidden;
 
   .sheet-container {
     width: 100%;
@@ -25,22 +24,101 @@
     left: 0;
     right: 0;
     bottom: 0;
-    overflow: hidden;
+    background: #f6f6f6;
+    border-top: 1px solid #ababab;
+    padding-left: 30px;
+    -webkit-user-select: none;
+
+    .create-sheet {
+      color: #777777;
+      width: 16px;
+      height: 16px;
+      line-height: 16px;
+      border: 1px solid #777;
+      border-radius: 100%;
+      font-size: 11px;
+      margin: 6px 0 6px 35px;
+
+      i {
+        position: relative;
+        top: 3px;
+      }
+
+      &:hover {
+        color: #3193c5;
+        border-color: #3193c5;
+      }
+    }
+
+    .tabs {
+      display: inline-block;
+      vertical-align: top;
+    }
 
     .tab {
+      position: relative;
       float: left;
-      border: 1px solid #000;
-      padding: 4px 8px;
+      border-left: 1px solid #ababab;
+      text-align: center;
+      width: 125px;
+      line-height: 22px;
+      height: 22px;
+      top: 4px;
+      cursor: default;
+
+      .close {
+        display: none;
+        position: absolute;
+        right: 8px;
+        top: 3px;
+        color: #A9A9A9;
+        font-weight: normal;
+        font-size: 10px;
+        width: 15px;
+        height: 15px;
+        line-height: 14px;
+        border-radius: 100%;
+
+        &:hover {
+          background: #E6E6E6;
+          color: #000;
+          border: 1px solid #BFBFBF;
+          width: 13px;
+          height: 13px;
+          line-height: 12px;
+        }
+      }
+
+      &:hover {
+        background: #fefefe;
+
+        .close {
+          display: block;
+        }
+      }
+
+      &:last-child {
+        border-right: 1px solid #ababab;
+      }
 
       &.active {
+        top: -1px;
+        left: 1px;
+        line-height: 22px;
+        height: 22px;
+        background: #fff;
+        border-bottom: 2px solid #3193c5;
+        border-right: 1px solid #ababab;
+        padding-top: 4px;
+        font-weight: bold;
+        color: #3193c5;
 
+        .close {
+          top: 7px;
+        }
       }
 
       .text {
-
-      }
-
-      .close {
 
       }
     }

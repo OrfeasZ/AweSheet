@@ -4,9 +4,24 @@ export default class ImageButton extends Component
 {
     render()
     {
+        let className = 'image-btn';
+
+        if (this.props.disabled)
+            className += ' disabled';
+
+        if (this.props.className)
+            className += ' ' + this.props.className;
+
         return (
-            <div>
+            <div className={className} onClick={(e) => this.onClick(e)}>
+                <i className={'fa fa-' + this.props.imageClass} />
             </div>
         );
+    }
+
+    onClick(e)
+    {
+        if (this.props.onClick)
+            this.props.onClick();
     }
 }

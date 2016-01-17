@@ -212,6 +212,10 @@ export default class Grid extends Component
 
     onMouseDown(event)
     {
+        // We only care about the left mouse button.
+        if (event.button != 0)
+            return;
+
         this.mouseStartCoords = [ event.pageX, event.pageY ];
         this.mouseStartElement = event.target;
         this.mouseDown = true;
@@ -383,6 +387,9 @@ export default class Grid extends Component
 
     onMouseUp(event)
     {
+        if (event.button != 0)
+            return;
+
         this.mouseDown = false;
         this.resizingColumn = false;
         this.resizingRow = false;
