@@ -2,6 +2,7 @@ package gr.uoi.cs.cs122250.managers;
 
 import gr.uoi.cs.cs122250.handlers.MenuHandler;
 import gr.uoi.cs.cs122250.interfaces.IMessageListener;
+import gr.uoi.cs.cs122250.messages.UIMessage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +23,7 @@ public class WindowManager implements IMessageListener {
     }
 
     protected WindowManager() {
+        UIMessageManager.getInstance().registerListener(this);
     }
 
     public void setMainFrame(JFrame frame) {

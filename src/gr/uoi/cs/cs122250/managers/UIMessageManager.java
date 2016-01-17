@@ -53,12 +53,14 @@ public class UIMessageManager {
     }
 
     public void onMessage(String message) {
-        String[] messageParts = message.split(",", 2);
+        // Separate message type and data.
+        String[] messageParts = message.split(";", 2);
 
         if (messageParts.length != 2) {
             return;
         }
 
+        // Deserialize the message.
         UIMessage deserializedMessage;
 
         try {
@@ -67,6 +69,7 @@ public class UIMessageManager {
             return;
         }
 
+        // And notify the listeners.
         for (IMessageListener listener : listeners) {
             listener.onMessage(deserializedMessage);
         }

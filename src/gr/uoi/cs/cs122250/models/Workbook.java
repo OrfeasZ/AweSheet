@@ -2,6 +2,8 @@ package gr.uoi.cs.cs122250.models;
 
 import gr.uoi.cs.cs122250.interfaces.IMessageListener;
 import gr.uoi.cs.cs122250.interfaces.ISerializable;
+import gr.uoi.cs.cs122250.managers.UIMessageManager;
+import gr.uoi.cs.cs122250.messages.UIMessage;
 
 import java.util.HashSet;
 
@@ -12,11 +14,15 @@ public class Workbook implements ISerializable, IMessageListener {
     Workbook(byte[] data, String path) {
         this.path = path;
 
+        UIMessageManager.getInstance().registerListener(this);
+
         // TODO: Parse workbook.
     }
 
     Workbook() {
         path = null;
+
+        UIMessageManager.getInstance().registerListener(this);
     }
 
     public String getPath() {

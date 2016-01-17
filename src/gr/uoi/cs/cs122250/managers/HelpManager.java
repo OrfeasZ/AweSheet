@@ -1,6 +1,7 @@
 package gr.uoi.cs.cs122250.managers;
 
 import gr.uoi.cs.cs122250.interfaces.IMessageListener;
+import gr.uoi.cs.cs122250.messages.UIMessage;
 import gr.uoi.cs.cs122250.models.HelpArticle;
 
 import java.util.HashSet;
@@ -20,6 +21,8 @@ public class HelpManager implements IMessageListener {
 
     protected HelpManager() {
         articles = new HashSet<HelpArticle>();
+
+        UIMessageManager.getInstance().registerListener(this);
     }
 
     public String getOnlineURL() {
