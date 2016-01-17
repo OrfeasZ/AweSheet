@@ -1,3 +1,5 @@
+import * as MessageType from '../constants/MessageTypes'
+
 export default class Utils
 {
     static getColumnName(x)
@@ -16,5 +18,45 @@ export default class Utils
         }
 
         return name.toUpperCase();
+    }
+
+    static dispatchMessage(type, data)
+    {
+        let message = {
+            ...data,
+            type: type
+        };
+
+        window.aweQuery({ request: this.getMessageClass(type) + ';' + JSON.stringify(message) });
+    }
+
+    static getMessageClass(type)
+    {
+        let className = '';
+
+        switch (type)
+        {
+            case MessageType.SET_CELL_VALUE:
+                className = 'SetCellValueMessage';
+                break;
+
+            case MessageType.CREATE_SHEET:
+                className = 'CreateSheetMessage';
+                break;
+
+            case MessageType.SELECT_SHEET:
+                className = 'SelectSheetMessage';
+                break;
+
+            case MessageType.DELETE_SHEET:
+                className = 'DeleteSheetMessage';
+                break;
+
+            default:
+                className = 'UIMessage';
+                break;
+        }
+
+        return 'com.awesheet.messages.' + className;
     }
 }

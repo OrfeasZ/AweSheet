@@ -1,9 +1,13 @@
 package com.awesheet.models;
 
+import com.awesheet.enums.UIMessageType;
 import com.awesheet.interfaces.IMessageListener;
 import com.awesheet.interfaces.ISerializable;
 import com.awesheet.managers.UIMessageManager;
+import com.awesheet.messages.DeleteSheetMessage;
+import com.awesheet.messages.SelectSheetMessage;
 import com.awesheet.messages.UIMessage;
+import com.sun.org.apache.bcel.internal.generic.Select;
 
 import java.util.HashSet;
 
@@ -11,7 +15,7 @@ public class Workbook implements ISerializable, IMessageListener {
     protected String path;
     protected HashSet<Sheet> sheets;
 
-    Workbook(byte[] data, String path) {
+    public Workbook(byte[] data, String path) {
         this.path = path;
 
         UIMessageManager.getInstance().registerListener(this);
@@ -19,7 +23,7 @@ public class Workbook implements ISerializable, IMessageListener {
         // TODO: Parse workbook.
     }
 
-    Workbook() {
+    public Workbook() {
         path = null;
 
         UIMessageManager.getInstance().registerListener(this);
@@ -64,6 +68,28 @@ public class Workbook implements ISerializable, IMessageListener {
 
     @Override
     public void onMessage(UIMessage message) {
+        switch (message.getType()) {
+            case UIMessageType.CREATE_SHEET: {
+                System.out.println("Creating sheet.");
+                // TODO: Create sheet.
+                break;
+            }
 
+            case UIMessageType.SELECT_SHEET: {
+                SelectSheetMessage uiMessage = (SelectSheetMessage) message;
+
+                System.out.println("Selecting sheet " + uiMessage.getSheet());
+
+                break;
+            }
+
+            case UIMessageType.DELETE_SHEET: {
+                DeleteSheetMessage uiMessage = (DeleteSheetMessage) message;
+
+                System.out.println("Deleting sheet " + uiMessage.getSheet());
+
+                break;
+            }
+        }
     }
 }

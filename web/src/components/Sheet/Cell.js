@@ -1,5 +1,9 @@
 import React, { Component, PropTypes } from 'react'
+
 import * as ActionType from '../../constants/ActionTypes'
+import * as MessageType from '../../constants/MessageTypes'
+
+import Utils from '../../util/Utils'
 
 export default class Cell extends Component
 {
@@ -75,7 +79,12 @@ export default class Cell extends Component
         // Save cell value changes.
         if (this.props.editing && !nextProps.editing)
         {
-            // TODO: Dispatch UI event.
+            Utils.dispatchMessage(MessageType.SET_CELL_VALUE, {
+                sheet: this.props.sheet,
+                cellX: this.props.x,
+                cellY: this.props.y,
+                value: this.refs.input.value
+            });
         }
     }
 
@@ -135,7 +144,12 @@ export default class Cell extends Component
         // Enter pressed; persist changes.
         if (event.keyCode == 13)
         {
-            // TODO: Dispatch UI event.
+            Utils.dispatchMessage(MessageType.SET_CELL_VALUE, {
+                sheet: this.props.sheet,
+                cellX: this.props.x,
+                cellY: this.props.y,
+                value: event.target.value
+            });
 
             store.dispatch({
                 type: ActionType.SET_EDITING_CELL,

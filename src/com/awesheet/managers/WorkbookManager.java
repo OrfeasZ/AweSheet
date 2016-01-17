@@ -1,5 +1,6 @@
 package com.awesheet.managers;
 
+import com.awesheet.enums.UIMessageType;
 import com.awesheet.interfaces.IMessageListener;
 import com.awesheet.messages.UIMessage;
 import com.awesheet.enums.OpenResult;
@@ -20,7 +21,7 @@ public class WorkbookManager implements IMessageListener {
     protected Workbook currentWorkbook;
 
     protected WorkbookManager() {
-        currentWorkbook = null;
+        currentWorkbook = new Workbook();
 
         UIMessageManager.getInstance().registerListener(this);
     }

@@ -1,5 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 
+import * as MessageType from '../constants/MessageTypes'
+
+import Utils from '../util/Utils'
+
 import SheetView from '../views/SheetView'
 
 import Tabs from '../components/Workbook/Tabs'
@@ -41,16 +45,20 @@ export default class WorkbookView extends Component
 
     onCreateSheet()
     {
-        // TODO: Dispatch UI event.
+        Utils.dispatchMessage(MessageType.CREATE_SHEET, {});
     }
 
     onSheetSelect(id)
     {
-        // TODO: Dispatch UI event.
+        Utils.dispatchMessage(MessageType.SELECT_SHEET, {
+            sheet: id
+        });
     }
 
     onSheetDelete(id)
     {
-        // TODO: Dispatch UI event.
+        Utils.dispatchMessage(MessageType.DELETE_SHEET, {
+            sheet: id
+        });
     }
 }
