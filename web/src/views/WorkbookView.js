@@ -21,7 +21,7 @@ export default class WorkbookView extends Component
         return (
             <div className="workbook-view">
                 <SheetView sheet={sheets[activeSheet]} sheetProps={sheetProps[activeSheet]} />
-                <Tabs>
+                <Tabs onCreateSheet={() => this.onCreateSheet()}>
                     {sheetKeys.map(function(value) {
                         let sheet = sheets[value];
 
@@ -39,13 +39,18 @@ export default class WorkbookView extends Component
         );
     }
 
+    onCreateSheet()
+    {
+        // TODO: Dispatch UI event.
+    }
+
     onSheetSelect(id)
     {
-        // TODO
+        // TODO: Dispatch UI event.
     }
 
     onSheetDelete(id)
     {
-        // TODO
+        // TODO: Dispatch UI event.
     }
 }

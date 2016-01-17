@@ -9,10 +9,15 @@ export default class Tab extends Component
         if (this.props.active)
             className += ' active';
 
+        let closeButton = null;
+
+        if (this.props.canDelete && !this.props.active)
+            closeButton = <span ref="close" className="close" onClick={(e) => this.onDelete(e)}>x</span>;
+
         return (
-            <div className={className}>
-                <span className="text" onClick={(e) => this.onClick(e)}>{this.props.text}</span>
-                <span className="close" onClick={(e) => this.onDelete(e)}>x</span>
+            <div className={className} onClick={(e) => this.onClick(e)}>
+                <span className="text">{this.props.text}</span>
+                {closeButton}
             </div>
         );
     }
@@ -20,6 +25,9 @@ export default class Tab extends Component
     onClick(e)
     {
         e.preventDefault();
+
+        if (e.target == this.refs.close)
+            return;
 
         if (this.props.active || !this.props.onClick)
             return;
