@@ -5,3 +5,4 @@ dist
 assets/css
 .idea
 .sass-cache
+static
