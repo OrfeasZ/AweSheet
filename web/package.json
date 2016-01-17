@@ -20,10 +20,15 @@
     "babel-preset-stage-0": "^6.3.13",
     "css-loader": "^0.23.1",
     "express": "^4.13.3",
+    "file-loader": "^0.8.5",
     "json-loader": "^0.5.4",
+    "node-sass": "^3.4.2",
     "redux-logger": "^2.3.1",
+    "sass-loader": "^3.1.2",
+    "style-loader": "^0.13.0",
     "webpack": "^1.12.10",
     "webpack-dev-middleware": "^1.4.0",
+    "webpack-dev-server": "^1.14.1",
     "webpack-hot-middleware": "^2.6.0"
   },
   "scripts": {

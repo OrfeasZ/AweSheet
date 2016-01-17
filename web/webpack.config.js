@@ -15,7 +15,16 @@ module.exports = {
             loaders: [ 'babel' ],
             exclude: /node_modules/,
             include: __dirname
-        }, {
+        },
+        {
+            test: /(\.scss|\.css)$/,
+            loaders: ['style', 'css', 'sass']
+        },
+        {
+            test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+            loader: 'file-loader'
+        },
+        {
             test: /\.json$/,
             loaders: [ 'json' ],
             exclude: /node_modules/,

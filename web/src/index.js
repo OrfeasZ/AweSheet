@@ -7,6 +7,8 @@ import thunk from 'redux-thunk'
 import reducer from './reducers'
 import App from './containers/App'
 
+import '../assets/scss/screen.scss'
+
 const store = createStore(reducer);
 
 render(
