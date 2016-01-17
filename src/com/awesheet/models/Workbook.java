@@ -32,7 +32,8 @@ public class Workbook implements ISerializable, IMessageListener, IDestructible 
         // Register ourselves to the message manager.
         UIMessageManager.getInstance().registerListener(this);
 
-        // TODO: Deserialize workbook.
+        if (deserialize(data))
+            valid = true;
     }
 
     public Workbook() {
@@ -43,7 +44,7 @@ public class Workbook implements ISerializable, IMessageListener, IDestructible 
         sheets = new HashMap<Integer, Sheet>();
 
         // Create an empty sheet.
-        addSheet(new Sheet("Sheet 1"));
+        addSheet(new Sheet(this, "Sheet 1"));
 
         // Register ourselves to the message manager.
         UIMessageManager.getInstance().registerListener(this);
@@ -141,7 +142,7 @@ public class Workbook implements ISerializable, IMessageListener, IDestructible 
     public void onMessage(UIMessage message) {
         switch (message.getType()) {
             case UIMessageType.CREATE_SHEET: {
-                addSheet(new Sheet("Sheet " + (newSheetID + 1)));
+                addSheet(new Sheet(this, "Sheet " + (newSheetID + 1)));
                 break;
             }
 
