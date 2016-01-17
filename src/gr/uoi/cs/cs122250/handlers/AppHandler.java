@@ -1,4 +1,3 @@
-
 package gr.uoi.cs.cs122250.handlers;
 
 import org.cef.CefApp;
