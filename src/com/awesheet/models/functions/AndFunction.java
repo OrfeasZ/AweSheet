@@ -3,22 +3,40 @@ package com.awesheet.models.functions;
 import com.awesheet.enums.FunctionType;
 import com.awesheet.models.DataFunction;
 import com.awesheet.models.FunctionArgument;
+import com.awesheet.util.Utils;
 
 public class AndFunction extends DataFunction {
-    AndFunction(FunctionArgument[] arguments){
-        super(FunctionType.AND_FUNCTION_TYPE, arguments);
+    public static String getName() {
+        return "and";
+    }
+
+    AndFunction(){
+        super(FunctionType.AND_FUNCTION_TYPE);
     }
 
     @Override
-    public String getDisplayValue() {
-        return null;
-    }
+    public boolean parse() {
+        if (arguments.size() != 2) {
+            return false;
+        }
 
-    @Override
-    public String getValue() {return null;}
+        boolean parsedValue1;
+        boolean parsedValue2;
 
-    @Override
-    public boolean isValid() {
-        return false;
+        try {
+            parsedValue1 = Utils.parseBool(arguments.get(0).getValue());
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        try {
+            parsedValue2 = Utils.parseBool(arguments.get(1).getValue());
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        internalValue = (parsedValue1 & parsedValue2) ? "true" : "false";
+
+        return true;
     }
 }

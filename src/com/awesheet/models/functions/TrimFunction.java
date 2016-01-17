@@ -5,20 +5,22 @@ import com.awesheet.models.FunctionArgument;
 import com.awesheet.enums.FunctionType;
 
 public class TrimFunction extends DataFunction {
-    TrimFunction(FunctionArgument[] arguments){
-        super(FunctionType.TRIM_FUNCTION_TYPE, arguments);
+    public static String getName() {
+        return "trim";
+    }
+
+    TrimFunction(){
+        super(FunctionType.TRIM_FUNCTION_TYPE);
     }
 
     @Override
-    public String getDisplayValue() {
-        return null;
-    }
+    public boolean parse() {
+        if (arguments.size() != 1) {
+            return false;
+        }
 
-    @Override
-    public String getValue() {return null;}
+        internalValue = arguments.get(0).getValue().trim();
 
-    @Override
-    public boolean isValid() {
-        return false;
+        return true;
     }
 }

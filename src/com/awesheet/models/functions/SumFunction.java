@@ -5,20 +5,36 @@ import com.awesheet.models.FunctionArgument;
 import com.awesheet.enums.FunctionType;
 
 public class SumFunction extends DataFunction {
-    SumFunction(FunctionArgument[] arguments){
-        super(FunctionType.SUM_FUNCTION_TYPE, arguments);
+    public static String getName() {
+        return "sum";
+    }
+
+    SumFunction(){
+        super(FunctionType.SUM_FUNCTION_TYPE);
     }
 
     @Override
-    public String getDisplayValue() {
-        return null;
-    }
+    public boolean parse() {
+        if (arguments.size() == 0) {
+            return false;
+        }
 
-    @Override
-    public String getValue() {return null;}
+        double sum = 0.0;
 
-    @Override
-    public boolean isValid() {
-        return false;
+        for (FunctionArgument argument : arguments) {
+            double parsedValue;
+
+            try {
+                parsedValue = Double.parseDouble(argument.getValue().trim());
+            } catch (NumberFormatException e) {
+                return false;
+            }
+
+            sum += parsedValue;
+        }
+
+        internalValue = Double.toString(sum);
+
+        return true;
     }
 }

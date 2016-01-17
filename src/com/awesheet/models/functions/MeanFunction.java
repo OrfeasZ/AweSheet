@@ -5,20 +5,32 @@ import com.awesheet.models.FunctionArgument;
 import com.awesheet.enums.FunctionType;
 
 public class MeanFunction extends DataFunction {
-    MeanFunction(FunctionArgument[] arguments){
-        super(FunctionType.MEAN_FUNCTION_TYPE, arguments);
+    public static String getName() {
+        return "mean";
+    }
+
+    MeanFunction(){
+        super(FunctionType.MEAN_FUNCTION_TYPE);
     }
 
     @Override
-    public String getDisplayValue() {
-        return null;
-    }
+    public boolean parse() {
+        if (arguments.size() == 0) {
+            return false;
+        }
 
-    @Override
-    public String getValue() {return null;}
+        double sum = 0.0;
 
-    @Override
-    public boolean isValid() {
-        return false;
+        for (FunctionArgument argument : arguments) {
+            try {
+                sum += Double.parseDouble(argument.getValue().trim());
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+
+        internalValue = Double.toString(sum / (double) arguments.size());
+
+        return true;
     }
 }

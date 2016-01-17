@@ -4,21 +4,47 @@ import com.awesheet.models.DataFunction;
 import com.awesheet.models.FunctionArgument;
 import com.awesheet.enums.FunctionType;
 
+import java.util.List;
+
 public class MaxFunction extends DataFunction {
-    MaxFunction(FunctionArgument[] arguments){
-        super(FunctionType.MAX_FUNCTION_TYPE, arguments);
+    public static String getName() {
+        return "max";
+    }
+
+    MaxFunction(){
+        super(FunctionType.MAX_FUNCTION_TYPE);
     }
 
     @Override
-    public String getDisplayValue() {
-        return null;
-    }
+    public boolean parse() {
+        if (arguments.size() == 0) {
+            return false;
+        }
 
-    @Override
-    public String getValue() {return null;}
+        double max = 0.0;
+        boolean hasMax = false;
 
-    @Override
-    public boolean isValid() {
-        return false;
+        for (FunctionArgument argument : arguments) {
+            double parsedValue;
+
+            try {
+                parsedValue = Double.parseDouble(argument.getValue().trim());
+            } catch (NumberFormatException e) {
+                return false;
+            }
+
+            if (!hasMax) {
+                hasMax = true;
+                max = parsedValue;
+            }
+
+            if (parsedValue > max) {
+                max = parsedValue;
+            }
+        }
+
+        internalValue = Double.toString(max);
+
+        return true;
     }
 }

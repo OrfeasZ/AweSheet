@@ -1,31 +1,37 @@
 package com.awesheet.models;
 
-import com.awesheet.enums.FunctionType;
+import java.util.ArrayList;
 
 public abstract class DataFunction {
     protected int type;
-    protected FunctionArgument[] arguments;
+    protected ArrayList<FunctionArgument> arguments;
+    protected String internalValue;
 
-    protected DataFunction(int type, FunctionArgument[] arguments){
+    protected DataFunction(int type){
         this.type = type;
-        this.arguments = arguments;
+        arguments = new ArrayList<FunctionArgument>();
+        internalValue = "";
     }
 
     public int getType() {
         return type;
     }
 
-    public FunctionArgument[] getArguments() {
+    public ArrayList<FunctionArgument> getArguments() {
         return arguments;
     }
 
     public FunctionArgument getArgument(int index) {
-        return arguments[index];
+        return arguments.get(index);
     }
 
-    public abstract String getDisplayValue();
+    public void addArgument(FunctionArgument argument) {
+        arguments.add(argument);
+    }
 
-    public abstract String getValue();
+    public String getDisplayValue() {
+        return internalValue;
+    }
 
-    public abstract boolean isValid();
+    public abstract boolean parse();
 }

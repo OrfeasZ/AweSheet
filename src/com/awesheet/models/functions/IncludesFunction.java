@@ -5,20 +5,29 @@ import com.awesheet.models.FunctionArgument;
 import com.awesheet.enums.FunctionType;
 
 public class IncludesFunction extends DataFunction {
-    IncludesFunction(FunctionArgument[] arguments){
-        super(FunctionType.INCLUDES_FUNCTION_TYPE, arguments);
+    public static String getName() {
+        return "includes";
+    }
+
+    IncludesFunction(){
+        super(FunctionType.INCLUDES_FUNCTION_TYPE);
     }
 
     @Override
-    public String getDisplayValue() {
-        return null;
-    }
+    public boolean parse() {
+        if (arguments.size() != 2) {
+            return false;
+        }
 
-    @Override
-    public String getValue() {return null;}
+        String argument1Value = arguments.get(0).getValue();
+        String argument2Value = arguments.get(1).getValue();
 
-    @Override
-    public boolean isValid() {
-        return false;
+        if (argument1Value.length() == 0 || argument2Value.length() == 0) {
+            return false;
+        }
+
+        internalValue = argument1Value.contains(argument2Value) ? "true" : "false";
+
+        return true;
     }
 }

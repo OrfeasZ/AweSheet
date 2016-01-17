@@ -1,7 +1,5 @@
 package com.awesheet.models;
 
-import com.awesheet.enums.FunctionArgumentType;
-
 public abstract class FunctionArgument {
     protected int type;
     protected String value;
@@ -11,6 +9,5 @@ public abstract class FunctionArgument {
         this.value = value;
     }
 
-    public abstract String getDisplayValue();
     public abstract String getValue();
 }

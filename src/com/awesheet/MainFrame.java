@@ -56,6 +56,7 @@ public class MainFrame extends JFrame {
         FileManager.getInstance();
         HelpManager.getInstance();
         WindowManager.getInstance();
+        FunctionManager.getInstance();
         WorkbookManager.getInstance();
 
         // Set manager properties and perform post-initialization.

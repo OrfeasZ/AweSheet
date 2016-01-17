@@ -5,20 +5,44 @@ import com.awesheet.models.DataFunction;
 import com.awesheet.enums.FunctionType;
 
 public class MinFunction extends DataFunction {
-    MinFunction(FunctionArgument[] arguments){
-        super(FunctionType.MIN_FUNCTION_TYPE, arguments);
+    public static String getName() {
+        return "min";
+    }
+
+    MinFunction(){
+        super(FunctionType.MIN_FUNCTION_TYPE);
     }
 
     @Override
-    public String getDisplayValue() {
-        return null;
-    }
+    public boolean parse() {
+        if (arguments.size() == 0) {
+            return false;
+        }
 
-    @Override
-    public String getValue() {return null;}
+        double min = 0.0;
+        boolean hasMin = false;
 
-    @Override
-    public boolean isValid() {
-        return false;
+        for (FunctionArgument argument : arguments) {
+            double parsedValue;
+
+            try {
+                parsedValue = Double.parseDouble(argument.getValue().trim());
+            } catch (NumberFormatException e) {
+                return false;
+            }
+
+            if (!hasMin) {
+                hasMin = true;
+                min = parsedValue;
+            }
+
+            if (parsedValue < min) {
+                min = parsedValue;
+            }
+        }
+
+        internalValue = Double.toString(min);
+
+        return true;
     }
 }
