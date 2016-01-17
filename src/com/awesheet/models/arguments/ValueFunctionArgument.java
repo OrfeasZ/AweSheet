@@ -12,4 +12,9 @@ public class ValueFunctionArgument extends FunctionArgument {
     public String getValue() {
         return value;
     }
+
+    @Override
+    public boolean isValid() {
+        return true;
+    }
 }

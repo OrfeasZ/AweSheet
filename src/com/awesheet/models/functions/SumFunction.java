@@ -9,7 +9,7 @@ public class SumFunction extends DataFunction {
         return "sum";
     }
 
-    SumFunction(){
+    public SumFunction(){
         super(FunctionType.SUM_FUNCTION_TYPE);
     }
 

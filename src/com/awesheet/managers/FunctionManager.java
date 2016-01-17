@@ -4,6 +4,7 @@ import com.awesheet.grammar.AweFuncLexer;
 import com.awesheet.grammar.AweFuncParser;
 import com.awesheet.grammar.AweVisitor;
 import com.awesheet.models.DataFunction;
+import com.awesheet.models.Sheet;
 import com.awesheet.models.functions.*;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -36,50 +37,52 @@ public class FunctionManager {
 
     public void registerBuiltins() {
         registerFunction(AbsFunction.getName(), AbsFunction.class);
-        registerFunction(AndFunction.getName(), AbsFunction.class);
-        registerFunction(ConcatFunction.getName(), AbsFunction.class);
-        registerFunction(CosFunction.getName(), AbsFunction.class);
-        registerFunction(IncludesFunction.getName(), AbsFunction.class);
-        registerFunction(Log10Function.getName(), AbsFunction.class);
-        registerFunction(LogFunction.getName(), AbsFunction.class);
-        registerFunction(MaxFunction.getName(), AbsFunction.class);
-        registerFunction(MeanFunction.getName(), AbsFunction.class);
-        registerFunction(MedianFunction.getName(), AbsFunction.class);
-        registerFunction(MinFunction.getName(), AbsFunction.class);
-        registerFunction(MultFunction.getName(), AbsFunction.class);
-        registerFunction(NotFunction.getName(), AbsFunction.class);
-        registerFunction(OrFunction.getName(), AbsFunction.class);
-        registerFunction(PowFunction.getName(), AbsFunction.class);
-        registerFunction(RemoveFunction.getName(), AbsFunction.class);
-        registerFunction(SinFunction.getName(), AbsFunction.class);
-        registerFunction(StddevFunction.getName(), AbsFunction.class);
-        registerFunction(SumFunction.getName(), AbsFunction.class);
-        registerFunction(TanFunction.getName(), AbsFunction.class);
-        registerFunction(TrimFunction.getName(), AbsFunction.class);
-        registerFunction(XorFunction.getName(), AbsFunction.class);
+        registerFunction(AndFunction.getName(), AndFunction.class);
+        registerFunction(ConcatFunction.getName(), ConcatFunction.class);
+        registerFunction(CosFunction.getName(), CosFunction.class);
+        registerFunction(IncludesFunction.getName(), IncludesFunction.class);
+        registerFunction(Log10Function.getName(), Log10Function.class);
+        registerFunction(LogFunction.getName(), LogFunction.class);
+        registerFunction(MaxFunction.getName(), MaxFunction.class);
+        registerFunction(MeanFunction.getName(), MeanFunction.class);
+        registerFunction(MedianFunction.getName(), MedianFunction.class);
+        registerFunction(MinFunction.getName(), MinFunction.class);
+        registerFunction(MultFunction.getName(), MultFunction.class);
+        registerFunction(NotFunction.getName(), NotFunction.class);
+        registerFunction(OrFunction.getName(), OrFunction.class);
+        registerFunction(PowFunction.getName(), PowFunction.class);
+        registerFunction(RemoveFunction.getName(), RemoveFunction.class);
+        registerFunction(SinFunction.getName(), SinFunction.class);
+        registerFunction(StddevFunction.getName(), StddevFunction.class);
+        registerFunction(SumFunction.getName(), SumFunction.class);
+        registerFunction(TanFunction.getName(), TanFunction.class);
+        registerFunction(TrimFunction.getName(), TrimFunction.class);
+        registerFunction(XorFunction.getName(), XorFunction.class);
     }
 
-    public DataFunction parseFunction(String value) {
-        ANTLRInputStream inputStream = new ANTLRInputStream(value);
-
-        AweFuncLexer lexer = new AweFuncLexer(inputStream);
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-
-        AweFuncParser parser = new AweFuncParser(tokens);
-        AweFuncParser.AweContext tree = parser.awe();
-
+    public DataFunction parseFunction(String value, Sheet sheet) {
         try {
-            AweVisitor visitor = new AweVisitor();
+            ANTLRInputStream inputStream = new ANTLRInputStream(value);
+
+            AweFuncLexer lexer = new AweFuncLexer(inputStream);
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+
+            AweFuncParser parser = new AweFuncParser(tokens);
+            AweFuncParser.AweFunctionContext tree = parser.aweFunction();
+
+            AweVisitor visitor = new AweVisitor(sheet);
             visitor.visit(tree);
 
             DataFunction function = visitor.getBaseFunction();
 
-            if (function.parse()) {
+            if (!function.parse()) {
                 return null;
             }
 
             return function;
         } catch (RuntimeException e) {
+            return null;
+        } catch (Exception e) {
             return null;
         }
     }

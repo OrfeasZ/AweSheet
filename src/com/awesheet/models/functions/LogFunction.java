@@ -8,7 +8,7 @@ public class LogFunction extends DataFunction {
         return "log";
     }
 
-    LogFunction(){
+    public LogFunction(){
         super(FunctionType.LOG_FUNCTION_TYPE);
     }
 

@@ -1,4 +1,4 @@
-// Generated from AweFunc.g4 by ANTLR 4.5.1
+// Generated from AweFuncParser.g4 by ANTLR 4.5.1
  package com.awesheet.grammar; 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -6,17 +6,7 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  * This interface defines a complete listener for a parse tree produced by
  * {@link AweFuncParser}.
  */
-public interface AweFuncListener extends ParseTreeListener {
-	/**
-	 * Enter a parse tree produced by {@link AweFuncParser#awe}.
-	 * @param ctx the parse tree
-	 */
-	void enterAwe(AweFuncParser.AweContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link AweFuncParser#awe}.
-	 * @param ctx the parse tree
-	 */
-	void exitAwe(AweFuncParser.AweContext ctx);
+public interface AweFuncParserListener extends ParseTreeListener {
 	/**
 	 * Enter a parse tree produced by {@link AweFuncParser#aweFunction}.
 	 * @param ctx the parse tree

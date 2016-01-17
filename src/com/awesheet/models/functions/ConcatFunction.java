@@ -9,7 +9,7 @@ public class ConcatFunction extends DataFunction {
         return "concat";
     }
 
-    ConcatFunction(){
+    public ConcatFunction(){
         super(FunctionType.CONCAT_FUNCTION_TYPE);
     }
 

@@ -8,7 +8,7 @@ public class CosFunction extends DataFunction {
         return "cos";
     }
 
-    CosFunction(){
+    public CosFunction(){
         super(FunctionType.COS_FUNCTION_TYPE);
     }
 

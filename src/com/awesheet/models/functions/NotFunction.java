@@ -10,7 +10,7 @@ public class NotFunction extends DataFunction {
         return "not";
     }
 
-    NotFunction(){
+    public NotFunction(){
         super(FunctionType.NOT_FUNCTION_TYPE);
     }
 

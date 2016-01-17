@@ -10,7 +10,7 @@ public class AndFunction extends DataFunction {
         return "and";
     }
 
-    AndFunction(){
+    public AndFunction(){
         super(FunctionType.AND_FUNCTION_TYPE);
     }
 

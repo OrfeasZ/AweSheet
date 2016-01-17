@@ -14,7 +14,7 @@ public class StddevFunction extends DataFunction {
         return "stddev";
     }
 
-    StddevFunction(){
+    public StddevFunction(){
         super(FunctionType.STDDEV_FUNCTION_TYPE);
     }
 

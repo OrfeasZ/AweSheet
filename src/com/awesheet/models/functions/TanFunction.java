@@ -8,7 +8,7 @@ public class TanFunction extends DataFunction {
         return "tan";
     }
 
-    TanFunction(){
+    public TanFunction(){
         super(FunctionType.TAN_FUNCTION_TYPE);
     }
 

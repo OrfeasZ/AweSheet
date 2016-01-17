@@ -9,7 +9,7 @@ public class MultFunction extends DataFunction {
         return "mult";
     }
 
-    MultFunction(){
+    public MultFunction(){
         super(FunctionType.MULT_FUNCTION_TYPE);
     }
 

@@ -8,7 +8,7 @@ public class PowFunction extends DataFunction {
         return "pow";
     }
 
-    PowFunction(){
+    public PowFunction(){
         super(FunctionType.POW_FUNCTION_TYPE);
     }
 

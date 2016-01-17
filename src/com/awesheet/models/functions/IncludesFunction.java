@@ -9,7 +9,7 @@ public class IncludesFunction extends DataFunction {
         return "includes";
     }
 
-    IncludesFunction(){
+    public IncludesFunction(){
         super(FunctionType.INCLUDES_FUNCTION_TYPE);
     }
 

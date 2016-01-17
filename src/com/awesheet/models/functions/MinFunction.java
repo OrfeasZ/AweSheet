@@ -9,7 +9,7 @@ public class MinFunction extends DataFunction {
         return "min";
     }
 
-    MinFunction(){
+    public MinFunction(){
         super(FunctionType.MIN_FUNCTION_TYPE);
     }
 

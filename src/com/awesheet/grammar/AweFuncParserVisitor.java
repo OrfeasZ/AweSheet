@@ -1,4 +1,4 @@
-// Generated from AweFunc.g4 by ANTLR 4.5.1
+// Generated from AweFuncParser.g4 by ANTLR 4.5.1
  package com.awesheet.grammar; 
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -9,13 +9,7 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  * @param <T> The return type of the visit operation. Use {@link Void} for
  * operations with no return type.
  */
-public interface AweFuncVisitor<T> extends ParseTreeVisitor<T> {
-	/**
-	 * Visit a parse tree produced by {@link AweFuncParser#awe}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAwe(AweFuncParser.AweContext ctx);
+public interface AweFuncParserVisitor<T> extends ParseTreeVisitor<T> {
 	/**
 	 * Visit a parse tree produced by {@link AweFuncParser#aweFunction}.
 	 * @param ctx the parse tree

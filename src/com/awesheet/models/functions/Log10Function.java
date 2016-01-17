@@ -8,7 +8,7 @@ public class Log10Function extends DataFunction {
         return "log10";
     }
 
-    Log10Function(){
+    public Log10Function(){
         super(FunctionType.LOG_10_FUNCTION_TYPE);
     }
 

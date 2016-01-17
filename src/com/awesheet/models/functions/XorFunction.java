@@ -10,7 +10,7 @@ public class XorFunction extends DataFunction {
         return "xor";
     }
 
-    XorFunction(){
+    public XorFunction(){
         super(FunctionType.XOR_FUNCTION_TYPE);
     }
 

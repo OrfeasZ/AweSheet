@@ -8,7 +8,7 @@ public class SinFunction extends DataFunction {
         return "sin";
     }
 
-    SinFunction(){
+    public SinFunction(){
         super(FunctionType.SIN_FUNCTION_TYPE);
     }
 

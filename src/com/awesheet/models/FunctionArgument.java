@@ -10,4 +10,6 @@ public abstract class FunctionArgument {
     }
 
     public abstract String getValue();
+
+    public abstract boolean isValid();
 }

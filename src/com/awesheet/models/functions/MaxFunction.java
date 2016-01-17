@@ -11,7 +11,7 @@ public class MaxFunction extends DataFunction {
         return "max";
     }
 
-    MaxFunction(){
+    public MaxFunction(){
         super(FunctionType.MAX_FUNCTION_TYPE);
     }
 

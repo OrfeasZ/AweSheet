@@ -12,7 +12,7 @@ public class MedianFunction extends DataFunction {
         return "median";
     }
 
-    MedianFunction(){
+    public MedianFunction(){
         super(FunctionType.MEDIAN_FUNCTION_TYPE);
     }
 

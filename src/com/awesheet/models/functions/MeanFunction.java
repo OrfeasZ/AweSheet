@@ -9,7 +9,7 @@ public class MeanFunction extends DataFunction {
         return "mean";
     }
 
-    MeanFunction(){
+    public MeanFunction(){
         super(FunctionType.MEAN_FUNCTION_TYPE);
     }
 

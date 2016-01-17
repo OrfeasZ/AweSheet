@@ -9,7 +9,7 @@ public class TrimFunction extends DataFunction {
         return "trim";
     }
 
-    TrimFunction(){
+    public TrimFunction(){
         super(FunctionType.TRIM_FUNCTION_TYPE);
     }
 

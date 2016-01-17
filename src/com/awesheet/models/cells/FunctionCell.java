@@ -11,7 +11,7 @@ public class FunctionCell extends Cell {
 
     public FunctionCell(int x, int y, String value, Sheet sheet) {
         super(CellType.FUNCTION_CELL_TYPE, x, y, value, sheet);
-        internalFunction = FunctionManager.getInstance().parseFunction(value);
+        internalFunction = FunctionManager.getInstance().parseFunction(value, sheet);
     }
 
     @Override

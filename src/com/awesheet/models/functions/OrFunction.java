@@ -10,7 +10,7 @@ public class OrFunction extends DataFunction {
         return "or";
     }
 
-    OrFunction(){
+    public OrFunction(){
         super(FunctionType.OR_FUNCTION_TYPE);
     }
 

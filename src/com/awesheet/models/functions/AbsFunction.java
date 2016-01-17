@@ -8,7 +8,7 @@ public class AbsFunction extends DataFunction {
         return "abs";
     }
 
-    AbsFunction(){
+    public AbsFunction(){
         super(FunctionType.ABS_FUNCTION_TYPE);
     }
 

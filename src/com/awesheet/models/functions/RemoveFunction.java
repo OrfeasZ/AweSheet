@@ -9,7 +9,7 @@ public class RemoveFunction extends DataFunction {
         return "remove";
     }
 
-    RemoveFunction(){
+    public RemoveFunction(){
         super(FunctionType.REMOVE_FUNCTION_TYPE);
     }
 
