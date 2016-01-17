@@ -6,22 +6,32 @@ import gr.uoi.cs.cs122250.interfaces.IMessageListener;
 import gr.uoi.cs.cs122250.models.Workbook;
 
 public class WorkbookManager implements IMessageListener {
+    private static WorkbookManager instance = null;
+
+    public static WorkbookManager getInstance() {
+        if (instance == null) {
+            instance = new WorkbookManager();
+        }
+
+        return instance;
+    }
+
     protected Workbook currentWorkbook;
 
-    WorkbookManager() {
-        this.currentWorkbook = null;
+    protected WorkbookManager() {
+        currentWorkbook = null;
     }
 
     public SaveResult saveWorkbook() {
-        return SaveResult.AcessError;
+        return SaveResult.ACCESS_ERROR;
     }
 
     public OpenResult openWorkbook(String path) {
-        return OpenResult.AccessError;
+        return OpenResult.ACCESS_ERROR;
     }
 
     public Workbook getCurrentWorkbook() {
-        return this.currentWorkbook;
+        return currentWorkbook;
     }
 
     public void createWorkbook() {
@@ -29,7 +39,7 @@ public class WorkbookManager implements IMessageListener {
     }
 
     @Override
-    public void onMessage(String message, Object data) {
+    public void onMessage(UIMessage message) {
 
     }
 }

@@ -13,15 +13,15 @@ public abstract class DataFunction {
     }
 
     public FunctionType getType() {
-        return this.type;
+        return type;
     }
 
     public FunctionArgument[] getArguments() {
-        return this.arguments;
+        return arguments;
     }
 
     public FunctionArgument getArgument(int index) {
-        return this.arguments[index];
+        return arguments[index];
     }
 
     public abstract String getDisplayValue();

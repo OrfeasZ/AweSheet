@@ -16,15 +16,15 @@ public class Workbook implements ISerializable, IMessageListener {
     }
 
     Workbook() {
-        this.path = null;
+        path = null;
     }
 
     public String getPath() {
-        return this.path;
+        return path;
     }
 
     public HashSet<Sheet> getSheets() {
-        return this.sheets;
+        return sheets;
     }
 
     public void addSheet(Sheet sheet) {
@@ -57,7 +57,7 @@ public class Workbook implements ISerializable, IMessageListener {
     }
 
     @Override
-    public void onMessage(String message, Object data) {
+    public void onMessage(UIMessage message) {
 
     }
 }

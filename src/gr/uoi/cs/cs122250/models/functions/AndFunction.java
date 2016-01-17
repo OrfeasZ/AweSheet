@@ -6,7 +6,7 @@ import gr.uoi.cs.cs122250.enums.FunctionType;
 
 public class AndFunction extends DataFunction {
     AndFunction(FunctionArgument[] arguments){
-        super(FunctionType.AndFunctionType, arguments);
+        super(FunctionType.AND_FUNCTION_TYPE, arguments);
     }
 
     @Override

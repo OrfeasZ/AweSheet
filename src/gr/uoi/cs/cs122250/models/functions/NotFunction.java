@@ -6,7 +6,7 @@ import gr.uoi.cs.cs122250.enums.FunctionType;
 
 public class NotFunction extends DataFunction {
     NotFunction(FunctionArgument[] arguments){
-        super(FunctionType.NotFunctionType, arguments);
+        super(FunctionType.NOT_FUNCTION_TYPE, arguments);
     }
 
     @Override

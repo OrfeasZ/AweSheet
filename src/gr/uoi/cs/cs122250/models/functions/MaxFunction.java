@@ -6,7 +6,7 @@ import gr.uoi.cs.cs122250.enums.FunctionType;
 
 public class MaxFunction extends DataFunction {
     MaxFunction(FunctionArgument[] arguments){
-        super(FunctionType.MaxFunctionType, arguments);
+        super(FunctionType.MAX_FUNCTION_TYPE, arguments);
     }
 
     @Override

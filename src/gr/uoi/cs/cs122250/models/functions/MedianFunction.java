@@ -6,7 +6,7 @@ import gr.uoi.cs.cs122250.enums.FunctionType;
 
 public class MedianFunction extends DataFunction {
     MedianFunction(FunctionArgument[] arguments){
-        super(FunctionType.MedianFunctionType, arguments);
+        super(FunctionType.MEDIAN_FUNCTION_TYPE, arguments);
     }
 
     @Override

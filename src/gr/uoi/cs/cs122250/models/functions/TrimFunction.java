@@ -6,7 +6,7 @@ import gr.uoi.cs.cs122250.enums.FunctionType;
 
 public class TrimFunction extends DataFunction {
     TrimFunction(FunctionArgument[] arguments){
-        super(FunctionType.TrimFunctionType, arguments);
+        super(FunctionType.TRIM_FUNCTION_TYPE, arguments);
     }
 
     @Override

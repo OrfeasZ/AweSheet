@@ -6,11 +6,20 @@ import gr.uoi.cs.cs122250.models.HelpArticle;
 import java.util.HashSet;
 
 public class HelpManager implements IMessageListener {
+    private static HelpManager instance = null;
 
     protected HashSet<HelpArticle> articles;
 
-    HelpManager() {
-        this.articles = new HashSet<HelpArticle>();
+    public static HelpManager getInstance() {
+        if (instance == null) {
+            instance = new HelpManager();
+        }
+
+        return instance;
+    }
+
+    protected HelpManager() {
+        articles = new HashSet<HelpArticle>();
     }
 
     public String getOnlineURL() {
@@ -18,7 +27,7 @@ public class HelpManager implements IMessageListener {
     }
 
     public HashSet<HelpArticle> getHelpArticles() {
-        return this.articles;
+        return articles;
     }
 
     public HelpArticle getHelpArticle(int id) {
@@ -26,7 +35,7 @@ public class HelpManager implements IMessageListener {
     }
 
     @Override
-    public void onMessage(String message, Object data) {
+    public void onMessage(UIMessage message) {
 
     }
 }

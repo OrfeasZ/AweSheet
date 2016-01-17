@@ -6,7 +6,7 @@ import gr.uoi.cs.cs122250.enums.FunctionType;
 
 public class MeanFunction extends DataFunction {
     MeanFunction(FunctionArgument[] arguments){
-        super(FunctionType.MeanFunctionType, arguments);
+        super(FunctionType.MEAN_FUNCTION_TYPE, arguments);
     }
 
     @Override

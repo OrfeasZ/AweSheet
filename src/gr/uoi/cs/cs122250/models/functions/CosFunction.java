@@ -6,7 +6,7 @@ import gr.uoi.cs.cs122250.enums.FunctionType;
 
 public class CosFunction extends DataFunction {
     CosFunction(FunctionArgument[] arguments){
-        super(FunctionType.CosFunctionType, arguments);
+        super(FunctionType.COS_FUNCTION_TYPE, arguments);
     }
 
     @Override

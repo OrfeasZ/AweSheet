@@ -11,15 +11,15 @@ public class Sheet {
 
     public Sheet(String name) {
         this.name = name;
-        this.cells = new HashSet<Cell>();
+        cells = new HashSet<Cell>();
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        name = name;
     }
 
     public Cell getCell(int x, int y) {
@@ -31,14 +31,14 @@ public class Sheet {
     }
 
     public int getID() {
-        return this.id;
+        return id;
     }
 
     public int getMaxColumnt() {
-        return this.maxColumn;
+        return maxColumn;
     }
 
     public int getMaxRow() {
-        return this.maxRow;
+        return maxRow;
     }
 }

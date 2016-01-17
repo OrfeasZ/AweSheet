@@ -16,19 +16,19 @@ public abstract class Cell {
     }
 
     public int getX() {
-        return this.x;
+        return x;
     }
 
     public int getY() {
-        return this.y;
+        return y;
     }
 
     public CellType getType() {
-        return this.type;
+        return type;
     }
 
     public String getValue() {
-        return this.value;
+        return value;
     }
 
     public abstract String getDisplayValue();

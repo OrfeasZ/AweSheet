@@ -6,7 +6,7 @@ import gr.uoi.cs.cs122250.enums.FunctionType;
 
 public class PowFunction extends DataFunction {
     PowFunction(FunctionArgument[] arguments){
-        super(FunctionType.PowFunctionType, arguments);
+        super(FunctionType.POW_FUNCTION_TYPE, arguments);
     }
 
     @Override

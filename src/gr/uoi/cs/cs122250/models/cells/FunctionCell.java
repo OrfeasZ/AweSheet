@@ -8,13 +8,13 @@ public class FunctionCell extends Cell {
     protected DataFunction internalFunction;
 
     public FunctionCell(int x, int y, String value) {
-        super(CellType.FunctionCellType, x, y, value);
+        super(CellType.FUNCTION_CELL_TYPE, x, y, value);
 
         // TODO: Create internalFunction.
     }
 
     @Override
     public String getDisplayValue() {
-        return this.internalFunction.getDisplayValue();
+        return internalFunction.getDisplayValue();
     }
 }

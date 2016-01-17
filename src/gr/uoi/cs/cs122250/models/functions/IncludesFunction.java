@@ -6,7 +6,7 @@ import gr.uoi.cs.cs122250.enums.FunctionType;
 
 public class IncludesFunction extends DataFunction {
     IncludesFunction(FunctionArgument[] arguments){
-        super(FunctionType.IncludesFunctionType, arguments);
+        super(FunctionType.INCLUDES_FUNCTION_TYPE, arguments);
     }
 
     @Override

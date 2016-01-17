@@ -6,7 +6,7 @@ import gr.uoi.cs.cs122250.enums.FunctionType;
 
 public class AbsFunction extends DataFunction {
     AbsFunction(FunctionArgument[] arguments){
-        super(FunctionType.AbsFunctionType, arguments);
+        super(FunctionType.ABS_FUNCTION_TYPE, arguments);
     }
 
     @Override

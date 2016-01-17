@@ -12,14 +12,14 @@ public class HelpArticle {
     }
 
     public String getContent() {
-        return this.content;
+        return content;
     }
 
     public String getTitle() {
-        return this.title;
+        return title;
     }
 
     public int getID() {
-        return this.id;
+        return id;
     }
 }

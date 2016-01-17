@@ -5,7 +5,7 @@ import gr.uoi.cs.cs122250.models.FunctionArgument;
 
 public class CellFunctionArgument extends FunctionArgument {
     CellFunctionArgument(String value) {
-        super(FunctionArgumentType.CellFunctionArgumentType, value);
+        super(FunctionArgumentType.CELL_FUNCTION_ARGUMENT_TYPE, value);
     }
 
     @Override

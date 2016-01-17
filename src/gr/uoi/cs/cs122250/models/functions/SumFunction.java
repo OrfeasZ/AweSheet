@@ -6,7 +6,7 @@ import gr.uoi.cs.cs122250.enums.FunctionType;
 
 public class SumFunction extends DataFunction {
     SumFunction(FunctionArgument[] arguments){
-        super(FunctionType.SumFunctionType, arguments);
+        super(FunctionType.SUM_FUNCTION_TYPE, arguments);
     }
 
     @Override

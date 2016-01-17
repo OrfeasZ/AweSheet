@@ -6,7 +6,7 @@ import gr.uoi.cs.cs122250.enums.FunctionType;
 
 public class ConcatFunction extends DataFunction {
     ConcatFunction(FunctionArgument[] arguments){
-        super(FunctionType.ConcatFunctionType, arguments);
+        super(FunctionType.CONCAT_FUNCTION_TYPE, arguments);
     }
 
     @Override

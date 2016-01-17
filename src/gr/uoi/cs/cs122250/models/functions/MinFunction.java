@@ -6,7 +6,7 @@ import gr.uoi.cs.cs122250.enums.FunctionType;
 
 public class MinFunction extends DataFunction {
     MinFunction(FunctionArgument[] arguments){
-        super(FunctionType.MinFunctionType, arguments);
+        super(FunctionType.MIN_FUNCTION_TYPE, arguments);
     }
 
     @Override

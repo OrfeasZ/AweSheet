@@ -5,7 +5,7 @@ import gr.uoi.cs.cs122250.models.FunctionArgument;
 
 public class ValueFunctionArgument extends FunctionArgument {
     ValueFunctionArgument(String value) {
-        super(FunctionArgumentType.ValueFunctionArgumentType, value);
+        super(FunctionArgumentType.VALUE_FUNCTION_ARGUMENT_TYPE, value);
     }
 
     @Override

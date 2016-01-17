@@ -7,7 +7,7 @@ import gr.uoi.cs.cs122250.models.Chart;
 public class BarChart extends Chart {
 
     public BarChart(Cell[] inputs) {
-        super(ChartType.BarChartType, inputs);
+        super(ChartType.BAR_CHART_TYPE, inputs);
     }
 
     @Override

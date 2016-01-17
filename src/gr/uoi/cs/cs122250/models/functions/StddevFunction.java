@@ -6,7 +6,7 @@ import gr.uoi.cs.cs122250.enums.FunctionType;
 
 public class StddevFunction extends DataFunction {
     StddevFunction(FunctionArgument[] arguments){
-        super(FunctionType.StddevFunctionType, arguments);
+        super(FunctionType.STDDEV_FUNCTION_TYPE, arguments);
     }
 
     @Override

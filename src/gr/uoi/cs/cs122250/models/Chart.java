@@ -23,35 +23,35 @@ public abstract class Chart {
     }
 
     public String getTitle() {
-        return this.title;
+        return title;
     }
 
     public void setNameX(String name) {
-        this.nameX = name;
+        nameX = name;
     }
 
     public String getNameX() {
-        return this.nameX;
+        return nameX;
     }
 
     public void setNameY(String name) {
-        this.nameY = name;
+        nameY = name;
     }
 
     public String getNameY() {
-        return this.nameY;
+        return nameY;
     }
 
     public Cell[] getInputs() {
-        return this.inputs;
+        return inputs;
     }
 
     public ChartType getType() {
-        return this.type;
+        return type;
     }
 
     public byte[] getImageData() {
-        return this.imageData;
+        return imageData;
     }
 
     public abstract boolean generateImageData();

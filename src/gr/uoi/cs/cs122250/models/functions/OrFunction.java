@@ -6,7 +6,7 @@ import gr.uoi.cs.cs122250.enums.FunctionType;
 
 public class OrFunction extends DataFunction {
     OrFunction(FunctionArgument[] arguments){
-        super(FunctionType.OrFunctionType, arguments);
+        super(FunctionType.OR_FUNCTION_TYPE, arguments);
     }
 
     @Override

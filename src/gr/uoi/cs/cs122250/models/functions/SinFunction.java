@@ -6,7 +6,7 @@ import gr.uoi.cs.cs122250.enums.FunctionType;
 
 public class SinFunction extends DataFunction {
     SinFunction(FunctionArgument[] arguments){
-        super(FunctionType.SinFunctionType, arguments);
+        super(FunctionType.SIN_FUNCTION_TYPE, arguments);
     }
 
     @Override

@@ -6,7 +6,7 @@ import gr.uoi.cs.cs122250.enums.FunctionType;
 
 public class MultFunction extends DataFunction {
     MultFunction(FunctionArgument[] arguments){
-        super(FunctionType.MultFunctionType, arguments);
+        super(FunctionType.MULT_FUNCTION_TYPE, arguments);
     }
 
     @Override

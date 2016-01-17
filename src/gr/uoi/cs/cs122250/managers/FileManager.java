@@ -1,6 +1,19 @@
 package gr.uoi.cs.cs122250.managers;
 
 public class FileManager {
+    private static FileManager instance = null;
+
+    public static FileManager getInstance() {
+        if (instance == null) {
+            instance = new FileManager();
+        }
+
+        return instance;
+    }
+
+    protected FileManager() {
+    }
+
     public byte[] readFile(String path) {
         return null;
     }

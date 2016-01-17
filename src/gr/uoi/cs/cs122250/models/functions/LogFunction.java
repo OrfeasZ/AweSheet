@@ -6,7 +6,7 @@ import gr.uoi.cs.cs122250.enums.FunctionType;
 
 public class LogFunction extends DataFunction {
     LogFunction(FunctionArgument[] arguments){
-        super(FunctionType.LogFunctionType, arguments);
+        super(FunctionType.LOG_FUNCTION_TYPE, arguments);
     }
 
     @Override

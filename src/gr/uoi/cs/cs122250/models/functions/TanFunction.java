@@ -6,7 +6,7 @@ import gr.uoi.cs.cs122250.enums.FunctionType;
 
 public class TanFunction extends DataFunction {
     TanFunction(FunctionArgument[] arguments){
-        super(FunctionType.TanFunctionType, arguments);
+        super(FunctionType.TAN_FUNCTION_TYPE, arguments);
     }
 
     @Override

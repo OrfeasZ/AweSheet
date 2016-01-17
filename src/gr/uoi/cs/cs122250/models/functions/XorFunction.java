@@ -6,7 +6,7 @@ import gr.uoi.cs.cs122250.enums.FunctionType;
 
 public class XorFunction extends DataFunction {
     XorFunction(FunctionArgument[] arguments){
-        super(FunctionType.XorFunctionType, arguments);
+        super(FunctionType.XOR_FUNCTION_TYPE, arguments);
     }
 
     @Override

@@ -6,7 +6,7 @@ import gr.uoi.cs.cs122250.enums.FunctionType;
 
 public class RemoveFunction extends DataFunction {
     RemoveFunction(FunctionArgument[] arguments){
-        super(FunctionType.RemoveFunctionType, arguments);
+        super(FunctionType.REMOVE_FUNCTION_TYPE, arguments);
     }
 
     @Override
