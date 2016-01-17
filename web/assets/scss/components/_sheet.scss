@@ -26,7 +26,28 @@
     height: 26px;
     vertical-align: top;
     margin-right: 3px;
-    width: 110px;
+    width: 108px;
+
+    .image-btn {
+      color: #777;
+      height: 24px;
+      width: 36px;
+      line-height: 24px;
+      font-size: 16px;
+
+      &:hover {
+        color: #3193c5;
+      }
+
+      &.disabled {
+        color: #cbcbcb;
+      }
+
+      i {
+        position: relative;
+        top: 4px;
+      }
+    }
   }
 
   .value-input {

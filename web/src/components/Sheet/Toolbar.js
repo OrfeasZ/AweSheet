@@ -6,12 +6,23 @@ import ImageButton from '../ImageButton'
 
 export default class Toolbar extends Component
 {
+    constructor(props)
+    {
+        super(props);
+
+        this.state = {
+            editValue: ''
+        };
+    }
+
     render()
     {
-        const { cells, selectedCells } = this.props;
+        const { cells, selectedCells, editingCell } = this.props;
 
         let selectedValue = '';
         let editValue = '';
+        let functionEnabled = false;
+        let buttonsEnabled = false;
 
         if (selectedCells.length > 1)
         {
@@ -33,7 +44,11 @@ export default class Toolbar extends Component
         {
             selectedValue = selectedCells[0][1] + Utils.getColumnName(selectedCells[0][0]);
             editValue = cells[selectedCells[0][0] + 'x' + selectedCells[0][1]] ? cells[selectedCells[0][0] + 'x' + selectedCells[0][1]].value : '';
+            functionEnabled = true;
         }
+
+        if (editingCell != null || this.state.editValue.length > 0)
+            buttonsEnabled = true;
 
         return (
             <div className="toolbar">
@@ -42,11 +57,12 @@ export default class Toolbar extends Component
                     className="selected-cell"
                     value={selectedValue} />
                 <div className="toolbar-buttons">
-                    <ImageButton className="cancel-button" />
-                    <ImageButton className="confirm-button" />
-                    <ImageButton className="function-button" />
+                    <ImageButton className="cancel-button" imageClass="times" disabled={!buttonsEnabled} />
+                    <ImageButton className="confirm-button" imageClass="check" disabled={!buttonsEnabled} />
+                    <ImageButton className="function-button" imageClass="bolt" disabled={!functionEnabled} />
                 </div>
                 <input
+                    ref="value"
                     type="text"
                     className="value-input"
                     value={editValue} />

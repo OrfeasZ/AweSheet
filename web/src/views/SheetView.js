@@ -11,7 +11,10 @@ export default class SheetView extends Component
 
         return (
             <div className="sheet-container">
-                <Toolbar cells={sheet.cells} selectedCells={sheetProps.selectedCells} />
+                <Toolbar
+                    cells={sheet.cells}
+                    selectedCells={sheetProps.selectedCells}
+                    editingCell={sheetProps.editingCell} />
                 <div className="sheet">
                     <Grid
                         id={sheet.id}
