@@ -1,14 +1,12 @@
 package com.awesheet.models;
 
-import com.awesheet.enums.CellType;
-
 public abstract class Cell {
     protected int x;
     protected int y;
-    protected CellType type;
+    protected int type;
     protected String value;
 
-    protected Cell(CellType type, int x, int y, String value) {
+    protected Cell(int type, int x, int y, String value) {
         this.type = type;
         this.x = x;
         this.y = y;
@@ -23,7 +21,7 @@ public abstract class Cell {
         return y;
     }
 
-    public CellType getType() {
+    public int getType() {
         return type;
     }
 

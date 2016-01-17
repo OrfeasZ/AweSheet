@@ -3,15 +3,15 @@ package com.awesheet.models;
 import com.awesheet.enums.FunctionType;
 
 public abstract class DataFunction {
-    protected FunctionType type;
+    protected int type;
     protected FunctionArgument[] arguments;
 
-    protected DataFunction(FunctionType type, FunctionArgument[] arguments){
+    protected DataFunction(int type, FunctionArgument[] arguments){
         this.type = type;
         this.arguments = arguments;
     }
 
-    public FunctionType getType() {
+    public int getType() {
         return type;
     }
 

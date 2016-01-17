@@ -3,14 +3,14 @@ package com.awesheet.models;
 import com.awesheet.enums.ChartType;
 
 public abstract class Chart {
-    protected ChartType type;
+    protected int type;
     protected String title;
     protected String nameX;
     protected String nameY;
     protected Cell[] inputs;
     protected byte[] imageData;
 
-    protected Chart(ChartType type, Cell[] inputs) {
+    protected Chart(int type, Cell[] inputs) {
         this.type = type;
         this.inputs = inputs;
         this.title = "";
@@ -46,7 +46,7 @@ public abstract class Chart {
         return inputs;
     }
 
-    public ChartType getType() {
+    public int getType() {
         return type;
     }
 

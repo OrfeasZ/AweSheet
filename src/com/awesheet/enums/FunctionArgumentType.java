@@ -1,6 +1,6 @@
 package com.awesheet.enums;
 
-public enum FunctionArgumentType {
-    VALUE_FUNCTION_ARGUMENT_TYPE,
-    CELL_FUNCTION_ARGUMENT_TYPE
+public class FunctionArgumentType {
+    public static final int VALUE_FUNCTION_ARGUMENT_TYPE = 0;
+    public static final int CELL_FUNCTION_ARGUMENT_TYPE = 1;
 }

@@ -1,7 +1,7 @@
 package com.awesheet.enums;
 
-public enum SaveResult {
-    SUCCESS,
-    ACCESS_ERROR
+public class SaveResult {
+    public static final int SUCCESS = 0;
+    public static final int ACCESS_ERROR = 1;
 }
 

@@ -1,11 +1,11 @@
 package com.awesheet.enums;
 
-public enum UIActionType {
-    SET_SHEET,
-    REMOVE_SHEET,
-    SET_ACTIVE_SHEET,
-    SET_SELECTED_CELLS,
-    SET_CELL,
-    REMOVE_CELL,
-    SET_EDITING_CELL
+public class UIActionType {
+    public static final int SET_SHEET = 0;
+    public static final int REMOVE_SHEET = 1;
+    public static final int SET_ACTIVE_SHEET = 2;
+    public static final int SET_SELECTED_CELLS = 3;
+    public static final int SET_CELL = 4;
+    public static final int REMOVE_CELL = 5;
+    public static final int SET_EDITING_CELL = 6;
 }

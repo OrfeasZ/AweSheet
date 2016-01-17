@@ -25,11 +25,11 @@ public class WorkbookManager implements IMessageListener {
         UIMessageManager.getInstance().registerListener(this);
     }
 
-    public SaveResult saveWorkbook() {
+    public int saveWorkbook() {
         return SaveResult.ACCESS_ERROR;
     }
 
-    public OpenResult openWorkbook(String path) {
+    public int openWorkbook(String path) {
         return OpenResult.ACCESS_ERROR;
     }
 
