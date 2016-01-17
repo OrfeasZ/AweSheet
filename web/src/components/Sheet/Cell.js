@@ -92,7 +92,7 @@ export default class Cell extends Component
     {
         store.dispatch({
             type: ActionType.SET_EDITING_CELL,
-            id: this.props.sheet,
+            sheet: this.props.sheet,
             cell: [ this.props.x, this.props.y ]
         });
     }
@@ -104,7 +104,7 @@ export default class Cell extends Component
 
         store.dispatch({
             type: ActionType.SET_EDITING_CELL,
-            id: this.props.sheet,
+            sheet: this.props.sheet,
             cell: null
         });
     }
@@ -134,7 +134,7 @@ export default class Cell extends Component
 
             store.dispatch({
                 type: ActionType.SET_EDITING_CELL,
-                id: this.props.sheet,
+                sheet: this.props.sheet,
                 cell: null
             });
 
@@ -153,7 +153,7 @@ export default class Cell extends Component
 
             store.dispatch({
                 type: ActionType.SET_EDITING_CELL,
-                id: this.props.sheet,
+                sheet: this.props.sheet,
                 cell: null
             });
         }

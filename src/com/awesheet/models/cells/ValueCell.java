@@ -11,6 +11,6 @@ public class ValueCell extends Cell {
 
     @Override
     public  String getDisplayValue() {
-        return null;
+        return value;
     }
 }
