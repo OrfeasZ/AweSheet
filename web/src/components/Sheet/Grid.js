@@ -246,7 +246,7 @@ export default class Grid extends Component
 
             store.dispatch({
                 type: ActionType.SET_SELECTED_CELLS,
-                id: this.props.id,
+                sheet: this.props.id,
                 cells: cells
             });
 
@@ -277,7 +277,7 @@ export default class Grid extends Component
 
             store.dispatch({
                 type: ActionType.SET_SELECTED_CELLS,
-                id: this.props.id,
+                sheet: this.props.id,
                 cells: cells
             });
 
@@ -293,7 +293,7 @@ export default class Grid extends Component
             // Select cell.
             store.dispatch({
                 type: ActionType.SET_SELECTED_CELLS,
-                id: this.props.id,
+                sheet: this.props.id,
                 cells: [
                     [ cellX, cellY ]
                 ]
@@ -377,7 +377,7 @@ export default class Grid extends Component
 
             store.dispatch({
                 type: ActionType.SET_SELECTED_CELLS,
-                id: this.props.id,
+                sheet: this.props.id,
                 cells: cells
             });
 

@@ -28,6 +28,7 @@
     border-top: 1px solid #ababab;
     padding-left: 30px;
     -webkit-user-select: none;
+    white-space: nowrap;
 
     .create-sheet {
       color: #777777;
@@ -53,11 +54,12 @@
     .tabs {
       display: inline-block;
       vertical-align: top;
+      white-space: nowrap;
     }
 
     .tab {
       position: relative;
-      float: left;
+      display: inline-block;
       border-left: 1px solid #ababab;
       text-align: center;
       width: 125px;
@@ -65,6 +67,7 @@
       height: 22px;
       top: 4px;
       cursor: default;
+      vertical-align: top;
 
       .close {
         display: none;

@@ -1,6 +1,10 @@
 package com.awesheet.models;
 
-public abstract class Cell {
+import com.awesheet.interfaces.IUIBindable;
+import com.awesheet.ui.UICell;
+import com.awesheet.ui.UIModel;
+
+public abstract class Cell implements IUIBindable {
     protected int x;
     protected int y;
     protected int type;
@@ -30,4 +34,9 @@ public abstract class Cell {
     }
 
     public abstract String getDisplayValue();
+
+    @Override
+    public UIModel bind() {
+        return new UICell(x, y, type, getValue(), getDisplayValue());
+    }
 }

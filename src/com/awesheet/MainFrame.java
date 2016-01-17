@@ -1,14 +1,6 @@
 package com.awesheet;
 
-import java.awt.*;
-import java.awt.event.*;
-
-import javax.swing.*;
-
-import com.awesheet.handlers.AppHandler;
-import com.awesheet.handlers.ContextMenuHandler;
-import com.awesheet.handlers.MenuHandler;
-import com.awesheet.handlers.MessageRouterHandler;
+import com.awesheet.handlers.*;
 import com.awesheet.managers.*;
 import org.cef.CefApp;
 import org.cef.CefClient;
@@ -17,19 +9,48 @@ import org.cef.OS;
 import org.cef.browser.CefBrowser;
 import org.cef.browser.CefMessageRouter;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 public class MainFrame extends JFrame {
+    private static MainFrame instance = null;
+
     private CefClient cefClient;
     private CefBrowser cefBrowser;
     private Component browserUI;
     private MenuHandler menuHandler;
 
+    private boolean hasManagers;
+
+    public static MainFrame getInstance() {
+        return instance;
+    }
+
+    public static void createInstance(String[] args) {
+        if (instance != null) {
+            return;
+        }
+
+        instance = new MainFrame(args);
+    }
+
     private MainFrame(String[] args) {
+        hasManagers = false;
+
         initCEF(args);
-        initManagers();
         initWindow();
     }
 
-    private void initManagers() {
+    public void initManagers() {
+        if (hasManagers) {
+            return;
+        }
+
+        hasManagers = true;
+
+        // Create all the manager instances.
         UIMessageManager.getInstance();
         CSVManager.getInstance();
         FileManager.getInstance();
@@ -37,15 +58,20 @@ public class MainFrame extends JFrame {
         WindowManager.getInstance();
         WorkbookManager.getInstance();
 
-        // Set manager properties.
+        // Set manager properties and perform post-initialization.
         WindowManager.getInstance().setMainFrame(this);
         WindowManager.getInstance().setMenuHandler(menuHandler);
+
+        UIMessageManager.getInstance().setBrowser(cefBrowser);
+
+        WorkbookManager.getInstance().init();
     }
 
     private void initCEF(String[] args) {
         CefSettings settings = new CefSettings();
         settings.windowless_rendering_enabled = OS.isLinux();
         settings.remote_debugging_port = 8884;
+        settings.log_severity = CefSettings.LogSeverity.LOGSEVERITY_DISABLE;
 
         // Add our custom app handler.
         CefApp cefApp_ = CefApp.getInstance(settings);
@@ -57,6 +83,7 @@ public class MainFrame extends JFrame {
         CefMessageRouter router = CefMessageRouter.create(new CefMessageRouter.CefMessageRouterConfig("aweQuery", "aweQueryAbort"), new MessageRouterHandler());
         cefClient.addMessageRouter(router);
         cefClient.addContextMenuHandler(new ContextMenuHandler());
+        cefClient.addLoadHandler(new LoadHandler());
 
         // Create the browser.
         cefBrowser = cefClient.createBrowser("awe://sheet", settings.windowless_rendering_enabled, false);
@@ -93,6 +120,6 @@ public class MainFrame extends JFrame {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception ignored) { }
 
-        new MainFrame(args);
+        MainFrame.createInstance(args);
     }
 }

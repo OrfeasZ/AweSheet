@@ -21,16 +21,22 @@ public class WorkbookManager implements IMessageListener {
     protected Workbook currentWorkbook;
 
     protected WorkbookManager() {
-        currentWorkbook = new Workbook();
-
+        // Register ourselves with the message manager.
         UIMessageManager.getInstance().registerListener(this);
     }
 
+    public void init() {
+        // Create a new empty workbook.
+        currentWorkbook = new Workbook();
+    }
+
     public int saveWorkbook() {
+        // TODO
         return SaveResult.ACCESS_ERROR;
     }
 
     public int openWorkbook(String path) {
+        // TODO
         return OpenResult.ACCESS_ERROR;
     }
 
@@ -39,7 +45,7 @@ public class WorkbookManager implements IMessageListener {
     }
 
     public void createWorkbook() {
-
+        // TODO
     }
 
     @Override

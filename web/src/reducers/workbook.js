@@ -45,8 +45,8 @@ export default function team(state = initialState, action)
                 activeSheet: state.activeSheet
             };
 
-            delete finalState.sheets[action.id];
-            delete finalState.sheetProps[action.id];
+            delete finalState.sheets[action.sheet];
+            delete finalState.sheetProps[action.sheet];
 
             return finalState;
         }
@@ -68,8 +68,8 @@ export default function team(state = initialState, action)
                 activeSheet: state.activeSheet
             };
 
-            if (action.id in finalState.sheetProps)
-                finalState.sheetProps[action.id].selectedCells = action.cells;
+            if (action.sheet in finalState.sheetProps)
+                finalState.sheetProps[action.sheet].selectedCells = action.cells;
 
             return finalState;
         }
@@ -82,8 +82,8 @@ export default function team(state = initialState, action)
                 activeSheet: state.activeSheet
             };
 
-            if (action.id in finalState.sheetProps)
-                finalState.sheetProps[action.id].editingCell = action.cell;
+            if (action.sheet in finalState.sheetProps)
+                finalState.sheetProps[action.sheet].editingCell = action.cell;
 
             return finalState;
         }

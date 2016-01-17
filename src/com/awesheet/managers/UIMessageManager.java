@@ -1,5 +1,6 @@
 package com.awesheet.managers;
 
+import com.awesheet.actions.UIAction;
 import com.awesheet.interfaces.IMessageListener;
 import com.google.gson.Gson;
 import com.awesheet.enums.UIActionType;
@@ -7,18 +8,9 @@ import com.awesheet.messages.UIMessage;
 import org.cef.browser.CefBrowser;
 
 import java.util.HashSet;
+import java.util.Iterator;
 
 public class UIMessageManager {
-    private class UIAction {
-        private UIActionType type;
-        private Object data;
-
-        public UIAction(UIActionType type, Object data) {
-            this.type = type;
-            this.data = data;
-        }
-    }
-
     private static UIMessageManager instance;
 
     protected HashSet<IMessageListener> listeners;
@@ -44,8 +36,8 @@ public class UIMessageManager {
         cefBrowser = browser;
     }
 
-    public void dispatchAction(UIActionType type, Object data) {
-        UIAction action = new UIAction(type, data);
+    public void dispatchAction(UIAction action) {
+        // Serialize to JSON.
         String serializedAction = gson.toJson(action);
 
         // Dispatch action to UI.
@@ -70,7 +62,9 @@ public class UIMessageManager {
         }
 
         // And notify the listeners.
-        for (IMessageListener listener : listeners) {
+        HashSet<IMessageListener> listenersCopy = new HashSet<IMessageListener>(listeners);
+
+        for (IMessageListener listener : listenersCopy) {
             listener.onMessage(deserializedMessage);
         }
     }

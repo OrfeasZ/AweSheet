@@ -21,6 +21,7 @@ window.store = store;
 // TODO: Remove after testing.
 import * as ActionType from './constants/ActionTypes'
 
+/*
 store.dispatch({
     type: ActionType.SET_SHEET,
     sheet: {
@@ -61,11 +62,11 @@ store.dispatch({
 
 store.dispatch({
     type: ActionType.SET_SELECTED_CELLS,
-    id: 0,
+    sheet: 0,
     cells: [
         [ 2, 5 ],
         [ 2, 6 ],
         [ 3, 5 ],
         [ 3, 6 ]
     ]
-});
+});*/
