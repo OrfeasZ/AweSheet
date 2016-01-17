@@ -1,10 +1,12 @@
 import React, { Component, PropTypes } from 'react'
 
+import Utils from '../../util/Utils'
+
 export default class Column extends Component
 {
     render()
     {
-        let value = this.props.empty ? null : this.getColumnName();
+        let value = this.props.empty ? null : Utils.getColumnName(this.props.x);
 
         let className = 'column';
 
@@ -22,25 +24,5 @@ export default class Column extends Component
                 {value}
             </div>
         );
-    }
-
-    getColumnName()
-    {
-        var x = this.props.x;
-
-        var ordA = 'a'.charCodeAt(0);
-        var ordZ = 'z'.charCodeAt(0);
-
-        var len = ordZ - ordA + 1;
-
-        var name = "";
-
-        while (x >= 0)
-        {
-            name = String.fromCharCode(x % len + ordA) + name;
-            x = Math.floor(x / len) - 1;
-        }
-
-        return name;
     }
 }

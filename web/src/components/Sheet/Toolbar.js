@@ -1,12 +1,55 @@
 import React, { Component, PropTypes } from 'react'
 
-export default class Dropdown extends Component
+import Utils from '../../util/Utils'
+
+import ImageButton from '../ImageButton'
+
+export default class Toolbar extends Component
 {
     render()
     {
+        const { cells, selectedCells } = this.props;
+
+        let selectedValue = '';
+        let editValue = '';
+
+        if (selectedCells.length > 1)
+        {
+            let minCell = selectedCells[0];
+            let maxCell = selectedCells[0];
+
+            for (let cell of selectedCells)
+            {
+                if (cell[0] < minCell[0] && cell[1] < minCell[1])
+                    minCell = cell;
+
+                if (cell[0] > maxCell[0] && cell[1] > maxCell[1])
+                    maxCell = cell;
+            }
+
+            selectedValue = minCell[1] + Utils.getColumnName(minCell[0]) + ' x ' + maxCell[1] + Utils.getColumnName(maxCell[0]);
+        }
+        else if (selectedCells.length == 1)
+        {
+            selectedValue = selectedCells[0][1] + Utils.getColumnName(selectedCells[0][0]);
+            editValue = cells[selectedCells[0][0] + 'x' + selectedCells[0][1]] ? cells[selectedCells[0][0] + 'x' + selectedCells[0][1]].value : '';
+        }
+
         return (
             <div className="toolbar">
-                Toolbar
+                <input
+                    type="text"
+                    className="selected-cell"
+                    value={selectedValue} />
+                <div className="toolbar-buttons">
+                    <ImageButton className="cancel-button" />
+                    <ImageButton className="confirm-button" />
+                    <ImageButton className="function-button" />
+                </div>
+                <input
+                    type="text"
+                    className="value-input"
+                    value={editValue} />
             </div>
         );
     }

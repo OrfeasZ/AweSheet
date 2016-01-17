@@ -31,7 +31,7 @@ export default class Grid extends Component
         };
 
         // Calculate required rows and columns based on window size.
-        let minRow = (this.state.windowHeight / 23) - 5;
+        let minRow = (this.state.windowHeight / 23) - 4;
         let minColumn = (this.state.windowWidth / 100);
 
         let rows = maxRow > minRow ? maxRow : minRow;
@@ -49,7 +49,7 @@ export default class Grid extends Component
         const { id, cells, maxRow, maxColumn, selectedCells, editingCell } = this.props;
 
         // Calculate required rows and columns based on window size.
-        let minRow = (this.state.windowHeight / 23) - 5;
+        let minRow = (this.state.windowHeight / 23) - 4;
         let minColumn = (this.state.windowWidth / 100);
 
         let rows = maxRow > minRow ? maxRow : minRow;
@@ -176,7 +176,7 @@ export default class Grid extends Component
         let rowSizes = this.state.rowSizes;
         let columnSizes = this.state.columnSizes;
 
-        let minRow = (window.innerHeight / 23) - 5;
+        let minRow = (window.innerHeight / 23) - 4;
         let minColumn = (window.innerWidth / 100);
 
         let rows = maxRow > minRow ? maxRow : minRow;
