@@ -1,11 +1,15 @@
 package com.awesheet.models;
 
-public class HelpArticle {
+import com.awesheet.interfaces.IUIBindable;
+import com.awesheet.ui.UIHelpArticle;
+import com.awesheet.ui.UIModel;
+
+public class HelpArticle implements IUIBindable {
     protected String content;
     protected String title;
     protected int id;
 
-    HelpArticle(int id, String title, String content){
+    public HelpArticle(int id, String title, String content){
         this.id = id;
         this.title = title;
         this.content = content;
@@ -21,5 +25,10 @@ public class HelpArticle {
 
     public int getID() {
         return id;
+    }
+
+    @Override
+    public UIModel bind() {
+        return new UIHelpArticle(id, title, content);
     }
 }

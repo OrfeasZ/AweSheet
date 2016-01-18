@@ -29,6 +29,7 @@
 
     .content {
       padding: 8px 8px;
+      overflow: hidden;
 
       &.invalid {
         label {
@@ -105,6 +106,38 @@
           border: 1px solid #3193c5;
           color: #3193c5;
         }
+      }
+
+      .help-sidebar {
+        width: 200px;
+        float: left;
+        overflow: hidden;
+        border: 1px solid #cbcbcb;
+
+        .sidebar-item {
+          line-height: 30px;
+          border-bottom: 1px solid #cbcbcb;
+          background: #eee;
+          padding: 0 10px;
+
+          &:hover {
+            background: #cbcbcb;
+          }
+
+          &.selected {
+            background: #fff;
+            border-right: 0;
+            font-weight: bold;
+          }
+        }
+      }
+
+      .article {
+        width: 500px;
+        float: right;
+        border: 1px solid #cbcbcb;
+        height: 350px;
+        padding: 10px;
       }
     }
   }

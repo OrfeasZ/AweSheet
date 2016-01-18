@@ -81,6 +81,7 @@ public class MainFrame extends JFrame {
         UIMessageManager.getInstance().setBrowser(cefBrowser);
 
         FunctionManager.getInstance().setUIFunctions();
+        HelpManager.getInstance().initHelpArticles();
         WorkbookManager.getInstance().init();
     }
 

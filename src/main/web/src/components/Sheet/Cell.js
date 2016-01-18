@@ -86,6 +86,8 @@ export default class Cell extends Component
                 value: this.refs.input.value
             });
         }
+
+        // TODO: Fix inputbox sizing when external value changes.
     }
 
     onDoubleClick(event)
