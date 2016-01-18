@@ -1,8 +1,6 @@
 package com.awesheet.models;
 
-import com.awesheet.actions.RemoveSheetAction;
-import com.awesheet.actions.SetActiveSheetAction;
-import com.awesheet.actions.SetSheetAction;
+import com.awesheet.actions.*;
 import com.awesheet.enums.UIMessageType;
 import com.awesheet.interfaces.IDestructible;
 import com.awesheet.interfaces.IMessageListener;
@@ -12,10 +10,21 @@ import com.awesheet.messages.DeleteSheetMessage;
 import com.awesheet.messages.SelectSheetMessage;
 import com.awesheet.messages.UIMessage;
 import com.awesheet.ui.UISheet;
+import com.awesheet.util.BinaryReader;
+import com.awesheet.util.BinaryWriter;
 
+import java.awt.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.MappedByteBuffer;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Workbook implements ISerializable, IMessageListener, IDestructible {
+    private static final int HEADER_MAGIC = 0x57455741;
+
     protected String path;
     protected HashMap<Integer, Sheet> sheets;
     protected boolean valid;
@@ -29,11 +38,13 @@ public class Workbook implements ISerializable, IMessageListener, IDestructible 
         selectedSheet = 0;
         sheets = new HashMap<Integer, Sheet>();
 
-        // Register ourselves to the message manager.
-        UIMessageManager.getInstance().registerListener(this);
-
         if (deserialize(data))
+        {
+            // Register ourselves to the message manager.
+            UIMessageManager.getInstance().registerListener(this);
+
             valid = true;
+        }
     }
 
     public Workbook() {
@@ -60,6 +71,10 @@ public class Workbook implements ISerializable, IMessageListener, IDestructible 
 
     public String getPath() {
         return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public HashMap<Integer, Sheet> getSheets() {
@@ -137,14 +152,90 @@ public class Workbook implements ISerializable, IMessageListener, IDestructible 
         return valid;
     }
 
+    public void addSheets() {
+        UIMessageManager.getInstance().dispatchAction(new ClearSheetsAction());
+
+        for (Sheet sheet : sheets.values()) {
+            UIMessageManager.getInstance().dispatchAction(new SetSheetAction((UISheet) sheet.bind()));
+
+            int[][] cells = new int[sheet.getSelectedCells().size()][];
+
+            int i = 0;
+            for (Point cell : sheet.getSelectedCells()) {
+                cells[i++] = new int[] { cell.x, cell.y };
+            }
+
+            UIMessageManager.getInstance().dispatchAction(new SetSelectedCellsAction(sheet.getID(), cells));
+        }
+    }
+
     @Override
     public byte[] serialize() {
-        return new byte[0];
+        try {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            BinaryWriter writer = new BinaryWriter(stream);
+
+            // Serialize our data.
+            writer.write(HEADER_MAGIC);
+            writer.write(sheets.size());
+            writer.write(newSheetID);
+            writer.write(selectedSheet);
+
+            for (Sheet sheet : sheets.values()) {
+                byte sheetData[] = sheet.serialize();
+
+                // Sheet failed to serialize; cancel.
+                if (sheetData == null) {
+                    return null;
+                }
+
+                writer.write(sheetData.length);
+                writer.write(sheetData);
+            }
+
+            // Get final data.
+            writer.flush();
+            byte serializedData[] = writer.toByteArray();
+            stream.close();
+
+            return serializedData;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
     public boolean deserialize(byte data[]) {
-        return false;
+        try {
+            BinaryReader reader = new BinaryReader(data);
+
+            int headerMagic = reader.readInt();
+
+            if (headerMagic != HEADER_MAGIC) {
+                return false;
+            }
+
+            int sheetCount = reader.readInt();
+            newSheetID = reader.readInt();
+            selectedSheet = reader.readInt();
+
+            for (int i = 0; i < sheetCount; ++i) {
+                int dataLength = reader.readInt();
+                Sheet readSheet = new Sheet(reader.readBytes(dataLength));
+
+                // Sheet failed to deserialize.
+                if (!readSheet.getValid()) {
+                    return false;
+                }
+
+                sheets.put(readSheet.getID(), readSheet);
+            }
+
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override

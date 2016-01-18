@@ -252,7 +252,7 @@ export default class Grid extends Component
                 sheet: this.props.id,
                 cells: cells
             });
-            
+
             Utils.dispatchMessage(MessageType.SET_SELECTED_CELLS, {
                 sheet: this.props.id,
                 cells: cells

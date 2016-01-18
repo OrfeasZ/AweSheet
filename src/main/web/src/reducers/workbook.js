@@ -7,7 +7,8 @@ import {
     SET_MAX_COLUMN,
     SET_MAX_ROW,
     SET_CELL,
-    REMOVE_CELL
+    REMOVE_CELL,
+    CLEAR_SHEETS,
 } from '../constants/ActionTypes'
 
 const initialState = {
@@ -39,6 +40,15 @@ export default function team(state = initialState, action)
             }
 
             return finalState;
+        }
+
+        case CLEAR_SHEETS:
+        {
+            return {
+                sheets: {},
+                sheetProps: {},
+                activeSheet: 0
+            };
         }
 
         case REMOVE_SHEET:

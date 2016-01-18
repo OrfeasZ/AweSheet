@@ -6,6 +6,7 @@ import com.awesheet.enums.UIMessageType;
 import com.awesheet.handlers.MenuHandler;
 import com.awesheet.interfaces.IDestructible;
 import com.awesheet.interfaces.IMessageListener;
+import com.awesheet.interfaces.ISerializable;
 import com.awesheet.interfaces.IUIBindable;
 import com.awesheet.managers.UIMessageManager;
 import com.awesheet.messages.SetCellValueMessage;
@@ -16,26 +17,33 @@ import com.awesheet.models.cells.ValueCell;
 import com.awesheet.ui.UICell;
 import com.awesheet.ui.UIModel;
 import com.awesheet.ui.UISheet;
+import com.awesheet.util.BinaryReader;
+import com.awesheet.util.BinaryWriter;
 
+import java.awt.*;
+import java.io.ByteArrayOutputStream;
 import java.util.*;
+import java.util.List;
 
-public class Sheet implements IUIBindable, IMessageListener, IDestructible {
+public class Sheet implements IUIBindable, IMessageListener, IDestructible, ISerializable {
     protected String name;
     protected HashMap<String, Cell> cells;
-    protected HashSet<String> selectedCells;
+    protected HashSet<Point> selectedCells;
     protected int id;
     protected int maxColumn;
     protected int maxRow;
     protected Workbook workbook;
+    protected boolean valid;
 
     public Sheet(Workbook workbook, String name) {
         this.workbook = workbook;
         this.name = name;
         cells = new HashMap<String, Cell>();
-        selectedCells = new HashSet<String>();
+        selectedCells = new HashSet<Point>();
         id = 0;
         maxColumn = 0;
         maxRow = 0;
+        valid = true;
 
         // Register ourselves to the message manager.
         UIMessageManager.getInstance().registerListener(this);
@@ -44,13 +52,28 @@ public class Sheet implements IUIBindable, IMessageListener, IDestructible {
     public Sheet(String name) {
         this.name = name;
         cells = new HashMap<String, Cell>();
-        selectedCells = new HashSet<String>();
+        selectedCells = new HashSet<Point>();
         id = 0;
         maxColumn = 0;
         maxRow = 0;
+        valid = true;
 
         // Register ourselves to the message manager.
         UIMessageManager.getInstance().registerListener(this);
+    }
+
+    public Sheet(byte[] data) {
+        valid = false;
+        cells = new HashMap<String, Cell>();
+        selectedCells = new HashSet<Point>();
+
+        if (deserialize(data))
+        {
+            // Register ourselves to the message manager.
+            UIMessageManager.getInstance().registerListener(this);
+
+            valid = true;
+        }
     }
 
     @Override
@@ -59,6 +82,10 @@ public class Sheet implements IUIBindable, IMessageListener, IDestructible {
 
         // Deregister ourselves from the message manager.
         UIMessageManager.getInstance().deregisterListener(this);
+    }
+
+    public boolean getValid() {
+        return valid;
     }
 
     public String getName() {
@@ -81,11 +108,14 @@ public class Sheet implements IUIBindable, IMessageListener, IDestructible {
         return cells.get(cell);
     }
 
-    public void setCellValue(int x, int y, String value) {
+    public void setCellValue(int x, int y, String value, boolean silent) {
         // Are we trying to remove this cell?
         if (value == null || value.length() == 0) {
             cells.remove(x + "x" + y);
-            UIMessageManager.getInstance().dispatchAction(new RemoveCellAction(id, x, y));
+
+            if (!silent) {
+                UIMessageManager.getInstance().dispatchAction(new RemoveCellAction(id, x, y));
+            }
 
             // Recalculate maxRow and maxColumn.
             if (cells.size() == 0) {
@@ -109,8 +139,10 @@ public class Sheet implements IUIBindable, IMessageListener, IDestructible {
             }
 
             // Notify UI of new values.
-            UIMessageManager.getInstance().dispatchAction(new SetMaxColumnAction(id, maxColumn));
-            UIMessageManager.getInstance().dispatchAction(new SetMaxRowAction(id, maxRow));
+            if (!silent) {
+                UIMessageManager.getInstance().dispatchAction(new SetMaxColumnAction(id, maxColumn));
+                UIMessageManager.getInstance().dispatchAction(new SetMaxRowAction(id, maxRow));
+            }
 
             return;
         }
@@ -133,18 +165,26 @@ public class Sheet implements IUIBindable, IMessageListener, IDestructible {
         // Check if we need to grow the grid.
         if (x + 1 > maxColumn) {
             maxColumn = x + 1;
-            UIMessageManager.getInstance().dispatchAction(new SetMaxColumnAction(id, maxColumn));
+
+            if (!silent) {
+                UIMessageManager.getInstance().dispatchAction(new SetMaxColumnAction(id, maxColumn));
+            }
         }
 
         if (y + 1 > maxRow) {
             maxRow = y + 1;
-            UIMessageManager.getInstance().dispatchAction(new SetMaxRowAction(id, maxRow));
+
+            if (!silent) {
+                UIMessageManager.getInstance().dispatchAction(new SetMaxRowAction(id, maxRow));
+            }
         }
 
         cells.put(x + "x" + y, cell);
 
         // Notify the UI of any changes.
-        UIMessageManager.getInstance().dispatchAction(new SetCellAction((UICell) cell.bind()));
+        if (!silent) {
+            UIMessageManager.getInstance().dispatchAction(new SetCellAction((UICell) cell.bind()));
+        }
     }
 
     public void setID(int id) {
@@ -175,15 +215,15 @@ public class Sheet implements IUIBindable, IMessageListener, IDestructible {
         this.workbook = workbook;
     }
 
-    public HashSet<String> getSelectedCells() {
+    public HashSet<Point> getSelectedCells() {
         return selectedCells;
     }
 
     public Cell[] collectSelectedCells() {
         List<Cell> collectedCells = new ArrayList<Cell>();
 
-        for (String selectedCell : selectedCells) {
-            Cell cell = getCell(selectedCell);
+        for (Point selectedCell : selectedCells) {
+            Cell cell = getCell(selectedCell.x, selectedCell.y);
 
             if (cell != null) {
                 collectedCells.add(cell);
@@ -212,7 +252,7 @@ public class Sheet implements IUIBindable, IMessageListener, IDestructible {
 
                 // We only care about messages directed to us.
                 if (uiMessage.getSheet() == id) {
-                    setCellValue(uiMessage.cellX(), uiMessage.cellY(), uiMessage.getValue());
+                    setCellValue(uiMessage.cellX(), uiMessage.cellY(), uiMessage.getValue(), false);
                 }
 
                 break;
@@ -230,14 +270,95 @@ public class Sheet implements IUIBindable, IMessageListener, IDestructible {
                 selectedCells.clear();
 
                 for (int cell[] : uiMessage.getCells()) {
-                    selectedCells.add(cell[0] + "x" + cell[1]);
+                    selectedCells.add(new Point(cell[0], cell[1]));
                 }
 
+                // Update menu bar item states.
                 MainFrame.getInstance().getMenuHandler().getChartBarItem().setEnabled(selectedCells.size() > 4);
                 MainFrame.getInstance().getMenuHandler().getChartLineItem().setEnabled(selectedCells.size() > 4);
+                MainFrame.getInstance().getMenuHandler().getEditCopyItem().setEnabled(selectedCells.size() == 1);
+                MainFrame.getInstance().getMenuHandler().getEditCutItem().setEnabled(selectedCells.size() == 1);
+                MainFrame.getInstance().getMenuHandler().getEditPasteItem().setEnabled(selectedCells.size() == 1);
 
                 break;
             }
+        }
+    }
+
+    @Override
+    public byte[] serialize() {
+        try {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            BinaryWriter writer = new BinaryWriter(stream);
+
+            // Serialize our data.
+            writer.write(id);
+            writer.write(maxColumn);
+            writer.write(maxRow);
+            writer.write(name.length());
+            writer.write(cells.size());
+            writer.write(selectedCells.size());
+
+            // Write name.
+            writer.write(name.getBytes());
+
+            // Write cells.
+            for (Cell cell : cells.values()) {
+                writer.write(cell.x);
+                writer.write(cell.y);
+                writer.write(cell.value.length());
+                writer.write(cell.value.getBytes());
+            }
+
+            // Write selected cells.
+            for (Point cell : selectedCells) {
+                writer.write(cell.x);
+                writer.write(cell.y);
+            }
+
+            // Get final data.
+            writer.flush();
+            byte serializedData[] = writer.toByteArray();
+            stream.close();
+
+            return serializedData;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean deserialize(byte[] data) {
+        try {
+            BinaryReader reader = new BinaryReader(data);
+
+            id = reader.readInt();
+            maxColumn = reader.readInt();
+            maxRow = reader.readInt();
+
+            int nameLength = reader.readInt();
+            int cellCount = reader.readInt();
+            int selectedCellCount = reader.readInt();
+
+            name = new String(reader.readBytes(nameLength));
+
+            for (int i = 0; i < cellCount; ++i) {
+                int x = reader.readInt();
+                int y = reader.readInt();
+                int valueLength = reader.readInt();
+                String value = new String(reader.readBytes(valueLength));
+                setCellValue(x, y, value, true);
+            }
+
+            for (int i = 0; i < selectedCellCount; ++i) {
+                int x = reader.readInt();
+                int y = reader.readInt();
+                selectedCells.add(new Point(x, y));
+            }
+
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 }

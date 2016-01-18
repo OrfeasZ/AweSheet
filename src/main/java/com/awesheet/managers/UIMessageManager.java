@@ -69,6 +69,15 @@ public class UIMessageManager {
         }
     }
 
+    public void onMessage(UIMessage message) {
+        // And notify the listeners.
+        HashSet<IMessageListener> listenersCopy = new HashSet<IMessageListener>(listeners);
+
+        for (IMessageListener listener : listenersCopy) {
+            listener.onMessage(message);
+        }
+    }
+
     public void registerListener(IMessageListener listener) {
         listeners.add(listener);
     }

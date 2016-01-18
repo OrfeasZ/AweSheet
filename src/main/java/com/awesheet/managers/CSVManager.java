@@ -46,7 +46,7 @@ public class CSVManager {
         // Populate its cells.
         for (CSVRecord record : parser) {
             for (int x = 0; x < record.size(); ++x) {
-                sheet.setCellValue(x, (int) record.getRecordNumber() - 1, record.get(x));
+                sheet.setCellValue(x, (int) record.getRecordNumber() - 1, record.get(x), true);
             }
         }
 

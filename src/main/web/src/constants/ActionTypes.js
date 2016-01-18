@@ -7,3 +7,4 @@ export const REMOVE_CELL = 5;
 export const SET_EDITING_CELL = 6;
 export const SET_MAX_COLUMN = 7;
 export const SET_MAX_ROW = 8;
+export const CLEAR_SHEETS = 9;

@@ -7,9 +7,14 @@ import com.awesheet.interfaces.IMessageListener;
 import com.awesheet.messages.UIMessage;
 import com.awesheet.enums.OpenResult;
 import com.awesheet.enums.SaveResult;
+import com.awesheet.models.Sheet;
 import com.awesheet.models.Workbook;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
+import java.awt.*;
+import java.io.File;
+import java.io.FilenameFilter;
 
 public class WorkbookManager implements IMessageListener {
     private static WorkbookManager instance = null;
@@ -41,13 +46,121 @@ public class WorkbookManager implements IMessageListener {
     }
 
     public int saveWorkbook() {
-        // TODO
+        if (currentWorkbook.getPath() == null) {
+            FileDialog dialog = new FileDialog(MainFrame.getInstance(), "Save Workbook", FileDialog.SAVE);
+            dialog.setFile("*.awew");
+            dialog.setVisible(true);
+            dialog.setFilenameFilter(new FilenameFilter(){
+                public boolean accept(File dir, String name){
+                    return (dir.isFile() && name.endsWith(".awew"));
+                }
+            });
+
+            String filePath = dialog.getFile();
+            String directory = dialog.getDirectory();
+            dialog.dispose();
+
+            if (directory != null && filePath != null) {
+                String absolutePath = new File(directory + filePath).getAbsolutePath();
+                byte serializedData[] = currentWorkbook.serialize();
+
+                if (serializedData == null) {
+                    return SaveResult.INTERNAL_ERROR;
+                }
+
+                if (FileManager.getInstance().saveFile(absolutePath, serializedData)) {
+                    currentWorkbook.setPath(absolutePath);
+                    return SaveResult.SUCCESS;
+                }
+
+                return SaveResult.ACCESS_ERROR;
+            }
+
+            // Dialog cancelled.
+            return SaveResult.SUCCESS;
+        }
+
+        byte serializedData[] = currentWorkbook.serialize();
+
+        if (serializedData == null) {
+            return SaveResult.INTERNAL_ERROR;
+        }
+
+        if (FileManager.getInstance().saveFile(currentWorkbook.getPath(), serializedData)) {
+            return SaveResult.SUCCESS;
+        }
+
         return SaveResult.ACCESS_ERROR;
     }
 
-    public int openWorkbook(String path) {
-        // TODO
-        return OpenResult.ACCESS_ERROR;
+    public int saveWorkbookAs() {
+        FileDialog dialog = new FileDialog(MainFrame.getInstance(), "Save Workbook As", FileDialog.SAVE);
+        dialog.setFile("*.awew");
+        dialog.setVisible(true);
+        dialog.setFilenameFilter(new FilenameFilter(){
+            public boolean accept(File dir, String name){
+                return (dir.isFile() && name.endsWith(".awew"));
+            }
+        });
+
+        String filePath = dialog.getFile();
+        String directory = dialog.getDirectory();
+        dialog.dispose();
+
+        if (directory != null && filePath != null) {
+            String absolutePath = new File(directory + filePath).getAbsolutePath();
+            byte serializedData[] = currentWorkbook.serialize();
+
+            if (serializedData == null) {
+                return SaveResult.INTERNAL_ERROR;
+            }
+
+            if (FileManager.getInstance().saveFile(absolutePath, serializedData)) {
+                return SaveResult.SUCCESS;
+            }
+
+            return SaveResult.ACCESS_ERROR;
+        }
+
+        return SaveResult.SUCCESS;
+    }
+
+    public int openWorkbook() {
+        FileDialog dialog = new FileDialog(MainFrame.getInstance(), "Open Workbook", FileDialog.LOAD);
+        dialog.setFile("*.awew");
+        dialog.setVisible(true);
+        dialog.setFilenameFilter(new FilenameFilter(){
+            public boolean accept(File dir, String name){
+                return (dir.isFile() && name.endsWith(".awew"));
+            }
+        });
+
+        String filePath = dialog.getFile();
+        String directory = dialog.getDirectory();
+        dialog.dispose();
+
+        if (directory != null && filePath != null) {
+            String absolutePath = new File(directory + filePath).getAbsolutePath();
+            byte fileData[] = FileManager.getInstance().readFile(absolutePath);
+
+            if (fileData == null) {
+                return OpenResult.ACCESS_ERROR;
+            }
+
+            Workbook newWorkbook = new Workbook(fileData, absolutePath);
+
+            if (!newWorkbook.isValid()) {
+                return OpenResult.INVALID_FORMAT;
+            }
+
+            currentWorkbook.destroy();
+            currentWorkbook = newWorkbook;
+            newWorkbook.addSheets();
+
+            return OpenResult.SUCCESS;
+        }
+
+        return OpenResult.SUCCESS;
     }
 
     public Workbook getCurrentWorkbook() {
@@ -60,6 +173,26 @@ public class WorkbookManager implements IMessageListener {
 
     @Override
     public void onMessage(UIMessage message) {
+        switch (message.getType()) {
+            case UIMessageType.SAVE_WORKBOOK: {
+                saveWorkbook();
+                break;
+            }
 
+            case UIMessageType.SAVE_WORKBOOK_AS: {
+                saveWorkbookAs();
+                break;
+            }
+
+            case UIMessageType.OPEN_WORKBOOK: {
+                openWorkbook();
+                break;
+            }
+
+            case UIMessageType.CREATE_WORKBOOK: {
+                createWorkbook();
+                break;
+            }
+        }
     }
 }

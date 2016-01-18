@@ -10,4 +10,5 @@ public class UIActionType {
     public static final int SET_EDITING_CELL = 6;
     public static final int SET_MAX_COLUMN = 7;
     public static final int SET_MAX_ROW = 8;
+    public static final int CLEAR_SHEETS = 9;
 }
