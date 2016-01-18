@@ -25,6 +25,7 @@ import * as ActionType from './constants/ActionTypes'
 import * as PopupType from './constants/PopupTypes'
 import * as ChartType from './constants/ChartTypes'
 
+/*
 store.dispatch({
     type: ActionType.SET_SHEET,
     sheet: {
@@ -41,7 +42,6 @@ store.dispatch({
     }
 });
 
-/*
 store.dispatch({
     type: ActionType.SET_FUNCTIONS,
     functions: {

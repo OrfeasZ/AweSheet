@@ -176,42 +176,47 @@ export default class Grid extends Component
 
     onResize()
     {
-        setTimeout(function()
+        const { maxColumn, maxRow } = this.props;
+
+        let rowSizes = this.state.rowSizes;
+        let columnSizes = this.state.columnSizes;
+
+        let minRow = (window.innerHeight / 23) - 4;
+        let minColumn = (window.innerWidth / 100);
+
+        let rows = maxRow > minRow ? maxRow : minRow;
+        let columns = maxColumn > minColumn ? maxColumn : minColumn;
+
+        if (rows > rowSizes.length)
         {
-            const { maxColumn, maxRow } = this.props;
+            let limit = rows - rowSizes.length;
 
-            let rowSizes = this.state.rowSizes;
-            let columnSizes = this.state.columnSizes;
+            for (let i = 0; i < limit; ++i)
+                rowSizes.push(24);
+        }
+        else if (rows < rowSizes.length)
+        {
+            rowSizes = rowSizes.slice(0, rows);
+        }
 
-            let minRow = (window.innerHeight / 23) - 4;
-            let minColumn = (window.innerWidth / 100);
+        if (columns > columnSizes.length)
+        {
+            let limit = columns - columnSizes.length;
 
-            let rows = maxRow > minRow ? maxRow : minRow;
-            let columns = maxColumn > minColumn ? maxColumn : minColumn;
+            for (let i = 0; i < limit; ++i)
+                columnSizes.push(100);
+        }
+        else if (columns < columnSizes.length)
+        {
+            columnSizes = columnSizes.slice(0, columns);
+        }
 
-            if (rows > rowSizes.length) {
-                for (let i = 0; i < rows - rowSizes.length; ++i)
-                    rowSizes.push(24);
-            }
-            else if (rows < rowSizes.length) {
-                rowSizes = rowSizes.slice(0, rows);
-            }
-
-            if (columns > columnSizes.length) {
-                for (let i = 0; i < columns - columnSizes.length; ++i)
-                    columnSizes.push(100);
-            }
-            else if (columns < columnSizes.length) {
-                columnSizes = columnSizes.slice(0, columns);
-            }
-
-            this.setState({
-                windowHeight: window.innerHeight,
-                windowWidth: window.innerWidth,
-                rowSizes: rowSizes,
-                columnSizes: columnSizes
-            });
-        }, 100);
+        this.setState({
+            windowHeight: window.innerHeight,
+            windowWidth: window.innerWidth,
+            rowSizes: rowSizes,
+            columnSizes: columnSizes
+        });
     }
 
     onMouseDown(event)

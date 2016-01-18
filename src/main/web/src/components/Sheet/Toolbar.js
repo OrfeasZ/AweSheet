@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 
+import * as MessageType from '../../constants/MessageTypes'
 import * as ActionType from '../../constants/ActionTypes'
 import * as PopupType from '../../constants/PopupTypes'
 
@@ -14,8 +15,17 @@ export default class Toolbar extends Component
         super(props);
 
         this.state = {
-            editValue: ''
+            editValue: '',
+            originalValue: '',
+            editingCell: null
         };
+
+        if (props.selectedCells.length == 1)
+        {
+            this.state.originalValue = props.cells[props.selectedCells[0][0] + 'x' + props.selectedCells[0][1]] ? props.cells[props.selectedCells[0][0] + 'x' + props.selectedCells[0][1]].value : '';
+            this.state.editValue = this.state.originalValue;
+            this.state.editingCell = [props.selectedCells[0][0],  props.selectedCells[0][1]];
+        }
     }
 
     render()
@@ -50,31 +60,48 @@ export default class Toolbar extends Component
             functionEnabled = true;
         }
 
-        if (editingCell != null || this.state.editValue.length > 0)
+        if (editingCell != null || this.state.editValue != this.state.originalValue)
             buttonsEnabled = true;
-
-        // TODO: Plugin button actions.
-        // TODO: Cell editing via the textbox.
-        // TODO: Cell selection via the textbox.
 
         return (
             <div className="toolbar">
                 <input
                     type="text"
                     className="selected-cell"
-                    value={selectedValue} />
+                    value={selectedValue}
+                    readOnly={true} />
                 <div className="toolbar-buttons">
-                    <ImageButton className="cancel-button" imageClass="times" disabled={!buttonsEnabled} />
-                    <ImageButton className="confirm-button" imageClass="check" disabled={!buttonsEnabled} />
+                    <ImageButton className="cancel-button" imageClass="times" disabled={!buttonsEnabled} onClick={(e) => this.onCancelClick(e)} />
+                    <ImageButton className="confirm-button" imageClass="check" disabled={!buttonsEnabled} onClick={(e) => this.onConfirmClick(e)} />
                     <ImageButton className="function-button" imageClass="bolt" disabled={!functionEnabled} onClick={(e) => this.onFunctionClick(e)} />
                 </div>
                 <input
                     ref="value"
                     type="text"
                     className="value-input"
-                    value={editValue} />
+                    defaultValue={editValue}
+                    onChange={(e) => this.onChange(e)}
+                    onKeyDown={(e) => this.onInputKeyDown(e)}
+                    readOnly={this.state.editingCell === null} />
             </div>
         );
+    }
+
+    componentWillReceiveProps(nextProps)
+    {
+        if (this.props.selectedCells == nextProps.selectedCells && this.props.editingCell == nextProps.editingCell)
+            return;
+
+        if (this.props.selectedCells != nextProps.selectedCells && nextProps.selectedCells.length == 1)
+        {
+            this.refs.value.value = nextProps.cells[nextProps.selectedCells[0][0] + 'x' + nextProps.selectedCells[0][1]] ? nextProps.cells[nextProps.selectedCells[0][0] + 'x' + nextProps.selectedCells[0][1]].value : '';
+
+            this.setState({
+                editValue: this.refs.value.value,
+                originalValue: this.refs.value.value,
+                editingCell: [nextProps.selectedCells[0][0],  nextProps.selectedCells[0][1]]
+            });
+        }
     }
 
     onFunctionClick(e)
@@ -83,5 +110,89 @@ export default class Toolbar extends Component
             type: ActionType.SHOW_POPUP,
             popup: PopupType.FUNCTION_POPUP
         });
+    }
+
+    onCancelClick(e)
+    {
+        this.refs.value.value = this.state.originalValue;
+
+        this.refs.value.blur();
+
+        this.setState({
+            editValue: this.state.originalValue
+        });
+    }
+
+    onConfirmClick(e)
+    {
+        if (this.state.editingCell === null)
+            return;
+
+        this.refs.value.blur();
+
+        Utils.dispatchMessage(MessageType.SET_CELL_VALUE, {
+            sheet: this.props.sheet,
+            cellX: this.state.editingCell[0],
+            cellY: this.state.editingCell[1],
+            value: this.refs.value.value
+        });
+
+        store.dispatch({
+            type: ActionType.SET_EDITING_CELL,
+            sheet: this.props.sheet,
+            cell: null
+        });
+    }
+
+    onChange(e)
+    {
+        this.setState({
+            editValue: this.refs.value.value
+        });
+    }
+
+    onInputKeyDown(event)
+    {
+        if (this.state.editingCell === null)
+            return;
+
+        // ESC pressed; discard changes.
+        if (event.keyCode == 27)
+        {
+            this.refs.value.value = this.state.originalValue;
+
+            this.refs.value.blur();
+
+            this.setState({
+                editValue: this.state.originalValue
+            });
+
+            store.dispatch({
+                type: ActionType.SET_EDITING_CELL,
+                sheet: this.props.sheet,
+                cell: null
+            });
+
+            return;
+        }
+
+        // Enter pressed; persist changes.
+        if (event.keyCode == 13)
+        {
+            this.refs.value.blur();
+
+            Utils.dispatchMessage(MessageType.SET_CELL_VALUE, {
+                sheet: this.props.sheet,
+                cellX: this.state.editingCell[0],
+                cellY: this.state.editingCell[1],
+                value: this.refs.value.value
+            });
+
+            store.dispatch({
+                type: ActionType.SET_EDITING_CELL,
+                sheet: this.props.sheet,
+                cell: null
+            });
+        }
     }
 }
