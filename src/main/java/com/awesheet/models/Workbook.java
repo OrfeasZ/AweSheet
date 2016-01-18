@@ -67,6 +67,10 @@ public class Workbook implements ISerializable, IMessageListener, IDestructible 
 
     @Override
     public void destroy() {
+        for (Sheet sheet : sheets.values()) {
+            sheet.destroy();
+        }
+
         sheets.clear();
 
         // Deregister ourselves from the message manager.

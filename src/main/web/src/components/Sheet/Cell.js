@@ -146,13 +146,6 @@ export default class Cell extends Component
         // Enter pressed; persist changes.
         if (event.keyCode == 13)
         {
-            Utils.dispatchMessage(MessageType.SET_CELL_VALUE, {
-                sheet: this.props.sheet,
-                cellX: this.props.x,
-                cellY: this.props.y,
-                value: event.target.value
-            });
-
             store.dispatch({
                 type: ActionType.SET_EDITING_CELL,
                 sheet: this.props.sheet,

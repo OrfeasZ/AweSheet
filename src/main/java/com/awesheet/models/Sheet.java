@@ -9,6 +9,7 @@ import com.awesheet.interfaces.IMessageListener;
 import com.awesheet.interfaces.ISerializable;
 import com.awesheet.interfaces.IUIBindable;
 import com.awesheet.managers.UIMessageManager;
+import com.awesheet.managers.WorkbookManager;
 import com.awesheet.messages.SetCellValueMessage;
 import com.awesheet.messages.SetSelectedCellsMessage;
 import com.awesheet.messages.UIMessage;
@@ -21,7 +22,12 @@ import com.awesheet.util.BinaryReader;
 import com.awesheet.util.BinaryWriter;
 
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
@@ -279,6 +285,68 @@ public class Sheet implements IUIBindable, IMessageListener, IDestructible, ISer
                 MainFrame.getInstance().getMenuHandler().getEditCopyItem().setEnabled(selectedCells.size() == 1);
                 MainFrame.getInstance().getMenuHandler().getEditCutItem().setEnabled(selectedCells.size() == 1);
                 MainFrame.getInstance().getMenuHandler().getEditPasteItem().setEnabled(selectedCells.size() == 1);
+
+                break;
+            }
+
+            case UIMessageType.COPY_CELL: {
+                if (WorkbookManager.getInstance().getCurrentWorkbook().getSelectedSheet() != this) {
+                    break;
+                }
+
+                if (selectedCells.size() != 1) {
+                    break;
+                }
+
+                Point selectedCell = selectedCells.iterator().next();
+                Cell cell = getCell(selectedCell.x, selectedCell.y);
+
+                StringSelection selection = new StringSelection(cell == null ? "" : cell.getValue());
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                clipboard.setContents(selection, selection);
+
+                break;
+            }
+
+            case UIMessageType.CUT_CELL: {
+                if (WorkbookManager.getInstance().getCurrentWorkbook().getSelectedSheet() != this) {
+                    break;
+                }
+
+                if (selectedCells.size() != 1) {
+                    break;
+                }
+
+                Point selectedCell = selectedCells.iterator().next();
+                Cell cell = getCell(selectedCell.x, selectedCell.y);
+
+                StringSelection selection = new StringSelection(cell == null ? "" : cell.getValue());
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                clipboard.setContents(selection, selection);
+
+                setCellValue(selectedCell.x, selectedCell.y, "", false);
+
+                break;
+            }
+
+            case UIMessageType.PASTE_CELL: {
+                if (WorkbookManager.getInstance().getCurrentWorkbook().getSelectedSheet() != this) {
+                    break;
+                }
+
+                if (selectedCells.size() != 1) {
+                    break;
+                }
+
+                Point selectedCell = selectedCells.iterator().next();
+
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                try {
+                    String value = (String) clipboard.getData(DataFlavor.stringFlavor);
+                    setCellValue(selectedCell.x, selectedCell.y, value, false);
+                } catch (Exception e) {
+                    break;
+                }
 
                 break;
             }

@@ -13,4 +13,7 @@ public class UIMessageType {
     public static final int OPEN_WORKBOOK = 9;
     public static final int CREATE_WORKBOOK = 10;
     public static final int SAVE_CHART_IMAGE = 11;
+    public static final int COPY_CELL = 12;
+    public static final int CUT_CELL = 13;
+    public static final int PASTE_CELL = 14;
 }

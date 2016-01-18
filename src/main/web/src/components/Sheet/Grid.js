@@ -259,6 +259,12 @@ export default class Grid extends Component
                 cells: cells
             });
 
+            store.dispatch({
+                type: ActionType.SET_EDITING_CELL,
+                sheet: this.props.id,
+                cell: null
+            });
+
             Utils.dispatchMessage(MessageType.SET_SELECTED_CELLS, {
                 sheet: this.props.id,
                 cells: cells
@@ -295,6 +301,12 @@ export default class Grid extends Component
                 cells: cells
             });
 
+            store.dispatch({
+                type: ActionType.SET_EDITING_CELL,
+                sheet: this.props.id,
+                cell: null
+            });
+
             Utils.dispatchMessage(MessageType.SET_SELECTED_CELLS, {
                 sheet: this.props.id,
                 cells: cells
@@ -316,6 +328,12 @@ export default class Grid extends Component
                 cells: [
                     [ cellX, cellY ]
                 ]
+            });
+
+            store.dispatch({
+                type: ActionType.SET_EDITING_CELL,
+                sheet: this.props.id,
+                cell: null
             });
 
             Utils.dispatchMessage(MessageType.SET_SELECTED_CELLS, {
@@ -381,7 +399,7 @@ export default class Grid extends Component
         }
 
         // Handle mouse-drag multiple cell selection.
-        if (this.mouseStartElement.className.indexOf('cell') !== -1 && event.target.className.indexOf('cell') !== -1)
+        if (this.mouseStartElement.className.indexOf('cell') !== -1 && event.target.className.indexOf('cell') !== -1 && this.props.editingCell === null)
         {
             let cellX = parseInt(this.mouseStartElement.getAttribute('data-x'), 10);
             let cellY = parseInt(this.mouseStartElement.getAttribute('data-y'), 10);
@@ -431,6 +449,8 @@ export default class Grid extends Component
         if (this.props.hasPopup)
             return;
 
+        const { editingCell } = this.props;
+
         let selectedCell = this.props.selectedCells.length > 0 ? this.props.selectedCells[0] : null;
         let newCell = selectedCell;
 
@@ -444,7 +464,7 @@ export default class Grid extends Component
         else if (event.keyCode == 40 && selectedCell !== null)
             newCell = [selectedCell[0], selectedCell[1] + 1];
 
-        if (selectedCell !== null && newCell[0] >= 0 && newCell[1] >= 0 && (newCell[0] != selectedCell[0] || newCell[1] != selectedCell[1]))
+        if (selectedCell !== null && editingCell === null && newCell[0] >= 0 && newCell[1] >= 0 && (newCell[0] != selectedCell[0] || newCell[1] != selectedCell[1]))
         {
             event.preventDefault();
 
