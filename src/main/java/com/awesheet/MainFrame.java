@@ -2,6 +2,7 @@ package com.awesheet;
 
 import com.awesheet.handlers.*;
 import com.awesheet.managers.*;
+import javafx.application.Platform;
 import org.cef.CefApp;
 import org.cef.CefClient;
 import org.cef.CefSettings;
@@ -20,6 +21,7 @@ public class MainFrame extends JFrame {
     private CefClient cefClient;
     private CefBrowser cefBrowser;
     private Component browserUI;
+
     private MenuHandler menuHandler;
 
     private boolean hasManagers;
@@ -41,6 +43,19 @@ public class MainFrame extends JFrame {
 
         initCEF(args);
         initWindow();
+    }
+
+    public MenuHandler getMenuHandler() {
+        return menuHandler;
+    }
+
+    public void requestExit() {
+        if (hasManagers) {
+            return;
+        }
+
+        Platform.exit();
+        JOptionPane.showMessageDialog(null, "AweSheet failed to initialize and will now exit.\nPlease make sure that your data isn't corrupted and try again.", "Initialization Error", JOptionPane.ERROR_MESSAGE);
     }
 
     public void initManagers() {

@@ -51,7 +51,7 @@ public class WindowManager implements IMessageListener {
     }
 
     public void maximizeWindow() {
-        mainFrame.setState(Frame.MAXIMIZED_BOTH);
+        mainFrame.setExtendedState(mainFrame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
 
     public void showMessageBox(String title, String contents, int messageType) {

@@ -1,5 +1,7 @@
 package com.awesheet.handlers;
 
+import com.awesheet.ui.actions.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.InputEvent;
@@ -14,12 +16,26 @@ public class MenuHandler {
     private JMenu chartMenu;
     private JMenu helpMenu;
 
+    private JMenuItem fileNewItem;
+    private JMenuItem fileOpenItem;
+    private JMenuItem fileSaveItem;
+    private JMenuItem fileSaveAsItem;
+    private JMenuItem fileImportItem;
+    private JMenuItem fileExportItem;
+    private JMenuItem fileExitItem;
+    private JMenuItem editCopyItem;
+    private JMenuItem editCutItem;
+    private JMenuItem editPasteItem;
+    private JMenuItem viewMaximizeItem;
+    private JMenuItem viewMinimizeItem;
+    private JMenuItem chartBarItem;
+    private JMenuItem chartLineItem;
+    private JMenuItem helpDocumentationItem;
+    private JMenuItem helpOnlineDocumentationItem;
+    private JMenuItem helpAboutItem;
+
     public MenuHandler() {
         initMenus();
-    }
-
-    public JMenuBar getMenuBar() {
-        return menuBar;
     }
 
     private void initMenus() {
@@ -45,29 +61,33 @@ public class MenuHandler {
     private void initFileMenu() {
         fileMenu = new JMenu("   File   ");
 
-        JMenuItem fileNewItem = new JMenuItem("New");
+        fileNewItem = new JMenuItem(new NewWorkbookAction());
         fileNewItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
         fileNewItem.setPreferredSize(new Dimension(200, 26));
 
-        JMenuItem fileOpenItem = new JMenuItem("Open");
+        fileOpenItem = new JMenuItem(new OpenWorkbookAction());
         fileOpenItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
         fileOpenItem.setPreferredSize(new Dimension(200, 26));
 
-        JMenuItem fileSaveItem = new JMenuItem("Save");
+        fileSaveItem = new JMenuItem(new SaveWorkbookAction());
         fileSaveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
+        fileSaveItem.setEnabled(false);
         fileSaveItem.setPreferredSize(new Dimension(200, 26));
 
-        JMenuItem fileSaveAsItem = new JMenuItem("Save As...      ");
+        fileSaveAsItem = new JMenuItem(new SaveWorkbookAsAction());
         fileSaveAsItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
+        fileSaveAsItem.setEnabled(false);
         fileSaveAsItem.setPreferredSize(new Dimension(200, 26));
 
-        JMenuItem fileImportItem = new JMenuItem("Import");
+        fileImportItem = new JMenuItem(new ImportCSVAction());
         fileImportItem.setPreferredSize(new Dimension(200, 26));
+        fileImportItem.setEnabled(false);
 
-        JMenuItem fileExportItem = new JMenuItem("Export");
+        fileExportItem = new JMenuItem(new ExportCSVAction());
         fileExportItem.setPreferredSize(new Dimension(200, 26));
+        fileExportItem.setEnabled(false);
 
-        JMenuItem fileExitItem = new JMenuItem("Exit");
+        fileExitItem = new JMenuItem(new ExitApplicationAction());
         fileExitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_MASK));
         fileExitItem.setPreferredSize(new Dimension(200, 26));
 
@@ -85,17 +105,20 @@ public class MenuHandler {
     private void initEditMenu() {
         editMenu = new JMenu("   Edit   ");
 
-        JMenuItem editCopyItem = new JMenuItem("Copy");
+        editCopyItem = new JMenuItem(new CopyCellAction());
         editCopyItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK));
         editCopyItem.setPreferredSize(new Dimension(200, 26));
+        editCopyItem.setEnabled(false);
 
-        JMenuItem editCutItem = new JMenuItem("Cut");
+        editCutItem = new JMenuItem(new CutCellAction());
         editCutItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_MASK));
         editCutItem.setPreferredSize(new Dimension(200, 26));
+        editCutItem.setEnabled(false);
 
-        JMenuItem editPasteItem = new JMenuItem("Paste");
+        editPasteItem = new JMenuItem(new PasteCellAction());
         editPasteItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK));
         editPasteItem.setPreferredSize(new Dimension(200, 26));
+        editPasteItem.setEnabled(false);
 
         editMenu.add(editCopyItem);
         editMenu.add(editCutItem);
@@ -105,29 +128,21 @@ public class MenuHandler {
     private void initViewMenu() {
         viewMenu = new JMenu("   View   ");
 
-        JRadioButtonMenuItem viewSheet1Item = new JRadioButtonMenuItem("Sheet 1");
+        /*JRadioButtonMenuItem viewSheet1Item = new JRadioButtonMenuItem(new SelectSheetAction(null));
         viewSheet1Item.setMnemonic(KeyEvent.VK_F1);
         viewSheet1Item.setSelected(true);
-        viewSheet1Item.setPreferredSize(new Dimension(200, 26));
+        viewSheet1Item.setPreferredSize(new Dimension(200, 26));*/
 
-        JRadioButtonMenuItem viewSheet2Item = new JRadioButtonMenuItem("Sheet 2");
-        viewSheet2Item.setMnemonic(KeyEvent.VK_F2);
-        viewSheet2Item.setPreferredSize(new Dimension(200, 26));
-
-        JRadioButtonMenuItem viewSheet3Item = new JRadioButtonMenuItem("Sheet 3");
-        viewSheet3Item.setMnemonic(KeyEvent.VK_F3);
-        viewSheet3Item.setPreferredSize(new Dimension(200, 26));
-
-        JMenuItem viewMaximizeItem = new JMenuItem("Maximize");
-        viewMaximizeItem.setMnemonic(KeyEvent.VK_F11);
+        viewMaximizeItem = new JMenuItem(new MaximizeWindowAction());
+        viewMaximizeItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F11, 0));
         viewMaximizeItem.setPreferredSize(new Dimension(200, 26));
 
-        JMenuItem viewMinimizeItem = new JMenuItem("Minimize");
+        viewMinimizeItem = new JMenuItem(new MinimizeWindowAction());
         viewMinimizeItem.setPreferredSize(new Dimension(200, 26));
 
-        viewMenu.add(viewSheet1Item);
+        /*viewMenu.add(viewSheet1Item);
         viewMenu.add(viewSheet2Item);
-        viewMenu.add(viewSheet3Item);
+        viewMenu.add(viewSheet3Item);*/
         viewMenu.add(new JSeparator());
         viewMenu.add(viewMaximizeItem);
         viewMenu.add(viewMinimizeItem);
@@ -136,11 +151,13 @@ public class MenuHandler {
     private void initChartMenu() {
         chartMenu = new JMenu("   Chart   ");
 
-        JMenuItem chartBarItem = new JMenuItem("Create Bar Chart");
+        chartBarItem = new JMenuItem(new CreateBarChartAction());
         chartBarItem.setPreferredSize(new Dimension(200, 26));
+        chartBarItem.setEnabled(false);
 
-        JMenuItem chartLineItem = new JMenuItem("Create Line Chart");
+        chartLineItem = new JMenuItem(new CreateLineChartAction());
         chartLineItem.setPreferredSize(new Dimension(200, 26));
+        chartLineItem.setEnabled(false);
 
         chartMenu.add(chartBarItem);
         chartMenu.add(chartLineItem);
@@ -149,19 +166,111 @@ public class MenuHandler {
     private void initHelpMenu() {
         helpMenu = new JMenu("   Help   ");
 
-        JMenuItem helpDocumentationItem = new JMenuItem("Documentation");
-        helpDocumentationItem.setMnemonic(KeyEvent.VK_F12);
+        helpDocumentationItem = new JMenuItem(new ViewDocumentationAction());
+        helpDocumentationItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F12, 0));
         helpDocumentationItem.setPreferredSize(new Dimension(200, 26));
 
-        JMenuItem helpOnlineDocumentationItem = new JMenuItem("Online Documentation");
+        helpOnlineDocumentationItem = new JMenuItem(new ViewOnlineDocumentationAction());
         helpOnlineDocumentationItem.setPreferredSize(new Dimension(200, 26));
 
-        JMenuItem helpAboutItem = new JMenuItem("About AweSheet");
+        helpAboutItem = new JMenuItem(new ViewAboutAction());
         helpAboutItem.setPreferredSize(new Dimension(200, 26));
 
         helpMenu.add(helpDocumentationItem);
         helpMenu.add(helpOnlineDocumentationItem);
         helpMenu.add(new JSeparator());
         helpMenu.add(helpAboutItem);
+    }
+
+    public JMenuBar getMenuBar() {
+        return menuBar;
+    }
+
+    public JMenu getFileMenu() {
+        return fileMenu;
+    }
+
+    public JMenu getEditMenu() {
+        return editMenu;
+    }
+
+    public JMenu getViewMenu() {
+        return viewMenu;
+    }
+
+    public JMenu getChartMenu() {
+        return chartMenu;
+    }
+
+    public JMenu getHelpMenu() {
+        return helpMenu;
+    }
+
+    public JMenuItem getFileNewItem() {
+        return fileNewItem;
+    }
+
+    public JMenuItem getFileOpenItem() {
+        return fileOpenItem;
+    }
+
+    public JMenuItem getFileSaveItem() {
+        return fileSaveItem;
+    }
+
+    public JMenuItem getFileSaveAsItem() {
+        return fileSaveAsItem;
+    }
+
+    public JMenuItem getFileImportItem() {
+        return fileImportItem;
+    }
+
+    public JMenuItem getFileExportItem() {
+        return fileExportItem;
+    }
+
+    public JMenuItem getFileExitItem() {
+        return fileExitItem;
+    }
+
+    public JMenuItem getEditCopyItem() {
+        return editCopyItem;
+    }
+
+    public JMenuItem getEditCutItem() {
+        return editCutItem;
+    }
+
+    public JMenuItem getEditPasteItem() {
+        return editPasteItem;
+    }
+
+    public JMenuItem getViewMaximizeItem() {
+        return viewMaximizeItem;
+    }
+
+    public JMenuItem getViewMinimizeItem() {
+        return viewMinimizeItem;
+    }
+
+    public JMenuItem getChartBarItem() {
+        return chartBarItem;
+    }
+
+    public JMenuItem getChartLineItem() {
+        return chartLineItem;
+    }
+
+    public JMenuItem getHelpDocumentationItem() {
+        return helpDocumentationItem;
+    }
+
+    public JMenuItem getHelpOnlineDocumentationItem() {
+        return helpOnlineDocumentationItem;
+    }
+
+    public JMenuItem getHelpAboutItem() {
+        return helpAboutItem;
     }
 }

@@ -39,6 +39,17 @@ public class Sheet implements IUIBindable, IMessageListener, IDestructible {
         UIMessageManager.getInstance().registerListener(this);
     }
 
+    public Sheet(String name) {
+        this.name = name;
+        cells = new HashMap<String, Cell>();
+        id = 0;
+        maxColumn = 0;
+        maxRow = 0;
+
+        // Register ourselves to the message manager.
+        UIMessageManager.getInstance().registerListener(this);
+    }
+
     @Override
     public void destroy() {
         cells.clear();
@@ -139,6 +150,10 @@ public class Sheet implements IUIBindable, IMessageListener, IDestructible {
 
     public int getMaxRow() {
         return maxRow;
+    }
+
+    public void setWorkbook(Workbook workbook) {
+        this.workbook = workbook;
     }
 
     @Override

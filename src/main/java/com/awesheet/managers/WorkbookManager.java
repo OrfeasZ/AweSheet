@@ -1,11 +1,15 @@
 package com.awesheet.managers;
 
+import com.awesheet.MainFrame;
 import com.awesheet.enums.UIMessageType;
+import com.awesheet.handlers.MenuHandler;
 import com.awesheet.interfaces.IMessageListener;
 import com.awesheet.messages.UIMessage;
 import com.awesheet.enums.OpenResult;
 import com.awesheet.enums.SaveResult;
 import com.awesheet.models.Workbook;
+
+import javax.swing.*;
 
 public class WorkbookManager implements IMessageListener {
     private static WorkbookManager instance = null;
@@ -28,6 +32,12 @@ public class WorkbookManager implements IMessageListener {
     public void init() {
         // Create a new empty workbook.
         currentWorkbook = new Workbook();
+
+        // Enable menu bar items.
+        MainFrame.getInstance().getMenuHandler().getFileSaveItem().setEnabled(true);
+        MainFrame.getInstance().getMenuHandler().getFileSaveAsItem().setEnabled(true);
+        MainFrame.getInstance().getMenuHandler().getFileImportItem().setEnabled(true);
+        MainFrame.getInstance().getMenuHandler().getFileExportItem().setEnabled(true);
     }
 
     public int saveWorkbook() {

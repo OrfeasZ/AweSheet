@@ -1,5 +1,6 @@
 package com.awesheet.handlers;
 
+import com.awesheet.managers.FileManager;
 import org.cef.callback.CefCallback;
 import org.cef.handler.CefResourceHandlerAdapter;
 import org.cef.misc.IntRef;
@@ -7,10 +8,6 @@ import org.cef.misc.StringRef;
 import org.cef.network.CefRequest;
 import org.cef.network.CefResponse;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
@@ -20,6 +17,7 @@ public class MainSchemeHandler extends CefResourceHandlerAdapter {
     public static final String scheme = "awe";
     public static final String domain = "sheet";
 
+    private boolean hasData;
     private byte[] fileData;
     private String mimeType;
     private int currentDataOffset = 0;
@@ -31,17 +29,20 @@ public class MainSchemeHandler extends CefResourceHandlerAdapter {
     @Override
     public synchronized boolean processRequest(CefRequest request,
                                                CefCallback callback) {
+        hasData = false;
         URI uri;
 
         // Parse the URI.
         try {
             uri = new URI(request.getURL());
         } catch (URISyntaxException e) {
-            return false;
+            callback.Continue();
+            return true;
         }
 
         if (!uri.getHost().equals("sheet")) {
-            return false;
+            callback.Continue();
+            return true;
         }
 
         // Form the file path.
@@ -56,7 +57,8 @@ public class MainSchemeHandler extends CefResourceHandlerAdapter {
         }
 
         if (path.length() == 0) {
-            return false;
+            callback.Continue();
+            return true;
         }
 
         String workingDir = System.getProperty("user.dir");
@@ -67,33 +69,16 @@ public class MainSchemeHandler extends CefResourceHandlerAdapter {
 
         // Prevent directory traversal.
         if (!finalPath.startsWith(webDir)) {
-            return false;
+            callback.Continue();
+            return true;
         }
 
         // Try to read the file.
-        File file = new File(finalPath.toString());
-        FileInputStream inputStream = null;
+        fileData = FileManager.getInstance().readFile(finalPath.toString());
 
-        try {
-            inputStream = new FileInputStream(file);
-
-            fileData = new byte[(int)file.length()];
-            inputStream.read(fileData);
-        }
-        catch (FileNotFoundException e) {
-            return false;
-        }
-        catch (IOException ioe) {
-            return false;
-        }
-        finally {
-            // Close the file stream.
-            try {
-                if (inputStream != null) {
-                    inputStream.close();
-                }
-            }
-            catch (IOException ignored) {}
+        if (fileData == null) {
+            callback.Continue();
+            return true;
         }
 
         // Get the file extension.
@@ -142,6 +127,7 @@ public class MainSchemeHandler extends CefResourceHandlerAdapter {
             mimeType = "application/octet-stream";
         }
 
+        hasData = true;
         callback.Continue();
         return true;
     }
@@ -150,6 +136,12 @@ public class MainSchemeHandler extends CefResourceHandlerAdapter {
     public void getResponseHeaders(CefResponse response,
                                    IntRef responseLength,
                                    StringRef redirectUrl) {
+        if (!hasData) {
+            responseLength.set(0);
+            response.setStatus(404);
+            return;
+        }
+
         responseLength.set(fileData.length);
         response.setMimeType(mimeType);
         response.setStatus(200);
@@ -160,6 +152,11 @@ public class MainSchemeHandler extends CefResourceHandlerAdapter {
                                              int bytesToRead,
                                              IntRef bytesRead,
                                              CefCallback callback) {
+        if (!hasData) {
+            bytesRead.set(0);
+            return true;
+        }
+
         if (currentDataOffset >= fileData.length) {
             currentDataOffset = 0;
             bytesRead.set(0);

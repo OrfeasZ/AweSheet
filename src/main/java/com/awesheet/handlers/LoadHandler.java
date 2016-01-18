@@ -17,7 +17,10 @@ public class LoadHandler implements CefLoadHandler {
 
     @Override
     public void onLoadEnd(CefBrowser cefBrowser, int frame, int httpStatusCode) {
+        // If we failed to load then request exit.
+        // If managers are not initialized the application will exit.
         if (httpStatusCode != 200) {
+            MainFrame.getInstance().requestExit();
             return;
         }
 
