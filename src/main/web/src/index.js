@@ -22,7 +22,8 @@ window.store = store;
 
 // TODO: Remove after testing.
 import * as ActionType from './constants/ActionTypes'
-import * as PopupType from './constants/PopupType'
+import * as PopupType from './constants/PopupTypes'
+import * as ChartType from './constants/ChartTypes'
 
 store.dispatch({
     type: ActionType.SET_SHEET,
@@ -42,10 +43,9 @@ store.dispatch({
 
 store.dispatch({
     type: ActionType.SHOW_POPUP,
-    popup: PopupType.MESSAGE_POPUP,
+    popup: PopupType.CREATE_CHART_POPUP,
     data: {
-        message: 'Hello world!',
-        title: 'Hello!'
+        type: ChartType.BAR_CHART_TYPE
     }
 });
 

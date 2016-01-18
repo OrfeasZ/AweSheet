@@ -11,4 +11,7 @@ public class UIActionType {
     public static final int SET_MAX_COLUMN = 7;
     public static final int SET_MAX_ROW = 8;
     public static final int CLEAR_SHEETS = 9;
+    public static final int SHOW_POPUP = 10;
+    public static final int CLOSE_POPUP = 11;
+    public static final int SET_POPUP_DATA = 12;
 }

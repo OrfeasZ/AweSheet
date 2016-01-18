@@ -1,17 +1,22 @@
 package com.awesheet.models;
 
 import com.awesheet.actions.*;
+import com.awesheet.actions.popups.ChartPopup;
+import com.awesheet.enums.UIActionType;
 import com.awesheet.enums.UIMessageType;
+import com.awesheet.enums.UIPopupType;
 import com.awesheet.interfaces.IDestructible;
 import com.awesheet.interfaces.IMessageListener;
 import com.awesheet.interfaces.ISerializable;
 import com.awesheet.managers.UIMessageManager;
-import com.awesheet.messages.DeleteSheetMessage;
-import com.awesheet.messages.SelectSheetMessage;
-import com.awesheet.messages.UIMessage;
+import com.awesheet.messages.*;
+import com.awesheet.models.charts.BarChart;
+import com.awesheet.models.charts.LineChart;
 import com.awesheet.ui.UISheet;
+import com.awesheet.ui.actions.CreateLineChartAction;
 import com.awesheet.util.BinaryReader;
 import com.awesheet.util.BinaryWriter;
+import org.apache.commons.codec.binary.Base64;
 
 import java.awt.*;
 import java.io.ByteArrayOutputStream;
@@ -255,6 +260,52 @@ public class Workbook implements ISerializable, IMessageListener, IDestructible 
             case UIMessageType.DELETE_SHEET: {
                 DeleteSheetMessage uiMessage = (DeleteSheetMessage) message;
                 removeSheet(uiMessage.getSheet());
+                break;
+            }
+
+            case UIMessageType.CREATE_BAR_CHART: {
+                CreateBarChartMessage uiMessage = (CreateBarChartMessage) message;
+
+                // Get selected cells.
+                Cell selectedCells[] = getSelectedSheet().collectSelectedCells();
+
+                BarChart chart = new BarChart(selectedCells);
+                chart.setNameX(uiMessage.getXaxis());
+                chart.setNameY(uiMessage.getYaxis());
+                chart.setTitle(uiMessage.getTitle());
+
+                if (!chart.generateImageData()) {
+                    // TODO: Show error message.
+                    break;
+                }
+
+                UIMessageManager.getInstance().dispatchAction(
+                        new ShowPopupAction<ChartPopup>(UIPopupType.VIEW_CHART_POPUP,
+                                new ChartPopup(new Base64().encodeAsString(chart.getImageData()))));
+
+                break;
+            }
+
+            case UIMessageType.CREATE_LINE_CHART: {
+                CreateLineChartMessage uiMessage = (CreateLineChartMessage) message;
+
+                // Get selected cells.
+                Cell selectedCells[] = getSelectedSheet().collectSelectedCells();
+
+                LineChart chart = new LineChart(selectedCells);
+                chart.setNameX(uiMessage.getXaxis());
+                chart.setNameY(uiMessage.getYaxis());
+                chart.setTitle(uiMessage.getTitle());
+
+                if (!chart.generateImageData()) {
+                    // TODO: Show error message.
+                    break;
+                }
+
+                UIMessageManager.getInstance().dispatchAction(
+                        new ShowPopupAction<ChartPopup>(UIPopupType.VIEW_CHART_POPUP,
+                                new ChartPopup(new Base64().encodeAsString(chart.getImageData()))));
+
                 break;
             }
         }

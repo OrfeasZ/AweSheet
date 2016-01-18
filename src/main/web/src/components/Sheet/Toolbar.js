@@ -38,11 +38,11 @@ export default class Toolbar extends Component
                     maxCell = cell;
             }
 
-            selectedValue = minCell[1] + Utils.getColumnName(minCell[0]) + ' x ' + maxCell[1] + Utils.getColumnName(maxCell[0]);
+            selectedValue = Utils.getColumnName(minCell[0]) + (minCell[1] + 1) + ' x ' + Utils.getColumnName(maxCell[0]) + (maxCell[1] + 1);
         }
         else if (selectedCells.length == 1)
         {
-            selectedValue = selectedCells[0][1] + Utils.getColumnName(selectedCells[0][0]);
+            selectedValue = Utils.getColumnName(selectedCells[0][0]) + (selectedCells[0][1] + 1);
             editValue = cells[selectedCells[0][0] + 'x' + selectedCells[0][1]] ? cells[selectedCells[0][0] + 'x' + selectedCells[0][1]].value : '';
             functionEnabled = true;
         }

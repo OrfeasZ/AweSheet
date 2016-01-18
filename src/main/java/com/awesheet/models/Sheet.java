@@ -230,7 +230,7 @@ public class Sheet implements IUIBindable, IMessageListener, IDestructible, ISer
             }
         }
 
-        return (Cell[]) collectedCells.toArray();
+        return collectedCells.toArray(new Cell[collectedCells.size()]);
     }
 
     @Override

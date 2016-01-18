@@ -133,7 +133,7 @@ public abstract class Chart {
                     } catch (NumberFormatException ignored) {}
                 }
 
-                dataset.addValue(numberValue, groupName, labels.get(y));
+                dataset.addValue(numberValue, groupName, labels.get(y - minY - 1));
             }
         }
 

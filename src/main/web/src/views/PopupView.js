@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 
-import * as PopupType from '../constants/PopupType'
+import * as PopupType from '../constants/PopupTypes'
 import * as ActionType from '../constants/ActionTypes'
 
 import CreateChartView from './CreateChartView'

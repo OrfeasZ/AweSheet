@@ -56,6 +56,14 @@ export default class Utils
                 className = 'SetSelectedCellsMessage';
                 break;
 
+            case MessageType.CREATE_BAR_CHART:
+                className = 'CreateBarChartMessage';
+                break;
+
+            case MessageType.CREATE_LINE_CHART:
+                className = 'CreateLineChartMessage';
+                break;
+
             default:
                 className = 'UIMessage';
                 break;

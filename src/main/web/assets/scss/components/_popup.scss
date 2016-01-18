@@ -30,6 +30,38 @@
     .content {
       padding: 8px 8px;
 
+      .chart-view {
+        border: 1px solid #aaa;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+
+        span {
+          width: 120px;
+          display: inline-block;
+          vertical-align: top;
+          line-height: 24px;
+        }
+
+        input {
+          display: inline-block;
+          vertical-align: top;
+          height: 24px;
+          outline: 0;
+          border: 1px solid #cbcbcb;
+          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+          font-size: 12px;
+          padding: 0 8px;
+          width: 370px;
+
+          &:active, &:focus {
+            border: 1px solid #3193c5;
+          }
+        }
+      }
+
       .popup-button {
         margin-top: 10px;
         text-align: center;
@@ -40,6 +72,7 @@
         padding: 0 10px;
         cursor: default;
         -webkit-user-select: none;
+        margin-right: 8px;
 
         &:hover {
           border: 1px solid #3193c5;

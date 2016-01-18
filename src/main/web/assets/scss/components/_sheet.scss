@@ -13,6 +13,10 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 12px;
     vertical-align: top;
+
+    &:active, &:focus {
+      border: 1px solid #3193c5;
+    }
   }
 
   .selected-cell {
