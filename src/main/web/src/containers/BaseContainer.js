@@ -12,7 +12,7 @@ class BaseContainer extends Component
 
         return (
             <div className="app-view">
-                <WorkbookView sheets={workbook.sheets} activeSheet={workbook.activeSheet} sheetProps={workbook.sheetProps} />
+                <WorkbookView sheets={workbook.sheets} activeSheet={workbook.activeSheet} sheetProps={workbook.sheetProps} hasPopup={popup.hasPopup} />
                 <PopupView popup={popup} awefunc={awefunc} help={help} workbook={workbook} />
             </div>
         );

@@ -13,7 +13,7 @@ export default class WorkbookView extends Component
 {
     render()
     {
-        const { sheets, activeSheet, sheetProps } = this.props;
+        const { sheets, activeSheet, sheetProps, hasPopup } = this.props;
 
         var sheetKeys = Object.keys(sheets);
 
@@ -24,7 +24,7 @@ export default class WorkbookView extends Component
 
         return (
             <div className="workbook-view">
-                <SheetView sheet={sheets[activeSheet]} sheetProps={sheetProps[activeSheet]} />
+                <SheetView sheet={sheets[activeSheet]} sheetProps={sheetProps[activeSheet]} hasPopup={hasPopup} />
                 <Tabs onCreateSheet={() => this.onCreateSheet()}>
                     {sheetKeys.map(function(value) {
                         let sheet = sheets[value];

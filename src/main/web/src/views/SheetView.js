@@ -7,7 +7,7 @@ export default class SheetView extends Component
 {
     render()
     {
-        const { sheet, sheetProps } = this.props;
+        const { sheet, sheetProps, hasPopup } = this.props;
 
         return (
             <div className="sheet-container">
@@ -22,7 +22,8 @@ export default class SheetView extends Component
                         selectedCells={sheetProps.selectedCells}
                         editingCell={sheetProps.editingCell}
                         maxColumn={sheet.maxColumn}
-                        maxRow={sheet.maxRow} />
+                        maxRow={sheet.maxRow}
+                        hasPopup={hasPopup} />
                 </div>
             </div>
         );

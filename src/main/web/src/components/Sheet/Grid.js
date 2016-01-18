@@ -156,12 +156,14 @@ export default class Grid extends Component
     {
         this.refs.grid.addEventListener('scroll', (e) => this.onScroll(e));
         window.addEventListener('resize', () => this.onResize());
+        window.addEventListener('keydown', (e) => this.onKeyDown(e));
     }
 
     componentWillUnmount()
     {
         this.refs.grid.removeEventListener('scroll', (e) => this.onScroll(e));
         window.removeEventListener('resize', () => this.onResize());
+        window.removeEventListener('keydown', (e) => this.onKeyDown(e));
     }
 
     onScroll(event)
@@ -174,43 +176,42 @@ export default class Grid extends Component
 
     onResize()
     {
-        const { maxColumn, maxRow } = this.props;
-
-        let rowSizes = this.state.rowSizes;
-        let columnSizes = this.state.columnSizes;
-
-        let minRow = (window.innerHeight / 23) - 4;
-        let minColumn = (window.innerWidth / 100);
-
-        let rows = maxRow > minRow ? maxRow : minRow;
-        let columns = maxColumn > minColumn ? maxColumn : minColumn;
-
-        if (rows > rowSizes.length)
+        setTimeout(function()
         {
-            for (let i = 0; i < rows - rowSizes.length; ++i)
-                rowSizes.push(24);
-        }
-        else if (rows < rowSizes.length)
-        {
-            rowSizes = rowSizes.slice(0, rows);
-        }
+            const { maxColumn, maxRow } = this.props;
 
-        if (columns > columnSizes.length)
-        {
-            for (let i = 0; i < columns - columnSizes.length; ++i)
-                columnSizes.push(100);
-        }
-        else if (columns < columnSizes.length)
-        {
-            columnSizes = columnSizes.slice(0, columns);
-        }
+            let rowSizes = this.state.rowSizes;
+            let columnSizes = this.state.columnSizes;
 
-        this.setState({
-            windowHeight: window.innerHeight,
-            windowWidth: window.innerWidth,
-            rowSizes: rowSizes,
-            columnSizes: columnSizes
-        });
+            let minRow = (window.innerHeight / 23) - 4;
+            let minColumn = (window.innerWidth / 100);
+
+            let rows = maxRow > minRow ? maxRow : minRow;
+            let columns = maxColumn > minColumn ? maxColumn : minColumn;
+
+            if (rows > rowSizes.length) {
+                for (let i = 0; i < rows - rowSizes.length; ++i)
+                    rowSizes.push(24);
+            }
+            else if (rows < rowSizes.length) {
+                rowSizes = rowSizes.slice(0, rows);
+            }
+
+            if (columns > columnSizes.length) {
+                for (let i = 0; i < columns - columnSizes.length; ++i)
+                    columnSizes.push(100);
+            }
+            else if (columns < columnSizes.length) {
+                columnSizes = columnSizes.slice(0, columns);
+            }
+
+            this.setState({
+                windowHeight: window.innerHeight,
+                windowWidth: window.innerWidth,
+                rowSizes: rowSizes,
+                columnSizes: columnSizes
+            });
+        }, 100);
     }
 
     onMouseDown(event)
@@ -418,5 +419,40 @@ export default class Grid extends Component
         this.mouseDown = false;
         this.resizingColumn = false;
         this.resizingRow = false;
+    }
+
+    onKeyDown(event)
+    {
+        if (this.props.hasPopup)
+            return;
+
+        let selectedCell = this.props.selectedCells.length > 0 ? this.props.selectedCells[0] : null;
+        let newCell = selectedCell;
+
+        // Handle arrow-based navigation.
+        if (event.keyCode == 37 && selectedCell !== null)
+            newCell = [selectedCell[0] - 1, selectedCell[1]];
+        else if (event.keyCode == 38 && selectedCell !== null)
+            newCell = [selectedCell[0], selectedCell[1] - 1];
+        else if (event.keyCode == 39 && selectedCell !== null)
+            newCell = [selectedCell[0] + 1, selectedCell[1]];
+        else if (event.keyCode == 40 && selectedCell !== null)
+            newCell = [selectedCell[0], selectedCell[1] + 1];
+
+        if (selectedCell !== null && newCell[0] >= 0 && newCell[1] >= 0 && (newCell[0] != selectedCell[0] || newCell[1] != selectedCell[1]))
+        {
+            event.preventDefault();
+
+            store.dispatch({
+                type: ActionType.SET_SELECTED_CELLS,
+                sheet: this.props.id,
+                cells: [ newCell ]
+            });
+
+            Utils.dispatchMessage(MessageType.SET_SELECTED_CELLS, {
+                sheet: this.props.id,
+                cells: [ newCell ]
+            });
+        }
     }
 }
