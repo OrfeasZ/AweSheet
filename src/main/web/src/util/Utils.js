@@ -52,6 +52,10 @@ export default class Utils
                 className = 'DeleteSheetMessage';
                 break;
 
+            case MessageType.SET_SELECTED_CELLS:
+                className = 'SetSelectedCellsMessage';
+                break;
+
             default:
                 className = 'UIMessage';
                 break;

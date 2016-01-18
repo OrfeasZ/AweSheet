@@ -1,6 +1,9 @@
 import React, { Component, PropTypes } from 'react'
-import * as ActionType from '../../constants/ActionTypes'
 
+import * as ActionType from '../../constants/ActionTypes'
+import * as MessageType from '../../constants/MessageTypes'
+
+import Utils from '../../util/Utils'
 import Column from './Column'
 import Cell from './Cell'
 import Row from './Row'
@@ -249,6 +252,11 @@ export default class Grid extends Component
                 sheet: this.props.id,
                 cells: cells
             });
+            
+            Utils.dispatchMessage(MessageType.SET_SELECTED_CELLS, {
+                sheet: this.props.id,
+                cells: cells
+            });
 
             return;
         }
@@ -281,6 +289,11 @@ export default class Grid extends Component
                 cells: cells
             });
 
+            Utils.dispatchMessage(MessageType.SET_SELECTED_CELLS, {
+                sheet: this.props.id,
+                cells: cells
+            });
+
             return;
         }
 
@@ -293,6 +306,13 @@ export default class Grid extends Component
             // Select cell.
             store.dispatch({
                 type: ActionType.SET_SELECTED_CELLS,
+                sheet: this.props.id,
+                cells: [
+                    [ cellX, cellY ]
+                ]
+            });
+
+            Utils.dispatchMessage(MessageType.SET_SELECTED_CELLS, {
                 sheet: this.props.id,
                 cells: [
                     [ cellX, cellY ]
@@ -377,6 +397,11 @@ export default class Grid extends Component
 
             store.dispatch({
                 type: ActionType.SET_SELECTED_CELLS,
+                sheet: this.props.id,
+                cells: cells
+            });
+
+            Utils.dispatchMessage(MessageType.SET_SELECTED_CELLS, {
                 sheet: this.props.id,
                 cells: cells
             });

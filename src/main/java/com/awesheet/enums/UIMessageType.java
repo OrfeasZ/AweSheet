@@ -5,4 +5,5 @@ public class UIMessageType {
     public static final int CREATE_SHEET = 1;
     public static final int SELECT_SHEET = 2;
     public static final int DELETE_SHEET = 3;
+    public static final int SET_SELECTED_CELLS = 4;
 }

@@ -1,15 +1,15 @@
 package com.awesheet.models;
 
-import com.awesheet.actions.RemoveCellAction;
-import com.awesheet.actions.SetCellAction;
-import com.awesheet.actions.SetMaxColumnAction;
-import com.awesheet.actions.SetMaxRowAction;
+import com.awesheet.MainFrame;
+import com.awesheet.actions.*;
 import com.awesheet.enums.UIMessageType;
+import com.awesheet.handlers.MenuHandler;
 import com.awesheet.interfaces.IDestructible;
 import com.awesheet.interfaces.IMessageListener;
 import com.awesheet.interfaces.IUIBindable;
 import com.awesheet.managers.UIMessageManager;
 import com.awesheet.messages.SetCellValueMessage;
+import com.awesheet.messages.SetSelectedCellsMessage;
 import com.awesheet.messages.UIMessage;
 import com.awesheet.models.cells.FunctionCell;
 import com.awesheet.models.cells.ValueCell;
@@ -17,12 +17,12 @@ import com.awesheet.ui.UICell;
 import com.awesheet.ui.UIModel;
 import com.awesheet.ui.UISheet;
 
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.*;
 
 public class Sheet implements IUIBindable, IMessageListener, IDestructible {
     protected String name;
     protected HashMap<String, Cell> cells;
+    protected HashSet<String> selectedCells;
     protected int id;
     protected int maxColumn;
     protected int maxRow;
@@ -32,6 +32,7 @@ public class Sheet implements IUIBindable, IMessageListener, IDestructible {
         this.workbook = workbook;
         this.name = name;
         cells = new HashMap<String, Cell>();
+        selectedCells = new HashSet<String>();
         id = 0;
         maxColumn = 0;
         maxRow = 0;
@@ -43,6 +44,7 @@ public class Sheet implements IUIBindable, IMessageListener, IDestructible {
     public Sheet(String name) {
         this.name = name;
         cells = new HashMap<String, Cell>();
+        selectedCells = new HashSet<String>();
         id = 0;
         maxColumn = 0;
         maxRow = 0;
@@ -69,6 +71,14 @@ public class Sheet implements IUIBindable, IMessageListener, IDestructible {
         }
 
         return cells.get(x + "x" + y);
+    }
+
+    public Cell getCell(String cell) {
+        if (!cells.containsKey(cell)) {
+            return null;
+        }
+
+        return cells.get(cell);
     }
 
     public void setCellValue(int x, int y, String value) {
@@ -165,6 +175,24 @@ public class Sheet implements IUIBindable, IMessageListener, IDestructible {
         this.workbook = workbook;
     }
 
+    public HashSet<String> getSelectedCells() {
+        return selectedCells;
+    }
+
+    public Cell[] collectSelectedCells() {
+        List<Cell> collectedCells = new ArrayList<Cell>();
+
+        for (String selectedCell : selectedCells) {
+            Cell cell = getCell(selectedCell);
+
+            if (cell != null) {
+                collectedCells.add(cell);
+            }
+        }
+
+        return (Cell[]) collectedCells.toArray();
+    }
+
     @Override
     public UIModel bind() {
         UISheet bindable = new UISheet(name, id, maxColumn, maxRow);
@@ -186,6 +214,27 @@ public class Sheet implements IUIBindable, IMessageListener, IDestructible {
                 if (uiMessage.getSheet() == id) {
                     setCellValue(uiMessage.cellX(), uiMessage.cellY(), uiMessage.getValue());
                 }
+
+                break;
+            }
+
+            case UIMessageType.SET_SELECTED_CELLS: {
+                SetSelectedCellsMessage uiMessage = (SetSelectedCellsMessage) message;
+
+                // We only care about messages directed to us.
+                if (uiMessage.getSheet() != id) {
+                    break;
+                }
+
+                // Update our selected cells.
+                selectedCells.clear();
+
+                for (int cell[] : uiMessage.getCells()) {
+                    selectedCells.add(cell[0] + "x" + cell[1]);
+                }
+
+                MainFrame.getInstance().getMenuHandler().getChartBarItem().setEnabled(selectedCells.size() > 4);
+                MainFrame.getInstance().getMenuHandler().getChartLineItem().setEnabled(selectedCells.size() > 4);
 
                 break;
             }
