@@ -12,6 +12,7 @@ public class BarChart extends Chart {
 
     @Override
     public boolean generateImageData() {
+        // TODO
         return false;
     }
 }

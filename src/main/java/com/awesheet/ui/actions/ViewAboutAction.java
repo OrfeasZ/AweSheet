@@ -10,6 +10,6 @@ public class ViewAboutAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        // TODO
     }
 }

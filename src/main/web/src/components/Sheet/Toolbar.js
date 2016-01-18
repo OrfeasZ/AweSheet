@@ -50,6 +50,10 @@ export default class Toolbar extends Component
         if (editingCell != null || this.state.editValue.length > 0)
             buttonsEnabled = true;
 
+        // TODO: Plugin button actions.
+        // TODO: Cell editing via the textbox.
+        // TODO: Cell selection via the textbox.
+
         return (
             <div className="toolbar">
                 <input
