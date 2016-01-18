@@ -99,13 +99,18 @@ public class Workbook implements ISerializable, IMessageListener, IDestructible 
     }
 
     public void replaceSheet(int id, Sheet newSheet) {
+        String sheetName = newSheet.getName();
+
         // Destroy the sheet if it already exists.
         if (sheets.containsKey(id)) {
+            sheetName = sheets.get(id).getName();
             sheets.get(id).destroy();
         }
 
         // Set the ID of the new sheet and add to list.
         newSheet.setID(id);
+        newSheet.setName(sheetName);
+
         sheets.put(newSheet.getID(), newSheet);
 
         // Notify UI of changes.
@@ -122,6 +127,10 @@ public class Workbook implements ISerializable, IMessageListener, IDestructible 
 
         // Notify UI of changes.
         UIMessageManager.getInstance().dispatchAction(new SetActiveSheetAction(id));
+    }
+
+    public Sheet getSelectedSheet() {
+        return getSheet(selectedSheet);
     }
 
     public boolean isValid() {

@@ -4,12 +4,14 @@ import com.awesheet.interfaces.IMessageListener;
 import com.awesheet.messages.UIMessage;
 import com.awesheet.models.HelpArticle;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class HelpManager implements IMessageListener {
     private static HelpManager instance = null;
 
-    protected HashSet<HelpArticle> articles;
+    protected HashMap<Integer, HelpArticle> articles;
 
     public static HelpManager getInstance() {
         if (instance == null) {
@@ -20,21 +22,27 @@ public class HelpManager implements IMessageListener {
     }
 
     protected HelpManager() {
-        articles = new HashSet<HelpArticle>();
+        articles = new HashMap<Integer, HelpArticle>();
 
         UIMessageManager.getInstance().registerListener(this);
+        // TODO: Help articles.
     }
 
     public String getOnlineURL() {
-        return "";
+        // TODO
+        return "http://google.com";
     }
 
-    public HashSet<HelpArticle> getHelpArticles() {
-        return articles;
+    public Collection<HelpArticle> getHelpArticles() {
+        return articles.values();
     }
 
     public HelpArticle getHelpArticle(int id) {
-        return null;
+        if (!articles.containsKey(id)) {
+            return null;
+        }
+
+        return articles.get(id);
     }
 
     @Override

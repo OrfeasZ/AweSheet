@@ -17,6 +17,7 @@ import com.awesheet.ui.UICell;
 import com.awesheet.ui.UIModel;
 import com.awesheet.ui.UISheet;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 public class Sheet implements IUIBindable, IMessageListener, IDestructible {
@@ -83,16 +84,16 @@ public class Sheet implements IUIBindable, IMessageListener, IDestructible {
             } else {
                 Cell firstCell = cells.values().iterator().next();
 
-                maxColumn = firstCell.x;
-                maxRow = firstCell.y;
+                maxColumn = firstCell.x + 1;
+                maxRow = firstCell.y + 1;
 
                 for (Cell cell : cells.values()) {
-                    if (cell.x > maxColumn) {
-                        maxColumn = cell.x;
+                    if (cell.x + 1 > maxColumn) {
+                        maxColumn = cell.x + 1;
                     }
 
-                    if (cell.y > maxRow) {
-                        maxRow = cell.y;
+                    if (cell.y + 1 > maxRow) {
+                        maxRow = cell.y + 1;
                     }
                 }
             }
@@ -120,13 +121,13 @@ public class Sheet implements IUIBindable, IMessageListener, IDestructible {
         }
 
         // Check if we need to grow the grid.
-        if (x > maxColumn) {
-            maxColumn = x;
+        if (x + 1 > maxColumn) {
+            maxColumn = x + 1;
             UIMessageManager.getInstance().dispatchAction(new SetMaxColumnAction(id, maxColumn));
         }
 
-        if (y > maxRow) {
-            maxRow = y;
+        if (y + 1 > maxRow) {
+            maxRow = y + 1;
             UIMessageManager.getInstance().dispatchAction(new SetMaxRowAction(id, maxRow));
         }
 
@@ -140,6 +141,10 @@ public class Sheet implements IUIBindable, IMessageListener, IDestructible {
         this.id = id;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public int getID() {
         return id;
     }
@@ -150,6 +155,10 @@ public class Sheet implements IUIBindable, IMessageListener, IDestructible {
 
     public int getMaxRow() {
         return maxRow;
+    }
+
+    public Collection<Cell> getCells() {
+        return cells.values();
     }
 
     public void setWorkbook(Workbook workbook) {

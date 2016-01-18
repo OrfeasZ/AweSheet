@@ -90,8 +90,8 @@
       position: relative;
       padding-left: 30px;
 
-      &.empty {
-
+      &.empty-row {
+        height: 25px;
       }
 
       &.selected {
@@ -224,10 +224,15 @@
           .cell-input {
             display: block;
           }
+
+          .cell-value {
+            display: none;
+          }
         }
 
         .cell-value {
-
+          text-overflow: ellipsis;
+          overflow: hidden;
         }
       }
     }

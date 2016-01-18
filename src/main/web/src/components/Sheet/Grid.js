@@ -140,7 +140,7 @@ export default class Grid extends Component
                     onMouseDown={(e) => this.onMouseDown(e)}
                     onMouseMove={(e) => this.onMouseMove(e)}
                     onMouseUp={(e) => this.onMouseUp(e)}>
-                    <div className="row">
+                    <div className="row empty-row" key={-1}>
                         {head}
                     </div>
                     {body}

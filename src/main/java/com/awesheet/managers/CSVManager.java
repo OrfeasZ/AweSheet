@@ -1,13 +1,18 @@
 package com.awesheet.managers;
 
+import com.awesheet.models.Cell;
 import com.awesheet.models.Sheet;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CSVManager {
     private static CSVManager instance = null;
@@ -41,8 +46,7 @@ public class CSVManager {
         // Populate its cells.
         for (CSVRecord record : parser) {
             for (int x = 0; x < record.size(); ++x) {
-                System.out.println(record.getRecordNumber());
-                sheet.setCellValue(x, (int) record.getRecordNumber(), record.get(x));
+                sheet.setCellValue(x, (int) record.getRecordNumber() - 1, record.get(x));
             }
         }
 
@@ -50,6 +54,41 @@ public class CSVManager {
     }
 
     public boolean exportSheet(Sheet sheet, String path) {
-        return false;
+        FileWriter writer = null;
+        CSVPrinter printer = null;
+
+        try {
+            writer = new FileWriter(path);
+            printer = new CSVPrinter(writer, CSVFormat.RFC4180);
+
+            // Write records.
+            for (int y = 0; y < sheet.getMaxRow(); ++y) {
+                List<String> values = new ArrayList<String>();
+
+                for (int x = 0; x < sheet.getMaxColumn(); ++x) {
+                    Cell cell = sheet.getCell(x, y);
+                    values.add(cell == null ? "" : cell.getDisplayValue());
+                }
+
+                printer.printRecord(values);
+            }
+        } catch (Exception e) {
+            return false;
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.flush();
+                    writer.close();
+                }
+
+                if (printer != null) {
+                    printer.close();
+                }
+            }
+            catch (Exception ignored) {
+            }
+        }
+
+        return true;
     }
 }
