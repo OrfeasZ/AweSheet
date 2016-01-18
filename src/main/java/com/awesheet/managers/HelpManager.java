@@ -109,8 +109,7 @@ public class HelpManager {
     }
 
     public String getOnlineURL() {
-        // TODO
-        return "http://google.com";
+        return "http://orfeasz.github.io/AweSheet/docs/index.html";
     }
 
     public Collection<HelpArticle> getHelpArticles() {
