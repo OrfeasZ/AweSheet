@@ -1,4 +1,6 @@
 # Awesome Sheet
+![AweSheet](http://i.nofate.me/uRjKMvf0.png)
+
 Awesome Sheet (stylized **AweSheet**) is an open-source spreadsheet editing and management application which aims to assist individuals and organizations when performing logistic tasks, by not only providing them with a variety of advanced tools and functions, but by also greatly enhancing user experience and productivity through a robust and simple-to-use user interface.
 
 With AweSheet, users can easily access, create, and edit their spreadsheets. A spreadsheet is a table of values arranged in rows and columns. In AweSheet, these values are not restricted to only static user-defined data, but can also have a direct relationship with other values within the spreadsheet. This allows users to simplify common spreadsheet tasks and create huge datasets consisting of dynamically computed content, leveraging the power of advanced functions, formulas, and expressions.
