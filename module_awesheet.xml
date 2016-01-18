@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_awesheet" default="compile.module.awesheet">
+  <dirname property="module.awesheet.basedir" file="${ant.file.module_awesheet}"/>
+  
+  <property name="module.jdk.home.awesheet" value="${jdk.home.1.8}"/>
+  <property name="module.jdk.bin.awesheet" value="${jdk.bin.1.8}"/>
+  <property name="module.jdk.classpath.awesheet" value="jdk.classpath.1.8"/>
+  
+  <property name="compiler.args.awesheet" value="-encoding UTF-8 -source 1.6 -target 1.6 ${compiler.args}"/>
+  
+  <property name="awesheet.output.dir" value="${module.awesheet.basedir}/out/production/AweSheet"/>
+  <property name="awesheet.testoutput.dir" value="${module.awesheet.basedir}/out/test/AweSheet"/>
+  
+  <path id="awesheet.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="awesheet.module.production.classpath">
+    <path refid="${module.jdk.classpath.awesheet}"/>
+    
+    <fileset dir="${basedir}/Depends/lib">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  <path id="awesheet.runtime.production.module.classpath">
+    <pathelement location="${awesheet.output.dir}"/>
+    
+    <fileset dir="${basedir}/Depends/lib">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  <path id="awesheet.module.classpath">
+    <path refid="${module.jdk.classpath.awesheet}"/>
+    <pathelement location="${awesheet.output.dir}"/>
+    
+    <fileset dir="${basedir}/Depends/lib">
+      <patternset refid="library.patterns"/>
+    </fileset>
+    <pathelement location="${basedir}/Depends/lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="${basedir}/Depends/lib/junit-4.12.jar"/>
+  </path>
+  
+  <path id="awesheet.runtime.module.classpath">
+    <pathelement location="${awesheet.testoutput.dir}"/>
+    <pathelement location="${awesheet.output.dir}"/>
+    
+    <fileset dir="${basedir}/Depends/lib">
+      <patternset refid="library.patterns"/>
+    </fileset>
+    <pathelement location="${basedir}/Depends/lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="${basedir}/Depends/lib/junit-4.12.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.awesheet">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.awesheet">
+    <patternset refid="excluded.from.module.awesheet"/>
+  </patternset>
+  
+  <path id="awesheet.module.sourcepath">
+    <dirset dir="${module.awesheet.basedir}">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="awesheet.module.test.sourcepath">
+    <dirset dir="${module.awesheet.basedir}">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.awesheet" depends="compile.module.awesheet.production,compile.module.awesheet.tests" description="Compile module AweSheet"/>
+  
+  <target name="compile.module.awesheet.production" description="Compile module AweSheet; production classes">
+    <mkdir dir="${awesheet.output.dir}"/>
+    <javac destdir="${awesheet.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.awesheet}/javac">
+      <compilerarg line="${compiler.args.awesheet}"/>
+      <bootclasspath refid="awesheet.module.bootclasspath"/>
+      <classpath refid="awesheet.module.production.classpath"/>
+      <src refid="awesheet.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.awesheet"/>
+    </javac>
+    
+    <copy todir="${awesheet.output.dir}">
+      <fileset dir="${module.awesheet.basedir}/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.awesheet.basedir}/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.awesheet.tests" depends="compile.module.awesheet.production" description="compile module AweSheet; test classes" unless="skip.tests">
+    <mkdir dir="${awesheet.testoutput.dir}"/>
+    <javac destdir="${awesheet.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.awesheet}/javac">
+      <compilerarg line="${compiler.args.awesheet}"/>
+      <bootclasspath refid="awesheet.module.bootclasspath"/>
+      <classpath refid="awesheet.module.classpath"/>
+      <src refid="awesheet.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.awesheet"/>
+    </javac>
+    
+    <copy todir="${awesheet.testoutput.dir}">
+      <fileset dir="${module.awesheet.basedir}/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.awesheet" description="cleanup module">
+    <delete dir="${awesheet.output.dir}"/>
+    <delete dir="${awesheet.testoutput.dir}"/>
+  </target>
+</project>
