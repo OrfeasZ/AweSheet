@@ -1,15 +1,14 @@
 package com.awesheet.models.functions;
 
-import com.awesheet.models.DataFunction;
-import com.awesheet.models.FunctionArgument;
 import com.awesheet.enums.FunctionType;
+import com.awesheet.models.DataFunction;
 
-public class TrimFunction extends DataFunction {
+public class TrimFunction extends DataFunction<String> {
     public static String getName() {
         return "trim";
     }
 
-    public TrimFunction(){
+    protected TrimFunction() {
         super(FunctionType.TRIM_FUNCTION_TYPE);
     }
 
@@ -20,6 +19,7 @@ public class TrimFunction extends DataFunction {
         }
 
         internalValue = arguments.get(0).getValue().trim();
+        displayValue = internalValue;
 
         return true;
     }

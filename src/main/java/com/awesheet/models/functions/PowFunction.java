@@ -3,7 +3,7 @@ package com.awesheet.models.functions;
 import com.awesheet.enums.FunctionType;
 import com.awesheet.models.DataFunction;
 
-public class PowFunction extends DataFunction {
+public class PowFunction extends DataFunction<Double> {
     public static String getName() {
         return "pow";
     }
@@ -33,7 +33,8 @@ public class PowFunction extends DataFunction {
             return false;
         }
 
-        internalValue = Double.toString(Math.pow(parsedValue1, parsedValue2));
+        internalValue = Math.pow(parsedValue1, parsedValue2);
+        displayValue = Double.toString(internalValue);
 
         return true;
     }

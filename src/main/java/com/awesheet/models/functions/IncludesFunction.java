@@ -1,10 +1,9 @@
 package com.awesheet.models.functions;
 
 import com.awesheet.models.DataFunction;
-import com.awesheet.models.FunctionArgument;
 import com.awesheet.enums.FunctionType;
 
-public class IncludesFunction extends DataFunction {
+public class IncludesFunction extends DataFunction<Boolean> {
     public static String getName() {
         return "includes";
     }
@@ -26,7 +25,8 @@ public class IncludesFunction extends DataFunction {
             return false;
         }
 
-        internalValue = argument1Value.contains(argument2Value) ? "true" : "false";
+        internalValue = argument1Value.contains(argument2Value);
+        displayValue = internalValue ? "true" : "false";
 
         return true;
     }

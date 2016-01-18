@@ -4,7 +4,7 @@ import com.awesheet.models.DataFunction;
 import com.awesheet.models.FunctionArgument;
 import com.awesheet.enums.FunctionType;
 
-public class MultFunction extends DataFunction {
+public class MultFunction extends DataFunction<Double> {
     public static String getName() {
         return "mult";
     }
@@ -19,7 +19,7 @@ public class MultFunction extends DataFunction {
             return false;
         }
 
-        double mult = 0.0;
+        double mult = 1.0;
 
         for (FunctionArgument argument : arguments) {
             double parsedValue;
@@ -33,7 +33,8 @@ public class MultFunction extends DataFunction {
             mult *= parsedValue;
         }
 
-        internalValue = Double.toString(mult);
+        internalValue = mult;
+        displayValue = Double.toString(internalValue);
 
         return true;
     }

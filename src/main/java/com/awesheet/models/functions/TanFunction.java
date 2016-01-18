@@ -3,7 +3,7 @@ package com.awesheet.models.functions;
 import com.awesheet.enums.FunctionType;
 import com.awesheet.models.DataFunction;
 
-public class TanFunction extends DataFunction {
+public class TanFunction extends DataFunction<Double> {
     public static String getName() {
         return "tan";
     }
@@ -30,7 +30,8 @@ public class TanFunction extends DataFunction {
             return false;
         }
 
-        internalValue = Double.toString(Math.tan(parsedValue));
+        internalValue = Math.tan(Math.toRadians(parsedValue));
+        displayValue = Double.toString(internalValue);
 
         return true;
     }

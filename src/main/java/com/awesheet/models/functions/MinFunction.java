@@ -4,7 +4,7 @@ import com.awesheet.models.FunctionArgument;
 import com.awesheet.models.DataFunction;
 import com.awesheet.enums.FunctionType;
 
-public class MinFunction extends DataFunction {
+public class MinFunction extends DataFunction<Double> {
     public static String getName() {
         return "min";
     }
@@ -41,7 +41,8 @@ public class MinFunction extends DataFunction {
             }
         }
 
-        internalValue = Double.toString(min);
+        internalValue = min;
+        displayValue = Double.toString(internalValue);
 
         return true;
     }

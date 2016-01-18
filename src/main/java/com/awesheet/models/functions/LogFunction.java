@@ -3,7 +3,7 @@ package com.awesheet.models.functions;
 import com.awesheet.enums.FunctionType;
 import com.awesheet.models.DataFunction;
 
-public class LogFunction extends DataFunction {
+public class LogFunction extends DataFunction<Double> {
     public static String getName() {
         return "log";
     }
@@ -30,7 +30,8 @@ public class LogFunction extends DataFunction {
             return false;
         }
 
-        internalValue = Double.toString(Math.log(parsedValue));
+        internalValue = Math.log(parsedValue);
+        displayValue = Double.toString(internalValue);
 
         return true;
     }

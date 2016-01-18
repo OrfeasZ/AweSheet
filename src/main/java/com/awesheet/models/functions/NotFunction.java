@@ -1,11 +1,10 @@
 package com.awesheet.models.functions;
 
-import com.awesheet.models.FunctionArgument;
 import com.awesheet.models.DataFunction;
 import com.awesheet.enums.FunctionType;
 import com.awesheet.util.Utils;
 
-public class NotFunction extends DataFunction {
+public class NotFunction extends DataFunction<Boolean> {
     public static String getName() {
         return "not";
     }
@@ -28,7 +27,8 @@ public class NotFunction extends DataFunction {
             return false;
         }
 
-        internalValue = (parsedValue) ? "false" : "true";
+        internalValue = !parsedValue;
+        displayValue = internalValue ? "true" : "false";
 
         return true;
     }

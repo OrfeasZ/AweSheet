@@ -1,10 +1,9 @@
 package com.awesheet.models.functions;
 
-import com.awesheet.models.FunctionArgument;
 import com.awesheet.models.DataFunction;
 import com.awesheet.enums.FunctionType;
 
-public class ConcatFunction extends DataFunction {
+public class ConcatFunction extends DataFunction<String> {
     public static String getName() {
         return "concat";
     }
@@ -27,6 +26,7 @@ public class ConcatFunction extends DataFunction {
         }
 
         internalValue = argument1Value + argument2Value;
+        displayValue = internalValue;
 
         return true;
     }

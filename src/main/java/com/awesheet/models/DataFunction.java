@@ -2,15 +2,16 @@ package com.awesheet.models;
 
 import java.util.ArrayList;
 
-public abstract class DataFunction {
+public abstract class DataFunction<T> {
     protected int type;
     protected ArrayList<FunctionArgument> arguments;
-    protected String internalValue;
+    protected String displayValue;
+    protected T internalValue;
 
     protected DataFunction(int type){
         this.type = type;
         arguments = new ArrayList<FunctionArgument>();
-        internalValue = "";
+        displayValue = "";
     }
 
     public int getType() {
@@ -30,6 +31,10 @@ public abstract class DataFunction {
     }
 
     public String getDisplayValue() {
+        return displayValue;
+    }
+
+    public T getInternalValue() {
         return internalValue;
     }
 

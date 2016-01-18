@@ -4,7 +4,7 @@ import com.awesheet.models.DataFunction;
 import com.awesheet.models.FunctionArgument;
 import com.awesheet.enums.FunctionType;
 
-public class SumFunction extends DataFunction {
+public class SumFunction extends DataFunction<Double> {
     public static String getName() {
         return "sum";
     }
@@ -33,7 +33,8 @@ public class SumFunction extends DataFunction {
             sum += parsedValue;
         }
 
-        internalValue = Double.toString(sum);
+        internalValue = sum;
+        displayValue = Double.toString(internalValue);
 
         return true;
     }

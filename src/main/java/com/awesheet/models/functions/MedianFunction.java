@@ -1,13 +1,12 @@
 package com.awesheet.models.functions;
 
-import com.awesheet.models.FunctionArgument;
 import com.awesheet.models.DataFunction;
 import com.awesheet.enums.FunctionType;
 import com.awesheet.util.Utils;
 
 import java.util.*;
 
-public class MedianFunction extends DataFunction {
+public class MedianFunction extends DataFunction<Double> {
     public static String getName() {
         return "median";
     }
@@ -38,7 +37,8 @@ public class MedianFunction extends DataFunction {
             median = parsedValues.get(parsedValues.size() / 2);
         }
 
-        internalValue = Double.toString(median);
+        internalValue = median;
+        displayValue = Double.toString(internalValue);
 
         return true;
     }

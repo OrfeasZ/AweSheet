@@ -3,7 +3,7 @@ package com.awesheet.models.functions;
 import com.awesheet.enums.FunctionType;
 import com.awesheet.models.DataFunction;
 
-public class SinFunction extends DataFunction {
+public class SinFunction extends DataFunction<Double> {
     public static String getName() {
         return "sin";
     }
@@ -30,7 +30,8 @@ public class SinFunction extends DataFunction {
             return false;
         }
 
-        internalValue = Double.toString(Math.sin(parsedValue));
+        internalValue = Math.sin(Math.toRadians(parsedValue));
+        displayValue = Double.toString(internalValue);
 
         return true;
     }

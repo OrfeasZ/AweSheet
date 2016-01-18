@@ -1,10 +1,9 @@
 package com.awesheet.models.functions;
 
-import com.awesheet.models.FunctionArgument;
 import com.awesheet.models.DataFunction;
 import com.awesheet.enums.FunctionType;
 
-public class RemoveFunction extends DataFunction {
+public class RemoveFunction extends DataFunction<String> {
     public static String getName() {
         return "remove";
     }
@@ -27,6 +26,7 @@ public class RemoveFunction extends DataFunction {
         }
 
         internalValue = argument1Value.replace(argument2Value, "");
+        displayValue = internalValue;
 
         return true;
     }

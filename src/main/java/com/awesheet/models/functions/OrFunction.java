@@ -1,11 +1,10 @@
 package com.awesheet.models.functions;
 
 import com.awesheet.models.DataFunction;
-import com.awesheet.models.FunctionArgument;
 import com.awesheet.enums.FunctionType;
 import com.awesheet.util.Utils;
 
-public class OrFunction extends DataFunction {
+public class OrFunction extends DataFunction<Boolean> {
     public static String getName() {
         return "or";
     }
@@ -35,7 +34,8 @@ public class OrFunction extends DataFunction {
             return false;
         }
 
-        internalValue = (parsedValue1 | parsedValue2) ? "true" : "false";
+        internalValue = (parsedValue1 | parsedValue2);
+        displayValue = internalValue ? "true" : "false";
 
         return true;
     }

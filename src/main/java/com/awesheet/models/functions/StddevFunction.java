@@ -1,15 +1,12 @@
 package com.awesheet.models.functions;
 
-import com.awesheet.models.FunctionArgument;
 import com.awesheet.models.DataFunction;
 import com.awesheet.enums.FunctionType;
 import com.awesheet.util.Utils;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class StddevFunction extends DataFunction {
+public class StddevFunction extends DataFunction<Double> {
     public static String getName() {
         return "stddev";
     }
@@ -36,7 +33,7 @@ public class StddevFunction extends DataFunction {
             sum += value;
         }
 
-        double mean = sum / 2.0;
+        double mean = sum / arguments.size();
 
         double stddev = 0.0;
 
@@ -44,7 +41,11 @@ public class StddevFunction extends DataFunction {
             stddev += Math.pow(value - mean, 2);
         }
 
-        internalValue = Double.toString(stddev);
+        stddev /= (double) (arguments.size() - 1);
+        stddev = Math.sqrt(stddev);
+
+        internalValue = stddev;
+        displayValue = Double.toString(internalValue);
 
         return true;
     }

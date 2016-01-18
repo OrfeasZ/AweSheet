@@ -4,7 +4,7 @@ import com.awesheet.models.DataFunction;
 import com.awesheet.models.FunctionArgument;
 import com.awesheet.enums.FunctionType;
 
-public class MeanFunction extends DataFunction {
+public class MeanFunction extends DataFunction<Double> {
     public static String getName() {
         return "mean";
     }
@@ -29,7 +29,8 @@ public class MeanFunction extends DataFunction {
             }
         }
 
-        internalValue = Double.toString(sum / (double) arguments.size());
+        internalValue = sum / (double) arguments.size();
+        displayValue = Double.toString(internalValue);
 
         return true;
     }
