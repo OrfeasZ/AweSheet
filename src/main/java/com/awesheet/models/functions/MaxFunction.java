@@ -9,6 +9,14 @@ public class MaxFunction extends DataFunction<Double> {
         return "max";
     }
 
+    public static String getDescription() {
+        return "Returns the maximum value from the specified set of numbers.";
+    }
+
+    public static String[] getArgumentNames() {
+        return new String[] {};
+    }
+
     public MaxFunction(){
         super(FunctionType.MAX_FUNCTION_TYPE);
     }

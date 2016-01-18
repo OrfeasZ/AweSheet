@@ -9,6 +9,14 @@ public class AndFunction extends DataFunction<Boolean> {
         return "and";
     }
 
+    public static String getDescription() {
+        return "Calculates the logical AND of two values.";
+    }
+
+    public static String[] getArgumentNames() {
+        return new String[] { "logical1", "logical2" };
+    }
+
     public AndFunction(){
         super(FunctionType.AND_FUNCTION_TYPE);
     }

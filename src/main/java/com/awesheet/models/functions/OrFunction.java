@@ -9,6 +9,14 @@ public class OrFunction extends DataFunction<Boolean> {
         return "or";
     }
 
+    public static String getDescription() {
+        return "Calculates the logical OR of two values.";
+    }
+
+    public static String[] getArgumentNames() {
+        return new String[] { "logical1", "logical2" };
+    }
+
     public OrFunction(){
         super(FunctionType.OR_FUNCTION_TYPE);
     }

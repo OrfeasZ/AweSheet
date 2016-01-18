@@ -9,6 +9,14 @@ public class MultFunction extends DataFunction<Double> {
         return "mult";
     }
 
+    public static String getDescription() {
+        return "Returns the result of the multiplication of the specified numbers.";
+    }
+
+    public static String[] getArgumentNames() {
+        return new String[] {};
+    }
+
     public MultFunction(){
         super(FunctionType.MULT_FUNCTION_TYPE);
     }

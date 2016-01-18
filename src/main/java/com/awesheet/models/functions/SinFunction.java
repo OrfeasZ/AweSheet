@@ -8,6 +8,14 @@ public class SinFunction extends DataFunction<Double> {
         return "sin";
     }
 
+    public static String getDescription() {
+        return "Calculates the sine of a given angle (in degrees).";
+    }
+
+    public static String[] getArgumentNames() {
+        return new String[] { "angle" };
+    }
+
     public SinFunction(){
         super(FunctionType.SIN_FUNCTION_TYPE);
     }

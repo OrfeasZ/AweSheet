@@ -8,6 +8,14 @@ public class CosFunction extends DataFunction<Double> {
         return "cos";
     }
 
+    public static String getDescription() {
+        return "Calculates the cosine of a given angle (in degrees).";
+    }
+
+    public static String[] getArgumentNames() {
+        return new String[] { "angle" };
+    }
+
     public CosFunction(){
         super(FunctionType.COS_FUNCTION_TYPE);
     }

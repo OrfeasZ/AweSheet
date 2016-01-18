@@ -10,7 +10,7 @@ const initialState = {
     popupData: {}
 };
 
-export default function team(state = initialState, action)
+export default function popup(state = initialState, action)
 {
     switch (action.type)
     {
@@ -46,7 +46,7 @@ export default function team(state = initialState, action)
 
         default:
         {
-            return initialState;
+            return state;
         }
     }
 }

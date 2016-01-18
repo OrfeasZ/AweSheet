@@ -8,6 +8,14 @@ public class IncludesFunction extends DataFunction<Boolean> {
         return "includes";
     }
 
+    public static String getDescription() {
+        return "Returns true if argument1 contains argument2; otherwise returns false.";
+    }
+
+    public static String[] getArgumentNames() {
+        return new String[] { "argument1", "argument2" };
+    }
+
     public IncludesFunction(){
         super(FunctionType.INCLUDES_FUNCTION_TYPE);
     }

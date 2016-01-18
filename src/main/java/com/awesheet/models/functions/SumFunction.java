@@ -9,6 +9,14 @@ public class SumFunction extends DataFunction<Double> {
         return "sum";
     }
 
+    public static String getDescription() {
+        return "Calculates the numerical sum of the specified numbers.";
+    }
+
+    public static String[] getArgumentNames() {
+        return new String[] {};
+    }
+
     public SumFunction(){
         super(FunctionType.SUM_FUNCTION_TYPE);
     }

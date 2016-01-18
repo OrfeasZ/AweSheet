@@ -8,6 +8,14 @@ public class LogFunction extends DataFunction<Double> {
         return "log";
     }
 
+    public static String getDescription() {
+        return "Calculates the natural logarithm of the specified number.";
+    }
+
+    public static String[] getArgumentNames() {
+        return new String[] { "number" };
+    }
+
     public LogFunction(){
         super(FunctionType.LOG_FUNCTION_TYPE);
     }

@@ -8,6 +8,14 @@ public class AbsFunction extends DataFunction<Double> {
         return "abs";
     }
 
+    public static String getDescription() {
+        return "Calculates the absolute value of the specified number.";
+    }
+
+    public static String[] getArgumentNames() {
+        return new String[] { "number" };
+    }
+
     public AbsFunction(){
         super(FunctionType.ABS_FUNCTION_TYPE);
     }

@@ -14,4 +14,6 @@ public class UIActionType {
     public static final int SHOW_POPUP = 10;
     public static final int CLOSE_POPUP = 11;
     public static final int SET_POPUP_DATA = 12;
+    public static final int SET_FUNCTIONS = 13;
+    public static final int SET_HELP_ARTICLES = 14;
 }

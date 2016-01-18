@@ -8,6 +8,14 @@ public class ConcatFunction extends DataFunction<String> {
         return "concat";
     }
 
+    public static String getDescription() {
+        return "Concatenates the the specified values into a single value.";
+    }
+
+    public static String[] getArgumentNames() {
+        return new String[] {};
+    }
+
     public ConcatFunction(){
         super(FunctionType.CONCAT_FUNCTION_TYPE);
     }

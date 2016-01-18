@@ -14,7 +14,7 @@ export default class PopupView extends Component
 {
     render()
     {
-        const { popup } = this.props;
+        const { popup, awefunc, help, workbook } = this.props;
 
         if (!popup.hasPopup)
             return null;
@@ -28,11 +28,11 @@ export default class PopupView extends Component
                 break;
 
             case PopupType.FUNCTION_POPUP:
-                popupElement = <FunctionView data={popup.popupData} />;
+                popupElement = <FunctionView data={popup.popupData} awefunc={awefunc} workbook={workbook} />;
                 break;
 
             case PopupType.HELP_POPUP:
-                popupElement = <HelpView data={popup.popupData} />;
+                popupElement = <HelpView data={popup.popupData} help={help} />;
                 break;
 
             case PopupType.MESSAGE_POPUP:

@@ -8,6 +8,14 @@ public class Log10Function extends DataFunction<Double> {
         return "log10";
     }
 
+    public static String getDescription() {
+        return "Calculates the base-10 logarithm of the specified number.";
+    }
+
+    public static String[] getArgumentNames() {
+        return new String[] { "number" };
+    }
+
     public Log10Function(){
         super(FunctionType.LOG_10_FUNCTION_TYPE);
     }

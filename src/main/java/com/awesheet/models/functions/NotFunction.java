@@ -9,6 +9,14 @@ public class NotFunction extends DataFunction<Boolean> {
         return "not";
     }
 
+    public static String getDescription() {
+        return "Returns the negated logical value of the specified value.";
+    }
+
+    public static String[] getArgumentNames() {
+        return new String[] { "logical" };
+    }
+
     public NotFunction(){
         super(FunctionType.NOT_FUNCTION_TYPE);
     }

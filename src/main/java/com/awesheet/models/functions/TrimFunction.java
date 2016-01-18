@@ -8,6 +8,14 @@ public class TrimFunction extends DataFunction<String> {
         return "trim";
     }
 
+    public static String getDescription() {
+        return "Returns the specified argument with leading and trailing whitespace trimmed.";
+    }
+
+    public static String[] getArgumentNames() {
+        return new String[] { "argument" };
+    }
+
     public TrimFunction() {
         super(FunctionType.TRIM_FUNCTION_TYPE);
     }

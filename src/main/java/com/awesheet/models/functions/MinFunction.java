@@ -9,6 +9,14 @@ public class MinFunction extends DataFunction<Double> {
         return "min";
     }
 
+    public static String getDescription() {
+        return "Returns the minimum value from the specified set of numbers.";
+    }
+
+    public static String[] getArgumentNames() {
+        return new String[] {};
+    }
+
     public MinFunction(){
         super(FunctionType.MIN_FUNCTION_TYPE);
     }

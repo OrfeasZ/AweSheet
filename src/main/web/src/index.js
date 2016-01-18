@@ -25,6 +25,7 @@ import * as ActionType from './constants/ActionTypes'
 import * as PopupType from './constants/PopupTypes'
 import * as ChartType from './constants/ChartTypes'
 
+/*
 store.dispatch({
     type: ActionType.SET_SHEET,
     sheet: {
@@ -42,14 +43,24 @@ store.dispatch({
 });
 
 store.dispatch({
-    type: ActionType.SHOW_POPUP,
-    popup: PopupType.CREATE_CHART_POPUP,
-    data: {
-        type: ChartType.BAR_CHART_TYPE
+    type: ActionType.SET_FUNCTIONS,
+    functions: {
+        sum: {
+            description: 'Calculates the numerical sum of the specified values.',
+            arguments: []
+        },
+        abs: {
+            description: 'Calculates the absolute value of a number.',
+            arguments: [ 'number' ]
+        }
     }
 });
 
-/*
+store.dispatch({
+    type: ActionType.SHOW_POPUP,
+    popup: PopupType.FUNCTION_POPUP
+});
+
 store.dispatch({
     type: ActionType.SET_SHEET,
     sheet: {

@@ -23,6 +23,9 @@ export default class ImageButton extends Component
     {
         e.preventDefault();
 
+        if (this.props.disabled)
+            return;
+
         if (this.props.onClick)
             this.props.onClick();
     }

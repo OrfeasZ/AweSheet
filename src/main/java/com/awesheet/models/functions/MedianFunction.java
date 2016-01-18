@@ -11,6 +11,14 @@ public class MedianFunction extends DataFunction<Double> {
         return "median";
     }
 
+    public static String getDescription() {
+        return "Returns the median value of the specified numbers.";
+    }
+
+    public static String[] getArgumentNames() {
+        return new String[] {};
+    }
+
     public MedianFunction(){
         super(FunctionType.MEDIAN_FUNCTION_TYPE);
     }

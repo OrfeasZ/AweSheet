@@ -8,6 +8,14 @@ public class RemoveFunction extends DataFunction<String> {
         return "remove";
     }
 
+    public static String getDescription() {
+        return "Returns the first argument with all the instances of the second argument removed.";
+    }
+
+    public static String[] getArgumentNames() {
+        return new String[] { "argument1", "argument2" };
+    }
+
     public RemoveFunction(){
         super(FunctionType.REMOVE_FUNCTION_TYPE);
     }

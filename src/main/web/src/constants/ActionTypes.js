@@ -11,3 +11,5 @@ export const CLEAR_SHEETS = 9;
 export const SHOW_POPUP = 10;
 export const CLOSE_POPUP = 11;
 export const SET_POPUP_DATA = 12;
+export const SET_FUNCTIONS = 13;
+export const SET_HELP_ARTICLES = 14;

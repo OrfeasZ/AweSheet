@@ -8,6 +8,14 @@ public class TanFunction extends DataFunction<Double> {
         return "tan";
     }
 
+    public static String getDescription() {
+        return "Calculates the tangent of the specified angle (in degrees).";
+    }
+
+    public static String[] getArgumentNames() {
+        return new String[] { "angle" };
+    }
+
     public TanFunction(){
         super(FunctionType.TAN_FUNCTION_TYPE);
     }

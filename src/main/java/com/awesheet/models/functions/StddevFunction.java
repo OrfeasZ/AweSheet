@@ -11,6 +11,14 @@ public class StddevFunction extends DataFunction<Double> {
         return "stddev";
     }
 
+    public static String getDescription() {
+        return "Calculates the standard deviation for the specified set of numbers.";
+    }
+
+    public static String[] getArgumentNames() {
+        return new String[] {};
+    }
+
     public StddevFunction(){
         super(FunctionType.STDDEV_FUNCTION_TYPE);
     }

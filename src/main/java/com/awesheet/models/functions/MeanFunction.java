@@ -9,6 +9,14 @@ public class MeanFunction extends DataFunction<Double> {
         return "mean";
     }
 
+    public static String getDescription() {
+        return "Returns the mean (average) value of the specified numbers.";
+    }
+
+    public static String[] getArgumentNames() {
+        return new String[] {};
+    }
+
     public MeanFunction(){
         super(FunctionType.MEAN_FUNCTION_TYPE);
     }

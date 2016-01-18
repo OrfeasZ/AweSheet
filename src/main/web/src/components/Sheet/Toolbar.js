@@ -1,5 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 
+import * as ActionType from '../../constants/ActionTypes'
+import * as PopupType from '../../constants/PopupTypes'
+
 import Utils from '../../util/Utils'
 
 import ImageButton from '../ImageButton'
@@ -63,7 +66,7 @@ export default class Toolbar extends Component
                 <div className="toolbar-buttons">
                     <ImageButton className="cancel-button" imageClass="times" disabled={!buttonsEnabled} />
                     <ImageButton className="confirm-button" imageClass="check" disabled={!buttonsEnabled} />
-                    <ImageButton className="function-button" imageClass="bolt" disabled={!functionEnabled} />
+                    <ImageButton className="function-button" imageClass="bolt" disabled={!functionEnabled} onClick={(e) => this.onFunctionClick(e)} />
                 </div>
                 <input
                     ref="value"
@@ -72,5 +75,13 @@ export default class Toolbar extends Component
                     value={editValue} />
             </div>
         );
+    }
+
+    onFunctionClick(e)
+    {
+        store.dispatch({
+            type: ActionType.SHOW_POPUP,
+            popup: PopupType.FUNCTION_POPUP
+        });
     }
 }

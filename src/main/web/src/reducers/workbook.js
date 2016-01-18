@@ -17,7 +17,7 @@ const initialState = {
     activeSheet: 0
 };
 
-export default function team(state = initialState, action)
+export default function workbook(state = initialState, action)
 {
     switch (action.type)
     {

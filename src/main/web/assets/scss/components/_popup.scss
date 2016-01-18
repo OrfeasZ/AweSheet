@@ -30,6 +30,14 @@
     .content {
       padding: 8px 8px;
 
+      &.invalid {
+        label {
+          input {
+            border: 1px solid #cb0012;
+          }
+        }
+      }
+
       .chart-view {
         border: 1px solid #aaa;
       }
@@ -45,7 +53,26 @@
           line-height: 24px;
         }
 
-        input {
+        p {
+          display: inline-block;
+          vertical-align: top;
+          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+          font-size: 12px;
+          padding: 0 8px;
+          width: 370px;
+
+          strong {
+            font-weight: bold;
+          }
+
+          span {
+            width: auto;
+            display: inline;
+            line-height: normal;
+          }
+        }
+
+        input, select {
           display: inline-block;
           vertical-align: top;
           height: 24px;

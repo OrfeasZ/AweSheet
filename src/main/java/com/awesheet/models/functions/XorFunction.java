@@ -9,6 +9,14 @@ public class XorFunction extends DataFunction<Boolean> {
         return "xor";
     }
 
+    public static String getDescription() {
+        return "Calculates the logical XOR of two values.";
+    }
+
+    public static String[] getArgumentNames() {
+        return new String[] { "logical1", "logical2" };
+    }
+
     public XorFunction(){
         super(FunctionType.XOR_FUNCTION_TYPE);
     }

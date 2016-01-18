@@ -8,6 +8,14 @@ public class PowFunction extends DataFunction<Double> {
         return "pow";
     }
 
+    public static String getDescription() {
+        return "Calculates the value of a number raised to a power.";
+    }
+
+    public static String[] getArgumentNames() {
+        return new String[] { "number", "power" };
+    }
+
     public PowFunction(){
         super(FunctionType.POW_FUNCTION_TYPE);
     }
