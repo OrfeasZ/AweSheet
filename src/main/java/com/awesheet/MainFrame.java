@@ -30,7 +30,7 @@ public class MainFrame extends JFrame {
         return instance;
     }
 
-    public static void createInstance(String[] args) {
+    public static void createInstance(String args[]) {
         if (instance != null) {
             return;
         }
@@ -38,7 +38,7 @@ public class MainFrame extends JFrame {
         instance = new MainFrame(args);
     }
 
-    private MainFrame(String[] args) {
+    private MainFrame(String args[]) {
         hasManagers = false;
 
         initCEF(args);
@@ -83,7 +83,7 @@ public class MainFrame extends JFrame {
         WorkbookManager.getInstance().init();
     }
 
-    private void initCEF(String[] args) {
+    private void initCEF(String args[]) {
         CefSettings settings = new CefSettings();
         settings.windowless_rendering_enabled = OS.isLinux();
         settings.remote_debugging_port = 8884;
@@ -128,7 +128,7 @@ public class MainFrame extends JFrame {
         });
     }
 
-    public static void main(String[] args) {
+    public static void main(String args[]) {
         // Make things look "native".
         JFrame.setDefaultLookAndFeelDecorated(false);
 

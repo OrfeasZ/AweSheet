@@ -46,7 +46,7 @@ public class FileManager {
 
     }
 
-    public boolean saveFile(String path, byte[] data) {
+    public boolean saveFile(String path, byte data[]) {
         FileOutputStream outputStream = null;
 
         try {

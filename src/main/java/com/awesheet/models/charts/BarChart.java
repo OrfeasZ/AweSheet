@@ -6,7 +6,7 @@ import com.awesheet.models.Chart;
 
 public class BarChart extends Chart {
 
-    public BarChart(Cell[] inputs) {
+    public BarChart(Cell inputs[]) {
         super(ChartType.BAR_CHART_TYPE, inputs);
     }
 

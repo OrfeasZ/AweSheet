@@ -46,7 +46,7 @@ public class UIMessageManager {
 
     public void onMessage(String message) {
         // Separate message type and data.
-        String[] messageParts = message.split(";", 2);
+        String messageParts[] = message.split(";", 2);
 
         if (messageParts.length != 2) {
             return;

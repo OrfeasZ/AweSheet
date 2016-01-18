@@ -1,7 +1,5 @@
 package com.awesheet.models;
 
-import com.awesheet.enums.ChartType;
-
 public abstract class Chart {
     protected int type;
     protected String title;
@@ -10,7 +8,7 @@ public abstract class Chart {
     protected Cell[] inputs;
     protected byte[] imageData;
 
-    protected Chart(int type, Cell[] inputs) {
+    protected Chart(int type, Cell inputs[]) {
         this.type = type;
         this.inputs = inputs;
         this.title = "";

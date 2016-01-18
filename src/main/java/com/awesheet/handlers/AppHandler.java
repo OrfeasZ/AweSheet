@@ -6,7 +6,7 @@ import org.cef.callback.CefSchemeRegistrar;
 import org.cef.handler.CefAppHandlerAdapter;
 
 public class AppHandler extends CefAppHandlerAdapter {
-    public AppHandler(String[] args) {
+    public AppHandler(String args[]) {
         super(args);
     }
 

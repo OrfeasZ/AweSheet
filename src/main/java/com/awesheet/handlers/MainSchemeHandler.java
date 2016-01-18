@@ -18,7 +18,7 @@ public class MainSchemeHandler extends CefResourceHandlerAdapter {
     public static final String domain = "sheet";
 
     private boolean hasData;
-    private byte[] fileData;
+    private byte fileData[];
     private String mimeType;
     private int currentDataOffset = 0;
 
@@ -148,7 +148,7 @@ public class MainSchemeHandler extends CefResourceHandlerAdapter {
     }
 
     @Override
-    public synchronized boolean readResponse(byte[] outputData,
+    public synchronized boolean readResponse(byte outputData[],
                                              int bytesToRead,
                                              IntRef bytesRead,
                                              CefCallback callback) {

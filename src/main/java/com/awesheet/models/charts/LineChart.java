@@ -6,7 +6,7 @@ import com.awesheet.models.Chart;
 
 public class LineChart extends Chart {
 
-    public LineChart(Cell[] inputs) {
+    public LineChart(Cell inputs[]) {
         super(ChartType.LINE_CHART_TYPE, inputs);
     }
 

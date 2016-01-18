@@ -22,7 +22,7 @@ public class Workbook implements ISerializable, IMessageListener, IDestructible 
     protected int newSheetID;
     protected int selectedSheet;
 
-    public Workbook(byte[] data, String path) {
+    public Workbook(byte data[], String path) {
         this.path = path;
         valid = false;
         newSheetID = 0;
@@ -134,7 +134,7 @@ public class Workbook implements ISerializable, IMessageListener, IDestructible 
     }
 
     @Override
-    public boolean deserialize(byte[] data) {
+    public boolean deserialize(byte data[]) {
         return false;
     }
 
