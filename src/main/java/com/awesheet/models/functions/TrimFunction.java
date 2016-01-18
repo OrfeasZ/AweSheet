@@ -8,7 +8,7 @@ public class TrimFunction extends DataFunction<String> {
         return "trim";
     }
 
-    protected TrimFunction() {
+    public TrimFunction() {
         super(FunctionType.TRIM_FUNCTION_TYPE);
     }
 
