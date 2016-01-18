@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 
-export default class HelpArticleView extends Component
+export default class SaveDiscardView extends Component
 {
     render()
     {

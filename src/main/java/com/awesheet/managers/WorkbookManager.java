@@ -168,7 +168,8 @@ public class WorkbookManager implements IMessageListener {
     }
 
     public void createWorkbook() {
-        // TODO
+        currentWorkbook.destroy();
+        currentWorkbook = new Workbook();
     }
 
     @Override

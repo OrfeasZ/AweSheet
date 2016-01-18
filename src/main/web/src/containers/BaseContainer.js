@@ -8,12 +8,12 @@ class BaseContainer extends Component
 {
     render()
     {
-        const { workbook } = this.props;
+        const { workbook, popup } = this.props;
 
         return (
             <div className="app-view">
                 <WorkbookView sheets={workbook.sheets} activeSheet={workbook.activeSheet} sheetProps={workbook.sheetProps} />
-                <PopupView />
+                <PopupView popup={popup} />
             </div>
         );
     }

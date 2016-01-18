@@ -22,8 +22,8 @@ window.store = store;
 
 // TODO: Remove after testing.
 import * as ActionType from './constants/ActionTypes'
+import * as PopupType from './constants/PopupType'
 
-/*
 store.dispatch({
     type: ActionType.SET_SHEET,
     sheet: {
@@ -40,6 +40,16 @@ store.dispatch({
     }
 });
 
+store.dispatch({
+    type: ActionType.SHOW_POPUP,
+    popup: PopupType.MESSAGE_POPUP,
+    data: {
+        message: 'Hello world!',
+        title: 'Hello!'
+    }
+});
+
+/*
 store.dispatch({
     type: ActionType.SET_SHEET,
     sheet: {
