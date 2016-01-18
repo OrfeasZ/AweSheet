@@ -2,6 +2,7 @@ package com.awesheet.models;
 
 import com.awesheet.actions.*;
 import com.awesheet.actions.popups.ChartPopup;
+import com.awesheet.actions.popups.MessagePopup;
 import com.awesheet.enums.UIActionType;
 import com.awesheet.enums.UIMessageType;
 import com.awesheet.enums.UIPopupType;
@@ -275,7 +276,9 @@ public class Workbook implements ISerializable, IMessageListener, IDestructible 
                 chart.setTitle(uiMessage.getTitle());
 
                 if (!chart.generateImageData()) {
-                    // TODO: Show error message.
+                    UIMessageManager.getInstance().dispatchAction(
+                            new ShowPopupAction<MessagePopup>(UIPopupType.MESSAGE_POPUP,
+                                    new MessagePopup("Error", "Could not create a chart. Please make sure the cells you selected are in the correct format.")));
                     break;
                 }
 
@@ -298,7 +301,9 @@ public class Workbook implements ISerializable, IMessageListener, IDestructible 
                 chart.setTitle(uiMessage.getTitle());
 
                 if (!chart.generateImageData()) {
-                    // TODO: Show error message.
+                    UIMessageManager.getInstance().dispatchAction(
+                            new ShowPopupAction<MessagePopup>(UIPopupType.MESSAGE_POPUP,
+                                    new MessagePopup("Error", "Could not create a chart. Please make sure the cells you selected are in the correct format.")));
                     break;
                 }
 
