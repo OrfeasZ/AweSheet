@@ -9,6 +9,7 @@ import HelpView from './HelpView'
 import MessageView from './MessageView'
 import SaveDiscardView from './SaveDiscardView'
 import ChartView from './ChartView'
+import AboutView from './AboutView'
 
 export default class PopupView extends Component
 {
@@ -45,6 +46,10 @@ export default class PopupView extends Component
 
             case PopupType.VIEW_CHART_POPUP:
                 popupElement = <ChartView data={popup.popupData} />;
+                break;
+
+            case PopupType.ABOUT_POPUP:
+                popupElement = <AboutView data={popup.popupData} />;
                 break;
         }
 

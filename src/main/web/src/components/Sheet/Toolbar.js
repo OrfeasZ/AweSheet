@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react'
 import * as MessageType from '../../constants/MessageTypes'
 import * as ActionType from '../../constants/ActionTypes'
 import * as PopupType from '../../constants/PopupTypes'
+import * as ChartType from '../../constants/ChartTypes'
 
 import Utils from '../../util/Utils'
 
@@ -36,6 +37,7 @@ export default class Toolbar extends Component
         let editValue = '';
         let functionEnabled = false;
         let buttonsEnabled = false;
+        let chartsEnabled = false;
 
         if (selectedCells.length > 1)
         {
@@ -50,6 +52,9 @@ export default class Toolbar extends Component
                 if (cell[0] > maxCell[0] && cell[1] > maxCell[1])
                     maxCell = cell;
             }
+
+            if (maxCell[0] - minCell[0] >= 1 && maxCell[1] - minCell[1] >= 1)
+                chartsEnabled = true;
 
             selectedValue = Utils.getColumnName(minCell[0]) + (minCell[1] + 1) + ' x ' + Utils.getColumnName(maxCell[0]) + (maxCell[1] + 1);
         }
@@ -71,6 +76,8 @@ export default class Toolbar extends Component
                     value={selectedValue}
                     readOnly={true} />
                 <div className="toolbar-buttons">
+                    <ImageButton className="bar-chart-button" imageClass="bar-chart" disabled={!chartsEnabled} onClick={(e) => this.onBarChartClick(e)} />
+                    <ImageButton className="line-chart-button" imageClass="line-chart" disabled={!chartsEnabled} onClick={(e) => this.onLineChartClick(e)} />
                     <ImageButton className="cancel-button" imageClass="times" disabled={!buttonsEnabled} onClick={(e) => this.onCancelClick(e)} />
                     <ImageButton className="confirm-button" imageClass="check" disabled={!buttonsEnabled} onClick={(e) => this.onConfirmClick(e)} />
                     <ImageButton className="function-button" imageClass="bolt" disabled={!functionEnabled} onClick={(e) => this.onFunctionClick(e)} />
@@ -102,6 +109,28 @@ export default class Toolbar extends Component
                 editingCell: [nextProps.selectedCells[0][0],  nextProps.selectedCells[0][1]]
             });
         }
+    }
+
+    onBarChartClick(e)
+    {
+        store.dispatch({
+            type: ActionType.SHOW_POPUP,
+            popup: PopupType.CREATE_CHART_POPUP,
+            data: {
+                type: ChartType.BAR_CHART_TYPE
+            }
+        });
+    }
+
+    onLineChartClick(e)
+    {
+        store.dispatch({
+            type: ActionType.SHOW_POPUP,
+            popup: PopupType.CREATE_CHART_POPUP,
+            data: {
+                type: ChartType.LINE_CHART_TYPE
+            }
+        });
     }
 
     onFunctionClick(e)

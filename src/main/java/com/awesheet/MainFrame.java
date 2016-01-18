@@ -115,6 +115,9 @@ public class MainFrame extends JFrame {
     }
 
     private void initWindow() {
+        Image image = Toolkit.getDefaultToolkit().getImage(getClass().getResource("img/logo-small.png"));
+        setIconImage(image);
+
         menuHandler = new MenuHandler();
         setJMenuBar(menuHandler.getMenuBar());
 

@@ -27,8 +27,6 @@ public class ImportCSVAction extends AbstractAction {
             return;
         }
 
-        // TODO: Dispatch event to UI for confirmation.
-
         FileDialog dialog = new FileDialog(MainFrame.getInstance(), "Import from CSV", FileDialog.LOAD);
         dialog.setFile(currentSheet.getName() + ".csv");
         dialog.setVisible(true);

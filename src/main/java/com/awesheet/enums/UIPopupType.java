@@ -7,4 +7,5 @@ public class UIPopupType {
     public static final int FUNCTION_POPUP = 3;
     public static final int HELP_POPUP = 4;
     public static final int MESSAGE_POPUP = 5;
+    public static final int ABOUT_POPUP = 6;
 }

@@ -140,5 +140,43 @@
         padding: 10px;
       }
     }
+
+    &.about-popup {
+      min-width: 312px;
+
+      .content {
+        text-align: center;
+
+        img {
+          -webkit-user-drag: none;
+        }
+
+        h1 {
+          font-size: 24px;
+          margin-top: 10px;
+        }
+
+        h2 {
+          font-size: 14px;
+          margin-bottom: 24px;
+        }
+
+        h3 {
+          i {
+            font-size: 11px;
+          }
+        }
+
+        h4 {
+          margin-top: 20px;
+          font-size: 10px;
+        }
+
+        h5 {
+          margin-bottom: 10px;
+          font-size: 10px;
+        }
+      }
+    }
   }
 }

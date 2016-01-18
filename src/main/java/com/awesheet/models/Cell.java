@@ -22,7 +22,6 @@ public abstract class Cell implements IUIBindable, IDestructible {
 
     @Override
     public void destroy() {
-        // TODO: Do we need to do anything here?
     }
 
     public int getX() {

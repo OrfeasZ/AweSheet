@@ -1,5 +1,6 @@
 package com.awesheet.handlers;
 
+import com.awesheet.MainFrame;
 import org.cef.CefApp;
 import org.cef.CefApp.CefAppState;
 import org.cef.callback.CefSchemeRegistrar;
@@ -13,9 +14,7 @@ public class AppHandler extends CefAppHandlerAdapter {
     @Override
     public void onRegisterCustomSchemes(CefSchemeRegistrar registrar) {
         if (!registrar.addCustomScheme(MainSchemeHandler.scheme, true, false, false)) {
-            // TODO: Show some error dialog?
-            System.err.println("Failed to register scheme handler.");
-            System.exit(0);
+            MainFrame.getInstance().requestExit();
         }
     }
 
