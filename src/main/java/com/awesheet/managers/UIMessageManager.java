@@ -28,6 +28,10 @@ import org.cef.browser.CefBrowser;
 import java.util.HashSet;
 import java.util.Iterator;
 
+/**
+ * Responsible for delegating communication to and from the UI
+ * layer.
+ */
 public class UIMessageManager {
     private static UIMessageManager instance;
 
@@ -54,6 +58,10 @@ public class UIMessageManager {
         cefBrowser = browser;
     }
 
+    /**
+     * Dispatches an action to the UI layer.
+     * @param action the action to dispatch.
+     */
     public void dispatchAction(UIAction action) {
         // Serialize to JSON.
         String serializedAction = gson.toJson(action);
@@ -96,10 +104,18 @@ public class UIMessageManager {
         }
     }
 
+    /**
+     * Registers a class instance as a listener for incoming UI messages.
+     * @param listener the class instance to register.
+     */
     public void registerListener(IMessageListener listener) {
         listeners.add(listener);
     }
 
+    /**
+     * De-registers a class instance from the message listeners.
+     * @param listener the class instance to de-register.
+     */
     public void deregisterListener(IMessageListener listener) {
         listeners.remove(listener);
     }

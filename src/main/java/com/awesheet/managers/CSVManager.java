@@ -32,6 +32,10 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Responsible for importing CSV files to Sheet instances, or exporting
+ * Sheet instances to CSV files.
+ */
 public class CSVManager {
     private static CSVManager instance = null;
 
@@ -46,6 +50,11 @@ public class CSVManager {
     protected CSVManager() {
     }
 
+    /**
+     * Imports a Sheet from a CSV file in the specified path.
+     * @param path a CSV File Path.
+     * @return a new Sheet or null if parsing failed
+     */
     public Sheet importSheet(String path) {
         File csvData = new File(path);
 
@@ -71,6 +80,12 @@ public class CSVManager {
         return sheet;
     }
 
+    /**
+     * Exports the given Sheet to a CSV file in the specified path.
+     * @param sheet the Sheet to export.
+     * @param path the target path of the CSV file.
+     * @return whether the export was successful
+     */
     public boolean exportSheet(Sheet sheet, String path) {
         FileWriter writer = null;
         CSVPrinter printer = null;

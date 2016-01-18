@@ -28,6 +28,10 @@ import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.image.renderable.RenderableImageProducer;
 
+/**
+ * Responsible for abstracting various window management functions
+ * and native windowing operations.
+ */
 public class WindowManager implements IMessageListener {
     private static WindowManager instance = null;
 
@@ -54,14 +58,25 @@ public class WindowManager implements IMessageListener {
         menuHandler = handler;
     }
 
+    /**
+     * Sets the window title.
+     * @param title the new title.
+     */
     public void setWindowTitle(String title) {
         mainFrame.setTitle(title);
     }
 
+    /**
+     * Gets the current window title.
+     * @return the current window title
+     */
     public String getWindowTitle() {
         return mainFrame.getTitle();
     }
 
+    /**
+     * Closes the window and exits the application.
+     */
     public void closeWindow() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -71,14 +86,26 @@ public class WindowManager implements IMessageListener {
         });
     }
 
+    /**
+     * Minimizes the window.
+     */
     public void minimizeWindow() {
         mainFrame.setState(Frame.ICONIFIED);
     }
 
+    /**
+     * Maximizes the window.
+     */
     public void maximizeWindow() {
         mainFrame.setExtendedState(mainFrame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
 
+    /**
+     * Shows a system messagebox.
+     * @param title the title of the messagebox.
+     * @param contents the contents of the messagebox.
+     * @param messageType the type of the messagebox.
+     */
     public void showMessageBox(String title, String contents, int messageType) {
         JOptionPane.showMessageDialog(null, contents, title, messageType);
     }

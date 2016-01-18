@@ -34,6 +34,11 @@ import java.awt.*;
 import java.io.File;
 import java.io.FilenameFilter;
 
+/**
+ * Responsible for managing the currently open workbook along with
+ * providing the required functionality for saving, opening, and creating
+ * new workbooks.
+ */
 public class WorkbookManager implements IMessageListener {
     private static WorkbookManager instance = null;
 
@@ -63,6 +68,10 @@ public class WorkbookManager implements IMessageListener {
         MainFrame.getInstance().getMenuHandler().getFileExportItem().setEnabled(true);
     }
 
+    /**
+     * Saves the currently open workbook.
+     * @return the save result status
+     */
     public int saveWorkbook() {
         if (currentWorkbook.getPath() == null) {
             FileDialog dialog = new FileDialog(MainFrame.getInstance(), "Save Workbook", FileDialog.SAVE);
@@ -111,6 +120,10 @@ public class WorkbookManager implements IMessageListener {
         return SaveResult.ACCESS_ERROR;
     }
 
+    /**
+     * Saves the currently open workbook in a different user-specified location.
+     * @return the save result status
+     */
     public int saveWorkbookAs() {
         FileDialog dialog = new FileDialog(MainFrame.getInstance(), "Save Workbook As", FileDialog.SAVE);
         dialog.setFile("*.awew");
@@ -143,6 +156,10 @@ public class WorkbookManager implements IMessageListener {
         return SaveResult.SUCCESS;
     }
 
+    /**
+     * Opens a workbook from a user-specified location.
+     * @return the open result status
+     */
     public int openWorkbook() {
         FileDialog dialog = new FileDialog(MainFrame.getInstance(), "Open Workbook", FileDialog.LOAD);
         dialog.setFile("*.awew");
@@ -181,10 +198,17 @@ public class WorkbookManager implements IMessageListener {
         return OpenResult.SUCCESS;
     }
 
+    /**
+     * Returns the currently open workbook.
+     * @return the currently open workbook
+     */
     public Workbook getCurrentWorkbook() {
         return currentWorkbook;
     }
 
+    /**
+     * Creates a new workbook.
+     */
     public void createWorkbook() {
         currentWorkbook.destroy();
         currentWorkbook = new Workbook();

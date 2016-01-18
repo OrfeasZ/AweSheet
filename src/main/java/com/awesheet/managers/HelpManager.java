@@ -28,6 +28,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * Responsible for keeping track of the various
+ * documentation/help articles.
+ */
 public class HelpManager {
     private static HelpManager instance = null;
 
@@ -45,6 +49,9 @@ public class HelpManager {
         articles = new HashMap<Integer, HelpArticle>();
     }
 
+    /**
+     * Initializes the built-in help articles.
+     */
     public void initHelpArticles() {
         // TODO: Currently everything is embedded here. We should probably move these to resources.
         articles.put(0, new HelpArticle(0, "Creating a new Workbook",
@@ -126,14 +133,27 @@ public class HelpManager {
         UIMessageManager.getInstance().dispatchAction(new SetHelpArticlesAction(uiArticles));
     }
 
+    /**
+     * Gets the URL of the online documentation.
+     * @return the online documentation URL
+     */
     public String getOnlineURL() {
         return "http://orfeasz.github.io/AweSheet/docs/index.html";
     }
 
+    /**
+     * Gets the collection of registered help articles.
+     * @return the help articles
+     */
     public Collection<HelpArticle> getHelpArticles() {
         return articles.values();
     }
 
+    /**
+     * Gets a help article with the specified id.
+     * @param id the id of the article
+     * @return the help article or null if not found
+     */
     public HelpArticle getHelpArticle(int id) {
         if (!articles.containsKey(id)) {
             return null;

@@ -33,6 +33,11 @@ import org.antlr.v4.runtime.CommonTokenStream;
 
 import java.util.HashMap;
 
+/**
+ * Responsible for keeping track of registered AweSheet functions
+ * and providing basic factory-like functionality for parsing and
+ * instantiating new functions.
+ */
 public class FunctionManager {
     protected class RegisteredFunction implements IUIBindable {
         protected String name;
@@ -84,10 +89,20 @@ public class FunctionManager {
         registerBuiltins();
     }
 
+    /**
+     * Registers a function for use by the application.
+     * @param name the name of the function.
+     * @param description the description of the function.
+     * @param arguments the names of the function arguments (empty array if unlimited arguments).
+     * @param type the class type of the function.
+     */
     public void registerFunction(String name, String description, String arguments[], Class type) {
         registeredFunctions.put(name, new RegisteredFunction(name, description, arguments, type));
     }
 
+    /**
+     * Registers all the built-in functions.
+     */
     public void registerBuiltins() {
         registerFunction(AbsFunction.getName(), AbsFunction.getDescription(), AbsFunction.getArgumentNames(), AbsFunction.class);
         registerFunction(AndFunction.getName(), AndFunction.getDescription(), AndFunction.getArgumentNames(), AndFunction.class);
@@ -113,6 +128,9 @@ public class FunctionManager {
         registerFunction(XorFunction.getName(), XorFunction.getDescription(), XorFunction.getArgumentNames(), XorFunction.class);
     }
 
+    /**
+     * Registers the registered functions with the UI layer.
+     */
     public void setUIFunctions() {
         // Register functions with the UI.
         HashMap<String, UIFunction> functions = new HashMap<String, UIFunction>();
@@ -124,6 +142,12 @@ public class FunctionManager {
         UIMessageManager.getInstance().dispatchAction(new SetFunctionsAction(functions));
     }
 
+    /**
+     * Parses a function string into an actual function.
+     * @param value the function string.
+     * @param sheet the containing sheet.
+     * @return the parsed function or null on failure
+     */
     public DataFunction parseFunction(String value, Sheet sheet) {
         try {
             ANTLRInputStream inputStream = new ANTLRInputStream(value);
@@ -151,6 +175,11 @@ public class FunctionManager {
         }
     }
 
+    /**
+     * Creates a new function instance based on the given type.
+     * @param type the function type.
+     * @return the function instance or null if not found
+     */
     public DataFunction createFunctionInstance(String type) {
         // Do we have a registered class for this type?
         if (!registeredFunctions.containsKey(type.trim())) {

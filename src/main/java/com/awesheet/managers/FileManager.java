@@ -20,6 +20,9 @@ package com.awesheet.managers;
 
 import java.io.*;
 
+/**
+ * Responsible for abstracting various file IO operations.
+ */
 public class FileManager {
     private static FileManager instance = null;
 
@@ -34,6 +37,11 @@ public class FileManager {
     protected FileManager() {
     }
 
+    /**
+     * Reads a file from the specified path into a byte array.
+     * @param path the path of the file to read.
+     * @return a byte array with the file data or null if reading failed
+     */
     public byte[] readFile(String path) {
         File file = new File(path);
 
@@ -64,6 +72,12 @@ public class FileManager {
 
     }
 
+    /**
+     * Writes the specified data to a file on the disk.
+     * @param path the target file path.
+     * @param data the data to write.
+     * @return whether the operation is successful
+     */
     public boolean saveFile(String path, byte data[]) {
         FileOutputStream outputStream = null;
 
@@ -85,6 +99,12 @@ public class FileManager {
         return true;
     }
 
+    /**
+     * Checks to see if a file with the given path exists on
+     * the disk.
+     * @param path the file path.
+     * @return whether the file exists
+     */
     public boolean fileExists(String path) {
         File file = new File(path);
         return file.exists() && file.isFile();
