@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>AweSheet by OrfeasZ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">AweSheet</h1>
+      <h2 class="project-tagline"></h2>
+      <a href="https://github.com/OrfeasZ/AweSheet" class="btn">View on GitHub</a>
+      <a href="https://github.com/OrfeasZ/AweSheet/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/OrfeasZ/AweSheet/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="awesome-sheet" class="anchor" href="#awesome-sheet" aria-hidden="true"><span class="octicon octicon-link"></span></a>Documentation</h1>
+
+<h2>Creating a new Workbook</h2>
+
+<p>To create a new workbook you can can either click on the <code>New</code> button under the <code>File</code> menu, or press the <code>Ctrl+N</code> shortcut.</p>
+
+<p>If you already have another active workbook you will be presented with the following options:</p>
+
+<ul>
+<li>Save and Continue, which when selected saves the Workbook and creates a new one.</li>
+<li>Discard Changes, which when selected discards any pending changes and creates a new workbook.</li>
+<li>Or Cancel, which when selected cancels the action.</li>
+</ul>
+
+
+<h2>Saving your Workbook</h2>
+
+<p>To save the workbook you're currently editing you can either click on the <code>Save</code> or <code>Save As</code> buttons under the <code>File</code> menu, or use the <code>Ctrl+S</code> and <code>Ctrl+Shift+S</code> shortcuts.</p>
+<p>If the workbook you're editing has not been saved before you will be prompted to specify a storage location.</p>
+
+
+<h2>Opening a Workbook</h2>
+
+<p>To open a previously saved workbook you can either click on the <code>Open</code> button under the <code>File</code> menu, or use the <code>Ctrl+O</code> shortcut.</p>
+<p>You will then be prompted with a dialog where you will have to select the workbook you wish to open.</p>
+
+
+<h2>Creating and Deleting Sheets</h2>
+
+<p>To create a sheet simply click on the <code>+</code> icon present at the bottom tab navigation.</p>
+<p>To delete a sheet simply hover over it, and click on the <code>x</code> button that will appear.</p>
+
+<p><em>Note: You cannot delete the currently edited sheet.</em></p>
+
+
+<h2>Exporting a Sheet</h2>
+
+<p>AweSheet allows you to easily export your currently active sheet as a CSV file in order to allow cross-compatibility with other applications.</p>
+<p>To export your sheet, simply click on the <code>Export</code> button under the <code>File</code> menu, and select a destination file for the export.</p>
+
+
+<h2>Importing a Sheet</h2>
+
+<p>AweSheet allows you to easily import sheets from CSV files in order to allow cross-compatibility with other applications.</p>
+<p>To import a sheet, simply click on the <code>Import</code> button under the <code>File</code> menu, and select a CSV file of your choice.</p>
+
+<p><em>Note: Importing a CSV file will overwrite your currently active sheet.</em></p>
+
+
+<h2>Editing a Cell</h2>
+
+<p>To edit a cell you can double click on it, select it and start typing, or select it and type on the text box present in the top toolbar.</p>
+<p>After you've finished your entry you can confirm the input by hitting <code>ENTER</code> (or the <code>check</code> button in the top toolbar), or revert to the prevous value by hitting <code>ESC</code> (or the <code>cancel</code> button in the top toolbar).</p>
+
+
+<h2>Inserting Functions</h2>
+
+<p>In AweSheet you can insert functions in two different ways: by typing the function directly, or by using the function insertion dialog.</p>
+
+<p>To add a function using the insertion dialog, simply select a cell and press the <code>lightning</code> button in the top toolbar. You can then follow the on-screen details in order to fill in the required fields for the function you're trying to insert. Alternatively, you can insert a function manually when editing a cell.</p>
+
+<p>All functions in AweSheet follow the following pattern:</p>
+<code>=function(parameter1, parameters2, ...)</code>
+
+<p>Where <code>function</code> is the function name, and <code>parameterN</code> is one of the following:</p>
+
+<ul>
+<li>A cell <em>(ie. A2)</em>.</li>
+<li>Another function.</li>
+<li>A generic value.</li>
+</ul>
+
+
+<h2>Creating Charts</h2>
+
+<p>AweSheet supports the creation of two types of charts: Bar charts, and Line Charts.</p>
+
+<p>To create a chart, you will first need to select the cells that contain the data for the given chart.</p>
+
+<p>Data should be formatted in the following manner:</p>
+
+<pre><code>
+[         ] [ entry 1 ] [ entry 2 ]
+[ label 1 ] [ value 1 ] [ value 1 ]
+[ label 2 ] [ value 2 ] [ value 2 ]
+[ label 3 ] [ value 3 ] [ value 3 ]
+</code></pre>
+
+<p>Afterwards, you can select the type of chart you want to create by clicking on either <code>Create Bar Chart</code> or <code>Create Line Chart</code> under the <code>Chart</code> menu.</p>
+<p>You will then be prompted to fill in some extra (optional) details for your chart. Once you're satisfied with your input, you can click on <code>Create Chart</code> to generate the chart.</p>
+
+
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/OrfeasZ/AweSheet">AweSheet</a> is maintained by <a href="https://github.com/OrfeasZ">OrfeasZ</a>.</span>
+
+        <span class="site-footer-credits">This page is using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
