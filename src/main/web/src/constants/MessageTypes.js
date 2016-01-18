@@ -9,3 +9,4 @@ export const SAVE_WORKBOOK = 7;
 export const SAVE_WORKBOOK_AS = 8;
 export const OPEN_WORKBOOK = 9;
 export const CREATE_WORKBOOK = 10;
+export const SAVE_CHART_IMAGE = 11;

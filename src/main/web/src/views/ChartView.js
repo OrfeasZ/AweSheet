@@ -1,6 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 
 import * as ActionType from '../constants/ActionTypes'
+import * as MessageType from '../constants/MessageTypes'
+
+import Utils from '../util/Utils'
 
 export default class ChartView extends Component
 {
@@ -33,5 +36,8 @@ export default class ChartView extends Component
 
     onSave(e)
     {
+        Utils.dispatchMessage(MessageType.SAVE_CHART_IMAGE, {
+            imageData: this.props.data.imageData
+        });
     }
 }

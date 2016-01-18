@@ -64,6 +64,10 @@ export default class Utils
                 className = 'CreateLineChartMessage';
                 break;
 
+            case MessageType.SAVE_CHART_IMAGE:
+                className = 'SaveChartImageMessage';
+                break;
+
             default:
                 className = 'UIMessage';
                 break;

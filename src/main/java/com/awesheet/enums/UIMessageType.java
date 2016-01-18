@@ -12,4 +12,5 @@ public class UIMessageType {
     public static final int SAVE_WORKBOOK_AS = 8;
     public static final int OPEN_WORKBOOK = 9;
     public static final int CREATE_WORKBOOK = 10;
+    public static final int SAVE_CHART_IMAGE = 11;
 }

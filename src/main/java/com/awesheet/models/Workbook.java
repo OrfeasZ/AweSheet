@@ -1,14 +1,17 @@
 package com.awesheet.models;
 
+import com.awesheet.MainFrame;
 import com.awesheet.actions.*;
 import com.awesheet.actions.popups.ChartPopup;
 import com.awesheet.actions.popups.MessagePopup;
+import com.awesheet.enums.SaveResult;
 import com.awesheet.enums.UIActionType;
 import com.awesheet.enums.UIMessageType;
 import com.awesheet.enums.UIPopupType;
 import com.awesheet.interfaces.IDestructible;
 import com.awesheet.interfaces.IMessageListener;
 import com.awesheet.interfaces.ISerializable;
+import com.awesheet.managers.FileManager;
 import com.awesheet.managers.UIMessageManager;
 import com.awesheet.messages.*;
 import com.awesheet.models.charts.BarChart;
@@ -19,8 +22,11 @@ import com.awesheet.util.BinaryReader;
 import com.awesheet.util.BinaryWriter;
 import org.apache.commons.codec.binary.Base64;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
@@ -245,7 +251,7 @@ public class Workbook implements ISerializable, IMessageListener, IDestructible 
     }
 
     @Override
-    public void onMessage(UIMessage message) {
+    public void onMessage(final UIMessage message) {
         switch (message.getType()) {
             case UIMessageType.CREATE_SHEET: {
                 addSheet(new Sheet(this, "Sheet " + (newSheetID + 1)));
@@ -310,6 +316,43 @@ public class Workbook implements ISerializable, IMessageListener, IDestructible 
                 UIMessageManager.getInstance().dispatchAction(
                         new ShowPopupAction<ChartPopup>(UIPopupType.VIEW_CHART_POPUP,
                                 new ChartPopup(new Base64().encodeAsString(chart.getImageData()))));
+
+                break;
+            }
+
+            case UIMessageType.SAVE_CHART_IMAGE: {
+                final SaveChartImageMessage uiMessage = (SaveChartImageMessage) message;
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        byte imageData[] = new Base64().decode(uiMessage.getImageData());
+
+                        FileDialog dialog = new FileDialog(MainFrame.getInstance(), "Save Chart Image", FileDialog.SAVE);
+                        dialog.setFile("*.png");
+                        dialog.setVisible(true);
+                        dialog.setFilenameFilter(new FilenameFilter(){
+                            public boolean accept(File dir, String name){
+                                return (dir.isFile() && name.endsWith(".png"));
+                            }
+                        });
+
+                        String filePath = dialog.getFile();
+                        String directory = dialog.getDirectory();
+                        dialog.dispose();
+
+                        if (directory != null && filePath != null) {
+                            String absolutePath = new File(directory + filePath).getAbsolutePath();
+
+                            if (!FileManager.getInstance().saveFile(absolutePath, imageData)) {
+                                UIMessageManager.getInstance().dispatchAction(
+                                        new ShowPopupAction<MessagePopup>(UIPopupType.MESSAGE_POPUP,
+                                                new MessagePopup("Error", "Could not save chart image.")));
+                            }
+                        }
+                    }
+                });
 
                 break;
             }
