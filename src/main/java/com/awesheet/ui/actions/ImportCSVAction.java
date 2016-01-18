@@ -1,7 +1,11 @@
 package com.awesheet.ui.actions;
 
 import com.awesheet.MainFrame;
+import com.awesheet.actions.ShowPopupAction;
+import com.awesheet.actions.popups.MessagePopup;
+import com.awesheet.enums.UIPopupType;
 import com.awesheet.managers.CSVManager;
+import com.awesheet.managers.UIMessageManager;
 import com.awesheet.managers.WorkbookManager;
 import com.awesheet.models.Sheet;
 
@@ -40,7 +44,9 @@ public class ImportCSVAction extends AbstractAction {
             Sheet importedSheet = CSVManager.getInstance().importSheet(absolutePath);
 
             if (importedSheet == null) {
-                // TODO: Notify UI of error.
+                UIMessageManager.getInstance().dispatchAction(
+                        new ShowPopupAction<MessagePopup>(UIPopupType.MESSAGE_POPUP,
+                                new MessagePopup("Import Error", "Could not import CSV. Please make sure that the file you're trying to import is in the right format.")));
             } else {
                 WorkbookManager.getInstance().getCurrentWorkbook().replaceSheet(currentSheet.getID(), importedSheet);
             }

@@ -70,8 +70,18 @@ export default class Cell extends Component
 
     componentDidUpdate()
     {
-        if (this.props.editing)
+        if (this.props.editing && this.refs.input)
             this.refs.input.focus();
+
+        let inputSize = (this.refs.input ? (!this.refs.input.value.length ? 1 : (this.refs.input.value.length * 1.1)) :
+            (this.props.cell ? this.props.cell.value.length : 1));
+
+        if (inputSize != this.state.inputSize)
+        {
+            this.setState({
+                inputSize: inputSize
+            });
+        }
     }
 
     componentWillReceiveProps(nextProps)
@@ -86,8 +96,6 @@ export default class Cell extends Component
                 value: this.refs.input.value
             });
         }
-
-        // TODO: Fix inputbox sizing when external value changes.
     }
 
     onDoubleClick(event)
