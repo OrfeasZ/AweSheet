@@ -1,5 +1,6 @@
 package com.awesheet.managers;
 
+import com.awesheet.enums.UIMessageType;
 import com.awesheet.handlers.MenuHandler;
 import com.awesheet.interfaces.IMessageListener;
 import com.awesheet.messages.UIMessage;
@@ -7,6 +8,7 @@ import com.awesheet.messages.UIMessage;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
+import java.awt.image.renderable.RenderableImageProducer;
 
 public class WindowManager implements IMessageListener {
     private static WindowManager instance = null;
@@ -43,7 +45,12 @@ public class WindowManager implements IMessageListener {
     }
 
     public void closeWindow() {
-        mainFrame.dispatchEvent(new WindowEvent(mainFrame, WindowEvent.WINDOW_CLOSING));
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                mainFrame.dispatchEvent(new WindowEvent(mainFrame, WindowEvent.WINDOW_CLOSING));
+            }
+        });
     }
 
     public void minimizeWindow() {
@@ -60,6 +67,23 @@ public class WindowManager implements IMessageListener {
 
     @Override
     public void onMessage(UIMessage message) {
+        switch (message.getType()) {
+            case UIMessageType.EXIT_APPLICATION: {
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        WorkbookManager.getInstance().saveWorkbook();
+                        closeWindow();
+                    }
+                });
 
+                break;
+            }
+
+            case UIMessageType.MAXIMIZE_APPLICATION: {
+                maximizeWindow();
+                break;
+            }
+        }
     }
 }

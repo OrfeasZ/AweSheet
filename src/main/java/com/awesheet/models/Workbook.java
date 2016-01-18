@@ -67,6 +67,8 @@ public class Workbook implements ISerializable, IMessageListener, IDestructible 
 
     @Override
     public void destroy() {
+        UIMessageManager.getInstance().dispatchAction(new ClearSheetsAction());
+
         for (Sheet sheet : sheets.values()) {
             sheet.destroy();
         }

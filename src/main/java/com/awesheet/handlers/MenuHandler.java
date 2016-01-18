@@ -128,11 +128,6 @@ public class MenuHandler {
     private void initViewMenu() {
         viewMenu = new JMenu("   View   ");
 
-        /*JRadioButtonMenuItem viewSheet1Item = new JRadioButtonMenuItem(new SelectSheetAction(null));
-        viewSheet1Item.setMnemonic(KeyEvent.VK_F1);
-        viewSheet1Item.setSelected(true);
-        viewSheet1Item.setPreferredSize(new Dimension(200, 26));*/
-
         viewMaximizeItem = new JMenuItem(new MaximizeWindowAction());
         viewMaximizeItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F11, 0));
         viewMaximizeItem.setPreferredSize(new Dimension(200, 26));
@@ -140,10 +135,6 @@ public class MenuHandler {
         viewMinimizeItem = new JMenuItem(new MinimizeWindowAction());
         viewMinimizeItem.setPreferredSize(new Dimension(200, 26));
 
-        /*viewMenu.add(viewSheet1Item);
-        viewMenu.add(viewSheet2Item);
-        viewMenu.add(viewSheet3Item);*/
-        viewMenu.add(new JSeparator());
         viewMenu.add(viewMaximizeItem);
         viewMenu.add(viewMinimizeItem);
     }

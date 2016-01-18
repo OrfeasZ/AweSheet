@@ -16,4 +16,6 @@ public class UIMessageType {
     public static final int COPY_CELL = 12;
     public static final int CUT_CELL = 13;
     public static final int PASTE_CELL = 14;
+    public static final int EXIT_APPLICATION = 15;
+    public static final int MAXIMIZE_APPLICATION = 16;
 }

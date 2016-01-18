@@ -176,22 +176,47 @@ public class WorkbookManager implements IMessageListener {
     public void onMessage(UIMessage message) {
         switch (message.getType()) {
             case UIMessageType.SAVE_WORKBOOK: {
-                saveWorkbook();
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        saveWorkbook();
+                    }
+                });
+
                 break;
             }
 
             case UIMessageType.SAVE_WORKBOOK_AS: {
-                saveWorkbookAs();
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        saveWorkbookAs();
+                    }
+                });
+
                 break;
             }
 
             case UIMessageType.OPEN_WORKBOOK: {
-                openWorkbook();
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        openWorkbook();
+                    }
+                });
+
                 break;
             }
 
             case UIMessageType.CREATE_WORKBOOK: {
-                createWorkbook();
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        saveWorkbook();
+                        createWorkbook();
+                    }
+                });
+
                 break;
             }
         }
