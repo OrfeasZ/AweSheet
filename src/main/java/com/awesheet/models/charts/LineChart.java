@@ -56,8 +56,8 @@ public class LineChart extends Chart {
                 dataset, PlotOrientation.VERTICAL,
                 true, true, false);
 
-        final CategoryPlot plot = lineChart.getCategoryPlot();
-        ((BarRenderer) plot.getRenderer()).setBarPainter(new StandardBarPainter());
+        //final CategoryPlot plot = lineChart.getCategoryPlot();
+        //((BarRenderer) plot.getRenderer()).setBarPainter(new StandardBarPainter());
 
         // Generate the image.
         try {

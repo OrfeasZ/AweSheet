@@ -31,7 +31,7 @@ public class ConcatFunction extends DataFunction<String> {
     }
 
     public static String[] getArgumentNames() {
-        return new String[] {};
+        return new String[] { "Argument1", "Argument2" };
     }
 
     public ConcatFunction(){
